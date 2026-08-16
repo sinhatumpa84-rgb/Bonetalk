@@ -223,6 +223,9 @@ export function HeroSection() {
             className="flex flex-col gap-4 sm:flex-row sm:items-center"
           >
             <MagneticButton href="#technology" variant="primary">
+              GET STARTED <ArrowRight size={14} />
+            </MagneticButton>
+            <MagneticButton href="#technology" variant="primary">
               EXPLORE THE SYSTEM <ArrowRight size={14} />
             </MagneticButton>
             <MagneticButton href="#how-it-works" variant="secondary">
@@ -245,6 +248,9 @@ export function HeroSection() {
             </div>
             <div>
               LATENCY: <span className="text-medical font-medium">&lt; 12.4 ms</span>
+            </div>
+            <div>
+              COMMS: <span className="text-cyan-signal font-medium">MQTT Protocol</span>
             </div>
           </motion.div>
         </div>

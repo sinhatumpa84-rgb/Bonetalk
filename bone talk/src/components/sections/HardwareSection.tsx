@@ -130,7 +130,7 @@ export function HardwareSection() {
                     y1={pos.y}
                     x2={next.x}
                     y2={next.y}
-                    stroke={selectedComp === pos.id || selectedComp === next.id ? '#22d3ee' : 'rgba(34,211,238,0.2)'}
+                    stroke={selectedComp === pos.id || selectedComp === next.id ? '#059669' : 'rgba(5,150,105,0.2)'}
                     strokeWidth={selectedComp === pos.id || selectedComp === next.id ? '1.5' : '1'}
                     strokeDasharray="4 4"
                     initial={{ pathLength: 0, opacity: 0 }}
@@ -156,14 +156,14 @@ export function HardwareSection() {
                   width="120"
                   height="60"
                   rx="4"
-                  fill={selectedComp === 'emg' ? '#1c2830' : '#18181b'}
-                  stroke={selectedComp === 'emg' ? '#22d3ee' : 'rgba(245,242,235,0.2)'}
+                  fill={selectedComp === 'emg' ? '#E0F2E8' : '#E8E6E1'}
+                  stroke={selectedComp === 'emg' ? '#059669' : 'rgba(0,0,0,0.12)'}
                   strokeWidth={selectedComp === 'emg' ? '2' : '1'}
                 />
-                <circle cx="270" cy="60" r="8" fill="none" stroke="#22d3ee" strokeWidth="1.5" />
-                <circle cx="300" cy="60" r="8" fill="none" stroke="#22d3ee" strokeWidth="1.5" />
-                <circle cx="330" cy="60" r="8" fill="none" stroke="#22d3ee" strokeWidth="1.5" />
-                <text x="300" y="110" textAnchor="middle" fill={selectedComp === 'emg' ? '#22d3ee' : '#a8a49c'} fontSize="10" fontFamily="monospace" fontWeight={selectedComp === 'emg' ? 'bold' : 'normal'}>
+                <circle cx="270" cy="60" r="8" fill="none" stroke="#059669" strokeWidth="1.5" />
+                <circle cx="300" cy="60" r="8" fill="none" stroke="#059669" strokeWidth="1.5" />
+                <circle cx="330" cy="60" r="8" fill="none" stroke="#059669" strokeWidth="1.5" />
+                <text x="300" y="110" textAnchor="middle" fill={selectedComp === 'emg' ? '#059669' : '#6B7280'} fontSize="10" fontFamily="monospace" fontWeight={selectedComp === 'emg' ? 'bold' : 'normal'}>
                   EMG SENSOR
                 </text>
               </motion.g>
@@ -183,12 +183,12 @@ export function HardwareSection() {
                   width="110"
                   height="50"
                   rx="4"
-                  fill={selectedComp === 'acquisition' ? '#1c2830' : '#18181b'}
-                  stroke={selectedComp === 'acquisition' ? '#22d3ee' : 'rgba(245,242,235,0.2)'}
+                  fill={selectedComp === 'acquisition' ? '#E0F2E8' : '#E8E6E1'}
+                  stroke={selectedComp === 'acquisition' ? '#059669' : 'rgba(0,0,0,0.12)'}
                   strokeWidth={selectedComp === 'acquisition' ? '2' : '1'}
                 />
-                <path d="M70 145 L90 135 L110 150 L130 130" stroke="#22d3ee" strokeWidth="1.5" fill="none" />
-                <text x="115" y="190" textAnchor="middle" fill={selectedComp === 'acquisition' ? '#22d3ee' : '#a8a49c'} fontSize="9" fontFamily="monospace">
+                <path d="M70 145 L90 135 L110 150 L130 130" stroke="#059669" strokeWidth="1.5" fill="none" />
+                <text x="115" y="190" textAnchor="middle" fill={selectedComp === 'acquisition' ? '#059669' : '#6B7280'} fontSize="9" fontFamily="monospace">
                   SIGNAL ACQ.
                 </text>
               </motion.g>
@@ -209,15 +209,15 @@ export function HardwareSection() {
                   width="160"
                   height="100"
                   rx="4"
-                  fill={selectedComp === 'esp32' ? '#0f2430' : '#111113'}
-                  stroke={selectedComp === 'esp32' ? '#22d3ee' : 'rgba(34,211,238,0.4)'}
+                  fill={selectedComp === 'esp32' ? '#E0F2E8' : '#F2F0EC'}
+                  stroke={selectedComp === 'esp32' ? '#059669' : 'rgba(5,150,105,0.4)'}
                   strokeWidth={selectedComp === 'esp32' ? '2.5' : '1.5'}
                 />
-                <rect x="240" y="190" width="30" height="20" rx="2" fill="#1c1c1e" stroke="#22d3ee" strokeWidth="0.5" />
-                <rect x="280" y="190" width="30" height="20" rx="2" fill="#1c1c1e" stroke="#22d3ee" strokeWidth="0.5" />
-                <rect x="320" y="190" width="30" height="20" rx="2" fill="#1c1c1e" stroke="#22d3ee" strokeWidth="0.5" />
-                <circle cx="300" cy="240" r="6" fill="#4ade80" className="animate-pulse" />
-                <text x="300" y="290" textAnchor="middle" fill={selectedComp === 'esp32' ? '#22d3ee' : '#f5f2eb'} fontSize="11" fontFamily="monospace" fontWeight="bold">
+                <rect x="240" y="190" width="30" height="20" rx="2" fill="#E0DED9" stroke="#059669" strokeWidth="0.5" />
+                <rect x="280" y="190" width="30" height="20" rx="2" fill="#E0DED9" stroke="#059669" strokeWidth="0.5" />
+                <rect x="320" y="190" width="30" height="20" rx="2" fill="#E0DED9" stroke="#059669" strokeWidth="0.5" />
+                <circle cx="300" cy="240" r="6" fill="#16A34A" className="animate-pulse" />
+                <text x="300" y="290" textAnchor="middle" fill={selectedComp === 'esp32' ? '#059669' : '#1A1A1A'} fontSize="11" fontFamily="monospace" fontWeight="bold">
                   ESP32-S3
                 </text>
               </motion.g>
@@ -234,12 +234,12 @@ export function HardwareSection() {
                 <path
                   d="M440 240 Q480 220 520 240 Q480 260 440 240"
                   fill="none"
-                  stroke="#22d3ee"
+                  stroke="#059669"
                   strokeWidth={selectedComp === 'wireless' ? '2' : '1'}
                   opacity={selectedComp === 'wireless' ? '0.9' : '0.5'}
                 />
-                <circle cx="480" cy="240" r="5" fill="#22d3ee" />
-                <text x="480" y="280" textAnchor="middle" fill={selectedComp === 'wireless' ? '#22d3ee' : '#a8a49c'} fontSize="9" fontFamily="monospace">
+                <circle cx="480" cy="240" r="5" fill="#059669" />
+                <text x="480" y="280" textAnchor="middle" fill={selectedComp === 'wireless' ? '#059669' : '#6B7280'} fontSize="9" fontFamily="monospace">
                   WIRELESS
                 </text>
               </motion.g>
@@ -259,8 +259,8 @@ export function HardwareSection() {
                   width="140"
                   height="50"
                   rx="4"
-                  fill={selectedComp === 'ai' ? '#162b20' : '#18181b'}
-                  stroke={selectedComp === 'ai' ? '#4ade80' : 'rgba(74,222,128,0.3)'}
+                  fill={selectedComp === 'ai' ? '#DCFCE7' : '#E8E6E1'}
+                  stroke={selectedComp === 'ai' ? '#16A34A' : 'rgba(22,163,74,0.3)'}
                   strokeWidth={selectedComp === 'ai' ? '2' : '1'}
                 />
                 {[0, 1, 2, 3, 4].map((i) => (
@@ -270,11 +270,11 @@ export function HardwareSection() {
                     y="325"
                     width="14"
                     height="20"
-                    fill="#4ade80"
+                    fill="#16A34A"
                     opacity={0.3 + i * 0.15}
                   />
                 ))}
-                <text x="300" y="380" textAnchor="middle" fill={selectedComp === 'ai' ? '#4ade80' : '#a8a49c'} fontSize="10" fontFamily="monospace">
+                <text x="300" y="380" textAnchor="middle" fill={selectedComp === 'ai' ? '#16A34A' : '#6B7280'} fontSize="10" fontFamily="monospace">
                   AI PROCESSING
                 </text>
               </motion.g>
@@ -360,7 +360,7 @@ export function HardwareSection() {
                 onClick={() => setSelectedComp(comp.id)}
                 className={`border p-4 text-left transition-all duration-200 ${
                   isSelected
-                    ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_12px_rgba(34,211,238,0.12)]'
+                    ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_12px_rgba(5,150,105,0.12)]'
                     : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
                 }`}
               >

@@ -72,7 +72,7 @@ export function CustomCursor() {
         }}
       >
         <motion.div
-          className="rounded-full border border-cream/70"
+          className="rounded-full border border-cream/80"
           animate={{
             width: hovering ? 44 : 10,
             height: hovering ? 44 : 10,

@@ -17,7 +17,6 @@ function App() {
   return (
     <>
       <CustomCursor />
-      <div className="grain-overlay" aria-hidden="true" />
       <Navigation />
       <main>
         <HeroSection />

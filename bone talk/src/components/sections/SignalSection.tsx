@@ -207,7 +207,7 @@ export function SignalSection() {
                     onClick={() => handleSelect(cmd)}
                     className={`group flex items-center justify-between border px-5 py-4 text-left transition-all duration-200 ${
                       selected === cmd
-                        ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_15px_rgba(34,211,238,0.15)]'
+                        ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_15px_rgba(5,150,105,0.15)]'
                         : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
                     }`}
                     aria-pressed={selected === cmd}
@@ -226,7 +226,7 @@ export function SignalSection() {
                     </div>
                     <span
                       className={`h-2 w-2 rounded-full transition-all ${
-                        selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_#22d3ee]' : 'bg-border group-hover:bg-cream/40'
+                        selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_#059669]' : 'bg-border group-hover:bg-cream/40'
                       }`}
                     />
                   </button>

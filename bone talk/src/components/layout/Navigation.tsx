@@ -23,8 +23,8 @@ export function Navigation() {
         <motion.nav
           className="mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border border-transparent px-4 py-3 md:px-6"
           animate={{
-            backgroundColor: scrolled ? 'rgba(10, 10, 11, 0.75)' : 'rgba(10, 10, 11, 0)',
-            borderColor: scrolled ? 'rgba(245, 242, 235, 0.06)' : 'rgba(245, 242, 235, 0)',
+            backgroundColor: scrolled ? 'rgba(250, 250, 248, 0.85)' : 'rgba(250, 250, 248, 0)',
+            borderColor: scrolled ? 'rgba(0, 0, 0, 0.06)' : 'rgba(0, 0, 0, 0)',
             backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
           }}
           transition={{ duration: 0.4 }}

@@ -22,7 +22,7 @@ export function EMGWaveform({
   frequency = 2.5,
   burst = 0.5,
   intensity = 1,
-  color = '#22d3ee',
+  color = '#059669',
   className = '',
   animate = true,
   command = null,
@@ -60,7 +60,7 @@ export function EMGWaveform({
 
     // Optional Oscilloscope Grid Background
     if (showGrid) {
-      ctx.strokeStyle = 'rgba(245, 242, 235, 0.05)'
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)'
       ctx.lineWidth = 1
       const gridSpacing = 20
       ctx.beginPath()
@@ -75,7 +75,7 @@ export function EMGWaveform({
       ctx.stroke()
 
       // Center baseline
-      ctx.strokeStyle = 'rgba(34, 211, 238, 0.2)'
+      ctx.strokeStyle = 'rgba(5, 150, 105, 0.2)'
       ctx.beginPath()
       ctx.moveTo(0, height / 2)
       ctx.lineTo(width, height / 2)
@@ -122,7 +122,7 @@ export function EMGWaveform({
       if (i === 0) ctx.moveTo(x, envY)
       else ctx.lineTo(x, envY)
     }
-    ctx.strokeStyle = '#4ade80'
+    ctx.strokeStyle = '#16A34A'
     ctx.lineWidth = 1.2
     ctx.globalAlpha = 0.4
     ctx.setLineDash([4, 4])

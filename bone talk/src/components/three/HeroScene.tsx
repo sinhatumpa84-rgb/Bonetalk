@@ -10,54 +10,72 @@ interface NeckDeviceProps {
 }
 
 function NeckSignalPulse({ intensity = 1 }: { intensity: number }) {
-  const lineObjRef = useRef<THREE.Line | null>(null)
+  const leftLineRef = useRef<THREE.Line | null>(null)
+  const rightLineRef = useRef<THREE.Line | null>(null)
 
   useEffect(() => {
-    const count = 60
-    const geometry = new THREE.BufferGeometry()
-    const positions = new Float32Array(count * 3)
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    
-    const material = new THREE.LineBasicMaterial({
-      color: '#22d3ee',
+    const count = 50
+    const geomLeft = new THREE.BufferGeometry()
+    const geomRight = new THREE.BufferGeometry()
+    geomLeft.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 3), 3))
+    geomRight.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 3), 3))
+
+    const mat = new THREE.LineBasicMaterial({
+      color: '#00d4b8',
       transparent: true,
-      opacity: 0.8 * intensity,
+      opacity: 0.85 * intensity,
       linewidth: 2,
     })
 
-    const line = new THREE.Line(geometry, material)
-    line.position.set(0, 0.28, 0.45)
-    lineObjRef.current = line
+    const lineL = new THREE.Line(geomLeft, mat)
+    const lineR = new THREE.Line(geomRight, mat)
+
+    leftLineRef.current = lineL
+    rightLineRef.current = lineR
 
     return () => {
-      geometry.dispose()
-      material.dispose()
+      geomLeft.dispose()
+      geomRight.dispose()
+      mat.dispose()
     }
   }, [intensity])
 
   useFrame((state) => {
-    if (!lineObjRef.current) return
     const t = state.clock.elapsedTime
-    const pos = lineObjRef.current.geometry.attributes.position as THREE.BufferAttribute
-    const count = 60
-    
-    for (let i = 0; i < count; i++) {
-      const u = i / (count - 1)
-      const x = (u - 0.5) * 2.2
-      const wave = Math.sin(u * 14 + t * 3.5) * 0.08 * intensity + Math.sin(u * 28 - t * 5) * 0.03 * intensity
-      const env = Math.exp(-Math.pow((u - 0.5) * 3, 2))
-      pos.setXYZ(i, x, wave * env, (wave * 0.4 + Math.cos(u * 6 + t * 2) * 0.03) * env)
+    const count = 50
+
+    if (leftLineRef.current && rightLineRef.current) {
+      const posL = leftLineRef.current.geometry.attributes.position as THREE.BufferAttribute
+      const posR = rightLineRef.current.geometry.attributes.position as THREE.BufferAttribute
+
+      for (let i = 0; i < count; i++) {
+        const u = i / (count - 1)
+        const xDist = 0.5 + u * 1.6
+        const wave = Math.sin(u * 16 - t * 4) * 0.06 * intensity + Math.sin(u * 32 + t * 6) * 0.025 * intensity
+        const env = Math.sin(u * Math.PI)
+
+        // Symmetrical soundwave/telemetry lines extending horizontally from both sides
+        posL.setXYZ(i, -xDist, 0.22 + wave * env, 0.35 + Math.cos(u * 8 + t * 2) * 0.02 * env)
+        posR.setXYZ(i, xDist, 0.22 + wave * env, 0.35 + Math.cos(u * 8 + t * 2) * 0.02 * env)
+      }
+      posL.needsUpdate = true
+      posR.needsUpdate = true
     }
-    pos.needsUpdate = true
   })
 
-  return lineObjRef.current ? <primitive object={lineObjRef.current} /> : null
+  return (
+    <>
+      {leftLineRef.current && <primitive object={leftLineRef.current} />}
+      {rightLineRef.current && <primitive object={rightLineRef.current} />}
+    </>
+  )
 }
 
 function NeckDeviceModel({
   scrollProgress = 0,
   intensity = 1,
-}: NeckDeviceProps) {
+  isLight = false,
+}: NeckDeviceProps & { isLight?: boolean }) {
   const groupRef = useRef<THREE.Group>(null)
   const ledRingRef = useRef<THREE.Mesh>(null)
 
@@ -79,17 +97,21 @@ function NeckDeviceModel({
     }
   })
 
+  // Light mode mannequin bust color is matte cream/off-white #E8E6E0; Dark mode is dark graphite #141416
+  const mannequinColor = isLight ? '#E8E6E0' : '#141416'
+  const clavicleColor = isLight ? '#DDD9D0' : '#111113'
+
   return (
     <group ref={groupRef}>
-      {/* 1. Stylized Human Neck & Upper Chest Silhouette (Dark Graphite) */}
+      {/* 1. Stylized Human Neck & Upper Chest Silhouette (Cream in Light Mode, Dark in Dark Mode) */}
       <group position={[0, -0.4, -0.1]}>
         {/* Main Neck Pillar */}
         <mesh position={[0, 0.45, 0]}>
           <cylinderGeometry args={[0.6, 0.7, 1.3, 32]} />
           <meshStandardMaterial
-            color="#141416"
-            roughness={0.82}
-            metalness={0.12}
+            color={mannequinColor}
+            roughness={isLight ? 0.88 : 0.82}
+            metalness={isLight ? 0.04 : 0.12}
           />
         </mesh>
 
@@ -97,9 +119,9 @@ function NeckDeviceModel({
         <mesh position={[0, -0.3, 0.1]} rotation={[0.38, 0, 0]}>
           <cylinderGeometry args={[0.72, 1.08, 0.7, 32]} />
           <meshStandardMaterial
-            color="#111113"
-            roughness={0.88}
-            metalness={0.08}
+            color={clavicleColor}
+            roughness={isLight ? 0.90 : 0.88}
+            metalness={isLight ? 0.02 : 0.08}
           />
         </mesh>
       </group>
@@ -237,6 +259,7 @@ export function HeroScene({
           <NeckDeviceModel
             scrollProgress={scrollProgress}
             intensity={intensity}
+            isLight={isLight}
           />
         </Float>
       </Canvas>

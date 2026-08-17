@@ -173,14 +173,14 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-graphite" />
 
-      <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 items-center gap-8 px-6 pt-28 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
-        {/* Left Side: Typography & CTAs */}
+      <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 items-center gap-8 px-4 pt-24 sm:px-6 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
+        {/* Left Column / Mobile Top Stack */}
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-6 flex items-center gap-3"
+            className="mb-4 sm:mb-6 flex items-center gap-3"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal animate-ping" />
             <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase md:text-xs font-semibold">
@@ -199,7 +199,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
-            className="mb-8 max-w-md text-sm leading-relaxed text-cream-muted md:mb-10 md:text-base"
+            className="mb-6 max-w-md text-sm leading-relaxed text-cream-muted sm:mb-8 md:mb-10 md:text-base"
           >
             BoneTalk is a neck-worn assistive device that transforms muscle activity into meaningful
             speech using surface EMG sensing, embedded DSP, and TinyML AI.
@@ -217,17 +217,17 @@ export function HeroSection() {
             <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
               EXPLORE THE SYSTEM <ArrowRight size={14} />
             </MagneticButton>
-            <MagneticButton href="#how-it-works" variant="secondary" className="w-full sm:w-auto min-h-[44px] justify-center">
+            <MagneticButton href="#how-it-works" variant="secondary" className="hidden md:inline-flex w-full sm:w-auto min-h-[44px] justify-center">
               SEE HOW IT WORKS <ArrowDown size={14} />
             </MagneticButton>
           </motion.div>
 
-          {/* Telemetry Status Line */}
+          {/* Desktop Telemetry Status Line (Preserved on Desktop) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/80 pt-6 font-mono text-[10px] text-cream-muted/70 md:mt-12"
+            className="mt-8 hidden md:flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/80 pt-6 font-mono text-[10px] text-cream-muted/70 md:mt-12"
           >
             <div>
               FORM FACTOR: <span className="text-cream font-medium">NECK WEARABLE</span>
@@ -244,9 +244,9 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right Side: Seamless Immersive Visual (NO WHITE BOX) */}
+        {/* Right Column / Mobile 3D Model & Telemetry Stack */}
         <motion.div
-          className="relative flex flex-col items-center justify-center h-auto min-h-[300px] md:h-[72vh]"
+          className="relative flex flex-col items-center justify-center w-full"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -259,15 +259,16 @@ export function HeroSection() {
             }}
           />
 
-          {/* Seamless Floating 3D / Fallback Container */}
-          <div className="relative h-[42vh] min-h-[280px] w-full max-w-[560px] md:h-full">
-            {!lowPerf && !isMobile ? (
+          {/* Dedicated 3D BoneTalk Neck Device Container */}
+          <div className="relative w-[88vw] max-w-[420px] h-[clamp(300px,75vw,460px)] md:w-full md:max-w-[560px] md:h-[72vh] mx-auto flex items-center justify-center">
+            {!lowPerf ? (
               <HeroErrorBoundary fallback={<HeroFallback />}>
                 <Suspense fallback={<HeroFallback />}>
                   <HeroScene
                     scrollProgress={progress}
                     intensity={intensity}
                     className="h-full w-full"
+                    isMobile={isMobile}
                   />
                 </Suspense>
               </HeroErrorBoundary>
@@ -275,7 +276,7 @@ export function HeroSection() {
               <HeroFallback />
             )}
 
-            {/* Technical Engineering Floating Annotations (Desktop) */}
+            {/* Desktop Technical Engineering Floating Callouts (Unchanged on Desktop) */}
             {TECHNICAL_ANNOTATIONS.map((note, i) => {
               const NoteIcon = note.icon
               return (
@@ -303,37 +304,61 @@ export function HeroSection() {
               )
             })}
 
-            {/* Initialization HUD Overlay */}
+            {/* Desktop Initialization HUD Overlay */}
             {initSequence < 3 && (
-              <div className="absolute top-2 left-2 z-30 font-mono text-[8px] sm:text-[9px] text-cyan-signal/80 bg-graphite/80 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
+              <div className="absolute top-2 left-2 z-30 hidden md:block font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
                 <div>BONETALK SIGNAL ENGINE INITIALIZING...</div>
-                <div className="text-cream-muted text-[7px] sm:text-[8px] mt-0.5 sm:mt-1 truncate">
+                <div className="text-cream-muted text-[8px] mt-1 truncate">
                   EMG SENSOR ARRAY ...... {initSequence >= 1 ? 'READY ✓' : 'CALIBRATING'}
                 </div>
-                <div className="text-cream-muted text-[7px] sm:text-[8px] truncate">
+                <div className="text-cream-muted text-[8px] truncate">
                   TINYML INFERENCE CORE .. {initSequence >= 2 ? 'READY ✓' : 'CALIBRATING'}
                 </div>
               </div>
             )}
           </div>
 
-          {/* Technical Engineering Labels (Mobile Grid below device) */}
-          <div className="mt-4 grid w-full max-w-md grid-cols-2 gap-2 sm:grid-cols-3 md:hidden">
-            {TECHNICAL_ANNOTATIONS.map((note) => {
+          {/* Mobile EMG Neck Telemetry Card */}
+          <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-4 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md md:hidden">
+            <div className="mb-2 flex items-center justify-between font-mono text-[9px]">
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal animate-pulse" />
+                <span className="font-semibold text-cyan-signal uppercase tracking-wider">
+                  EMG NECK TELEMETRY
+                </span>
+              </div>
+              <span className="text-cream-muted/70">1000 Hz</span>
+            </div>
+            <div className="relative overflow-hidden rounded-sm border border-border/60 bg-graphite p-1.5">
+              <EMGWaveform
+                height={50}
+                intensity={0.9}
+                className="w-full opacity-90"
+                showGrid={true}
+              />
+            </div>
+          </div>
+
+          {/* Mobile Technical Labels Grid */}
+          <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 md:hidden">
+            {TECHNICAL_ANNOTATIONS.map((note, index) => {
               const NoteIcon = note.icon
+              const isLast = index === TECHNICAL_ANNOTATIONS.length - 1
               return (
                 <div
                   key={note.id}
-                  className="flex items-center gap-2 rounded-sm border border-border/80 bg-graphite-light/70 px-2.5 py-2 backdrop-blur-sm"
+                  className={`flex items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-2 backdrop-blur-sm ${
+                    isLast ? 'sm:col-span-2 sm:max-w-[60%] sm:mx-auto w-full' : ''
+                  }`}
                 >
                   <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
                     <NoteIcon size={10} />
                   </div>
-                  <div className="min-w-0">
-                    <span className="block font-mono text-[8px] font-bold tracking-[0.15em] text-cream uppercase truncate">
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.15em] text-cream uppercase truncate">
                       {note.label}
                     </span>
-                    <span className="block font-mono text-[7px] text-cream-muted/70 truncate">
+                    <span className="block font-mono text-[7px] sm:text-[8px] text-cream-muted/70 truncate">
                       {note.sub}
                     </span>
                   </div>

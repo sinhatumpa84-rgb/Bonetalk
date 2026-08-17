@@ -214,20 +214,26 @@ interface HeroSceneProps {
   scrollProgress?: number
   intensity?: number
   className?: string
+  isMobile?: boolean
 }
 
 export function HeroScene({
   scrollProgress = 0,
   intensity = 1,
   className = '',
+  isMobile = false,
 }: HeroSceneProps) {
   const { theme } = useTheme()
   const isLight = theme === 'light'
 
+  // Mobile camera is centered, slightly closer, and balanced so the neck wearable occupies ~65-75% of the frame
+  const cameraPosition: [number, number, number] = isMobile ? [0, 0.04, 2.5] : [0, 0.15, 3.4]
+  const cameraFov = isMobile ? 42 : 38
+
   return (
     <div className={`${className} relative h-full w-full bg-transparent`} aria-hidden="true">
       <Canvas
-        camera={{ position: [0, 0.15, 3.4], fov: 38 }}
+        camera={{ position: cameraPosition, fov: cameraFov }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ background: 'transparent' }}

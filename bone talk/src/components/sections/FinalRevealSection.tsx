@@ -118,7 +118,7 @@ export function FinalRevealSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
             >
-              <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_10px_#059669]" />
+              <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_10px_var(--color-cyan-signal)]" />
             </motion.div>
           </motion.div>
         </div>

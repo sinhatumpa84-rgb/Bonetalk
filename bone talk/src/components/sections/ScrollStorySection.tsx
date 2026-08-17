@@ -44,8 +44,8 @@ export function ScrollStorySection() {
                   >
                     <defs>
                       <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#C4C0BA" />
-                        <stop offset="100%" stopColor="#D4D2CC" />
+                        <stop offset="0%" stopColor="var(--skin-tone-base)" />
+                        <stop offset="100%" stopColor="var(--skin-tone-start)" />
                       </linearGradient>
                     </defs>
                     {/* Shoulders and head silhouette */}
@@ -55,11 +55,11 @@ export function ScrollStorySection() {
                       fill="url(#skinGrad)"
                     />
                     {/* Subtle facial features - contemplative */}
-                    <ellipse cx="130" cy="115" rx="8" ry="3" fill="#9CA3AF" opacity="0.5" />
-                    <ellipse cx="170" cy="115" rx="8" ry="3" fill="#9CA3AF" opacity="0.5" />
+                    <ellipse cx="130" cy="115" rx="8" ry="3" fill="var(--skin-feature)" opacity="0.5" />
+                    <ellipse cx="170" cy="115" rx="8" ry="3" fill="var(--skin-feature)" opacity="0.5" />
                     <path
                       d="M140 145 Q150 138 160 145"
-                      stroke="#9CA3AF"
+                      stroke="var(--skin-feature)"
                       strokeWidth="2"
                       fill="none"
                       opacity="0.4"
@@ -71,7 +71,7 @@ export function ScrollStorySection() {
                       width="40"
                       height="120"
                       rx="20"
-                      fill="#C4C0BA"
+                      fill="var(--skin-tone-base)"
                       transform="rotate(-15 220 280)"
                     />
                   </svg>

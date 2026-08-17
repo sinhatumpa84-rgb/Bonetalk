@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { NAV_LINKS } from '../../lib/constants'
+import { NAV_LINKS, cn } from '../../lib/constants'
 import { useScrollY } from '../../hooks/useScrollProgress'
 import { MagneticButton } from '../ui/MagneticButton'
+import { ThemeToggle } from '../ui/ThemeToggle'
 
 export function Navigation() {
   const scrollY = useScrollY()
@@ -21,13 +22,12 @@ export function Navigation() {
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       >
         <motion.nav
-          className="mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border border-transparent px-4 py-3 md:px-6"
-          animate={{
-            backgroundColor: scrolled ? 'rgba(250, 250, 248, 0.85)' : 'rgba(250, 250, 248, 0)',
-            borderColor: scrolled ? 'rgba(0, 0, 0, 0.06)' : 'rgba(0, 0, 0, 0)',
-            backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
-          }}
-          transition={{ duration: 0.4 }}
+          className={cn(
+            'mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border px-4 py-3 transition-[background-color,border-color,backdrop-filter] duration-300 md:px-6',
+            scrolled
+              ? 'border-[color:var(--nav-border-scrolled)] bg-[color:var(--nav-bg-scrolled)] backdrop-blur-md'
+              : 'border-transparent bg-transparent'
+          )}
           aria-label="Main navigation"
         >
           <a
@@ -50,21 +50,25 @@ export function Navigation() {
             ))}
           </ul>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle />
             <MagneticButton href="#experience" variant="ghost" dataCursor="OPEN">
               EXPERIENCE BONETALK
             </MagneticButton>
           </div>
 
-          <button
-            type="button"
-            className="flex items-center justify-center p-2 text-cream lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="flex items-center justify-center p-2 text-cream"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </motion.nav>
       </motion.header>
 

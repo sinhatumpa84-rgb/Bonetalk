@@ -12,7 +12,7 @@ function SignalParticleFlow({ active }: { active: boolean }) {
       {[0, 1, 2, 3].map((i) => (
         <div
           key={i}
-          className="absolute left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_8px_#059669] animate-pulse"
+          className="absolute left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)] animate-pulse"
           style={{
             top: `${20 + i * 22}%`,
             animationDuration: `${1.8 + i * 0.4}s`,

@@ -24,30 +24,30 @@ function HeroFallback() {
         <svg viewBox="0 0 400 400" className="h-full w-full" aria-label="BoneTalk Neck Wearable Diagram">
           <defs>
             <radialGradient id="neckGlow" cx="50%" cy="40%" r="50%">
-              <stop offset="0%" stopColor="#059669" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#FAFAF8" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--color-cyan-signal)" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="var(--color-graphite)" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="collarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#D4D2CC" />
-              <stop offset="100%" stopColor="#F2F0EC" />
+              <stop offset="0%" stopColor="var(--skin-tone-start)" />
+              <stop offset="100%" stopColor="var(--skin-tone-end)" />
             </linearGradient>
           </defs>
 
           {/* Background Tech Circle */}
-          <circle cx="200" cy="200" r="170" fill="url(#neckGlow)" stroke="rgba(0,0,0,0.06)" strokeWidth="1" />
-          <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(5,150,105,0.15)" strokeDasharray="3 3" />
+          <circle cx="200" cy="200" r="170" fill="url(#neckGlow)" stroke="var(--grid-line)" strokeWidth="1" />
+          <circle cx="200" cy="200" r="130" fill="none" stroke="var(--signal-ring)" strokeDasharray="3 3" />
 
           {/* Human Neck & Clavicle Silhouette */}
           <path
             d="M130 90 Q200 70 270 90 L280 240 Q200 270 120 240 Z"
-            fill="#E8E6E1"
-            stroke="rgba(0,0,0,0.1)"
+            fill="var(--surface-elevated)"
+            stroke="var(--stroke-muted)"
             strokeWidth="1"
           />
           {/* Shoulder Slope */}
           <path
             d="M80 340 Q130 240 180 240 L220 240 Q270 240 320 340 Z"
-            fill="#F2F0EC"
+            fill="var(--surface-base)"
           />
 
           {/* BoneTalk Ergonomic Neck Collar Band */}
@@ -61,7 +61,7 @@ function HeroFallback() {
           <path
             d="M110 180 C 110 240, 290 240, 290 180"
             fill="none"
-            stroke="#059669"
+            stroke="var(--color-cyan-signal)"
             strokeWidth="1.5"
             strokeOpacity="0.4"
             strokeDasharray="6 4"
@@ -69,11 +69,11 @@ function HeroFallback() {
 
           {/* Central ESP32-S3 Processing Pod (Rests on front of neck) */}
           <g transform="translate(145, 205)">
-            <rect x="0" y="0" width="110" height="50" rx="8" fill="#E8E6E1" stroke="#059669" strokeWidth="1.5" />
-            <rect x="8" y="8" width="94" height="34" rx="4" fill="#F2F0EC" />
+            <rect x="0" y="0" width="110" height="50" rx="8" fill="var(--surface-elevated)" stroke="var(--color-cyan-signal)" strokeWidth="1.5" />
+            <rect x="8" y="8" width="94" height="34" rx="4" fill="var(--surface-base)" />
             {/* Status Micro LED */}
-            <circle cx="55" cy="25" r="10" fill="none" stroke="#059669" strokeWidth="2" />
-            <circle cx="55" cy="25" r="4" fill="#059669" className="animate-pulse" />
+            <circle cx="55" cy="25" r="10" fill="none" stroke="var(--color-cyan-signal)" strokeWidth="2" />
+            <circle cx="55" cy="25" r="4" fill="var(--color-cyan-signal)" className="animate-pulse" />
             {/* Surface Gold Electrodes */}
             <circle cx="24" cy="25" r="6" fill="#D97706" />
             <circle cx="86" cy="25" r="6" fill="#D97706" />
@@ -83,7 +83,7 @@ function HeroFallback() {
           <path
             d="M120 160 Q 200 130 280 160"
             fill="none"
-            stroke="#059669"
+            stroke="var(--color-cyan-signal)"
             strokeWidth="2"
             strokeDasharray="4 2"
           />
@@ -270,7 +270,7 @@ export function HeroSection() {
           <div
             className="pointer-events-none absolute inset-0 transition-opacity duration-700"
             style={{
-              background: `radial-gradient(circle at 50% 45%, rgba(5,150,105,${0.08 + progress * 0.08}) 0%, transparent 68%)`,
+              background: `radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--color-cyan-signal) ${Math.round((0.08 + progress * 0.08) * 100)}%, transparent) 0%, transparent 68%)`,
             }}
           />
 

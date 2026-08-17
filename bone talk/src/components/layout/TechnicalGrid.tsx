@@ -29,8 +29,8 @@ export function TechnicalGrid({
           opacity,
           transform: `translateY(${offset}px)`,
           backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)
           `,
           backgroundSize: '80px 80px',
         }}

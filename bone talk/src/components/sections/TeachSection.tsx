@@ -211,7 +211,7 @@ export function TeachSection() {
                       frequency={phase === 'learned' ? 2.8 : 3.5}
                       burst={phase === 'learned' ? 0.6 : 0.9}
                       intensity={1}
-                      color={phase === 'learned' ? '#16A34A' : '#059669'}
+                      color={phase === 'learned' ? 'var(--color-medical)' : 'var(--color-cyan-signal)'}
                       className="w-full"
                       showGrid={true}
                     />

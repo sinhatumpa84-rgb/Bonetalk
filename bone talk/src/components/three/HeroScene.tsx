@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float } from '@react-three/drei'
 import * as THREE from 'three'
+import { useTheme } from '../../context/ThemeContext'
 
 interface NeckDeviceProps {
   scrollProgress?: number
@@ -206,6 +207,9 @@ export function HeroScene({
   mouseY = 0,
   className = '',
 }: HeroSceneProps) {
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
+
   return (
     <div className={`${className} relative h-full w-full bg-transparent`} aria-hidden="true">
       <Canvas
@@ -214,12 +218,28 @@ export function HeroScene({
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ background: 'transparent' }}
       >
-        {/* Studio Lighting Setup - No external network HDRI downloads */}
-        <ambientLight intensity={0.45} />
-        <directionalLight position={[4, 5, 4]} intensity={1.1} color="#f5f2eb" />
-        <directionalLight position={[-4, 2, -2]} intensity={0.8} color="#22d3ee" />
-        <pointLight position={[0, 0.4, 1.4]} intensity={0.8} color="#4ade80" distance={4} />
-        <spotLight position={[0, 3.5, 2.5]} angle={0.45} penumbra={0.8} intensity={0.9} color="#22d3ee" />
+        {isLight ? (
+          // ── LIGHT MODE LIGHTING ──────────────────────────────────────────
+          // Bright studio light so the dark device has strong contrast
+          // against the white/off-white background.
+          <>
+            <ambientLight intensity={0.85} color="#ffffff" />
+            <directionalLight position={[5, 8, 5]} intensity={2.2} color="#ffffff" />
+            <directionalLight position={[-3, 2, 2]} intensity={0.6} color="#e0f7f2" />
+            <pointLight position={[0, 0.4, 1.4]} intensity={1.0} color="#00A878" distance={5} />
+            <spotLight position={[0, 4, 3]} angle={0.5} penumbra={0.7} intensity={1.2} color="#ffffff" />
+          </>
+        ) : (
+          // ── DARK MODE LIGHTING ───────────────────────────────────────────
+          // Original moody studio setup — unchanged.
+          <>
+            <ambientLight intensity={0.45} />
+            <directionalLight position={[4, 5, 4]} intensity={1.1} color="#f5f2eb" />
+            <directionalLight position={[-4, 2, -2]} intensity={0.8} color="#22d3ee" />
+            <pointLight position={[0, 0.4, 1.4]} intensity={0.8} color="#4ade80" distance={4} />
+            <spotLight position={[0, 3.5, 2.5]} angle={0.45} penumbra={0.8} intensity={0.9} color="#22d3ee" />
+          </>
+        )}
 
         <Float speed={1.4} rotationIntensity={0.06} floatIntensity={0.2}>
           <NeckDeviceModel

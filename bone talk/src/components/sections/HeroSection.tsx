@@ -5,7 +5,7 @@ import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { useScrollProgress } from '../../hooks/useScrollProgress'
-import { useLowPerformance, useIsMobile } from '../../hooks/useMediaQuery'
+import { useReducedMotion, useIsMobile } from '../../hooks/useMediaQuery'
 import { EMGWaveform } from '../ui/EMGWaveform'
 import { HeroErrorBoundary } from '../three/HeroErrorBoundary'
 
@@ -149,7 +149,9 @@ const TECHNICAL_ANNOTATIONS = [
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const progress = useScrollProgress(sectionRef)
-  const lowPerf = useLowPerformance()
+  // Only block 3D for users who explicitly prefer reduced motion.
+  // Mobile is NOT blocked — it gets the 3D scene with mobile-specific camera/quality.
+  const reducedMotion = useReducedMotion()
   const isMobile = useIsMobile()
   const intensity = 0.5 + progress * 0.5
 
@@ -261,7 +263,7 @@ export function HeroSection() {
 
           {/* Dedicated 3D BoneTalk Neck Device Container */}
           <div className="relative w-[88vw] max-w-[420px] h-[clamp(300px,75vw,460px)] md:w-full md:max-w-[560px] md:h-[72vh] mx-auto flex items-center justify-center">
-            {!lowPerf ? (
+            {!reducedMotion ? (
               <HeroErrorBoundary fallback={<HeroFallback />}>
                 <Suspense fallback={<HeroFallback />}>
                   <HeroScene

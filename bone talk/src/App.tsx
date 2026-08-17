@@ -1,5 +1,4 @@
 import { Navigation } from './components/layout/Navigation'
-import { CustomCursor } from './components/layout/CustomCursor'
 import { HeroSection } from './components/sections/HeroSection'
 import { ScrollStorySection } from './components/sections/ScrollStorySection'
 import { SignalSection } from './components/sections/SignalSection'
@@ -16,7 +15,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       <Navigation />
       <main>
         <HeroSection />

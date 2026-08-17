@@ -1,5 +1,5 @@
 import { Suspense, lazy, useRef, useState, useEffect } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, Cpu, Activity, Zap, Radio, Volume2 } from 'lucide-react'
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
@@ -151,10 +151,8 @@ export function HeroSection() {
   const progress = useScrollProgress(sectionRef)
   const lowPerf = useLowPerformance()
   const isMobile = useIsMobile()
-  const prefersReduced = useReducedMotion()
   const intensity = 0.5 + progress * 0.5
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [initSequence, setInitSequence] = useState(0)
 
   // Initialization Sequence simulation for telemetry
@@ -164,15 +162,6 @@ export function HeroSection() {
     }, 450)
     return () => clearInterval(timer)
   }, [])
-
-  // Parallax tracking with low-frequency throttle
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isMobile || prefersReduced) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setMousePos({ x, y })
-  }
 
   return (
     <section
@@ -257,14 +246,10 @@ export function HeroSection() {
 
         {/* Right Side: Seamless Immersive Visual (NO WHITE BOX) */}
         <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
           className="relative h-[55vh] min-h-[340px] md:h-[72vh] flex items-center justify-center"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          data-cursor="EXPLORE"
-          data-cursor-label="EXPLORE"
         >
           {/* Subtle Ambient Radial Glow */}
           <div
@@ -282,8 +267,6 @@ export function HeroSection() {
                   <HeroScene
                     scrollProgress={progress}
                     intensity={intensity}
-                    mouseX={mousePos.x}
-                    mouseY={mousePos.y}
                     className="h-full w-full"
                   />
                 </Suspense>

@@ -7,8 +7,6 @@ import { useTheme } from '../../context/ThemeContext'
 interface NeckDeviceProps {
   scrollProgress?: number
   intensity?: number
-  mouseX?: number
-  mouseY?: number
 }
 
 function NeckSignalPulse({ intensity = 1 }: { intensity: number }) {
@@ -59,8 +57,6 @@ function NeckSignalPulse({ intensity = 1 }: { intensity: number }) {
 function NeckDeviceModel({
   scrollProgress = 0,
   intensity = 1,
-  mouseX = 0,
-  mouseY = 0,
 }: NeckDeviceProps) {
   const groupRef = useRef<THREE.Group>(null)
   const ledRingRef = useRef<THREE.Mesh>(null)
@@ -68,9 +64,9 @@ function NeckDeviceModel({
   useFrame((state) => {
     const t = state.clock.elapsedTime
     if (groupRef.current) {
-      // Smooth, controlled rotation & mouse parallax (No motion sickness)
-      const targetRotY = scrollProgress * 0.3 + mouseX * 0.06 + Math.sin(t * 0.25) * 0.02
-      const targetRotX = -0.08 + scrollProgress * 0.08 - mouseY * 0.04 + Math.cos(t * 0.2) * 0.012
+      // Smooth, controlled rotation (No motion sickness or mouse tracking lag)
+      const targetRotY = scrollProgress * 0.3 + Math.sin(t * 0.25) * 0.02
+      const targetRotX = -0.08 + scrollProgress * 0.08 + Math.cos(t * 0.2) * 0.012
       
       groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.06
       groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06
@@ -195,16 +191,12 @@ function NeckDeviceModel({
 interface HeroSceneProps {
   scrollProgress?: number
   intensity?: number
-  mouseX?: number
-  mouseY?: number
   className?: string
 }
 
 export function HeroScene({
   scrollProgress = 0,
   intensity = 1,
-  mouseX = 0,
-  mouseY = 0,
   className = '',
 }: HeroSceneProps) {
   const { theme } = useTheme()
@@ -245,8 +237,6 @@ export function HeroScene({
           <NeckDeviceModel
             scrollProgress={scrollProgress}
             intensity={intensity}
-            mouseX={mouseX}
-            mouseY={mouseY}
           />
         </Float>
       </Canvas>

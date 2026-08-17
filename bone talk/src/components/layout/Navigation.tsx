@@ -52,7 +52,7 @@ export function Navigation() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <ThemeToggle />
-            <MagneticButton href="#experience" variant="ghost" dataCursor="OPEN">
+            <MagneticButton href="#experience" variant="ghost">
               EXPERIENCE BONETALK
             </MagneticButton>
           </div>

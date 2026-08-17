@@ -80,7 +80,7 @@ export function FinalRevealSection() {
               transition={{ delay: 0.8 }}
               className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
-              <MagneticButton href="#technology" variant="primary" dataCursor="OPEN">
+              <MagneticButton href="#technology" variant="primary">
                 EXPERIENCE BONETALK <ArrowRight size={14} />
               </MagneticButton>
               <MagneticButton href="#hardware" variant="secondary">

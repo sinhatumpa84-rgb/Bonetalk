@@ -69,7 +69,6 @@ export function HumanConnectionSection() {
               }}
               className="group relative flex items-center justify-center gap-4 cursor-pointer"
               onClick={() => playVoice(item.raw)}
-              data-cursor="LISTEN"
             >
               <p className="font-display text-[clamp(1.75rem,4vw,3.25rem)] font-medium tracking-wide text-cream/90 transition-colors group-hover:text-cyan-signal">
                 {item.text}

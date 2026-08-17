@@ -201,7 +201,6 @@ export function HardwareSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                data-cursor="EXPLORE"
               >
                 <rect
                   x="220"

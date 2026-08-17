@@ -82,28 +82,27 @@ export function SignalSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_340px]">
-          <div className="rounded-sm border border-border bg-graphite-light/50 p-6 backdrop-blur-sm md:p-8">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px] md:gap-8">
+          <div className="rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-6 md:p-8">
+            <div className="mb-4 flex flex-col gap-2 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-signal" />
                 <span className="font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase">
                   Live EMG Oscilloscope Stream
                 </span>
               </div>
-              <div className="flex items-center gap-4 font-mono text-[10px]">
+              <div className="flex flex-wrap items-center gap-3 font-mono text-[9px] sm:gap-4 sm:text-[10px]">
                 <span className="text-cream-muted/70">FS: <span className="text-cream">1000 Hz</span></span>
                 <span className="text-cream-muted/70">BAND: <span className="text-cream">20-450 Hz</span></span>
-                <span className="text-cyan-signal">
+                <span className="text-cyan-signal font-semibold">
                   {selected ? `PATTERN: ${selected}` : 'AWAITING INPUT'}
                 </span>
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-sm border border-border bg-graphite p-4">
+            <div className="relative overflow-hidden rounded-sm border border-border bg-graphite p-2 sm:p-4">
               <EMGWaveform
-                width={720}
-                height={170}
+                height={160}
                 command={selected}
                 intensity={selected ? 1.3 : 0.7}
                 className="w-full"
@@ -111,10 +110,10 @@ export function SignalSection() {
               />
               
               {/* Telemetry Corner Overlays */}
-              <div className="pointer-events-none absolute top-3 left-4 font-mono text-[9px] text-cream-muted/60">
+              <div className="pointer-events-none absolute top-2 left-3 font-mono text-[8px] sm:text-[9px] text-cream-muted/60">
                 100 μV / div
               </div>
-              <div className="pointer-events-none absolute bottom-3 right-4 font-mono text-[9px] text-cream-muted/60">
+              <div className="pointer-events-none absolute bottom-2 right-3 font-mono text-[8px] sm:text-[9px] text-cream-muted/60">
                 TIME: 50ms / div
               </div>
             </div>
@@ -126,10 +125,10 @@ export function SignalSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="mt-8 space-y-4 font-mono text-xs"
+                  className="mt-6 space-y-4 font-mono text-xs md:mt-8"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="tracking-[0.2em] text-cream-muted uppercase">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                    <span className="tracking-[0.2em] text-cream-muted uppercase text-[10px] sm:text-xs">
                       SIGNAL DETECTED
                     </span>
                     <div className="flex flex-1 items-center gap-3">
@@ -141,7 +140,7 @@ export function SignalSection() {
                           transition={{ duration: 0.3 }}
                         />
                       </div>
-                      <span className="text-cyan-signal tabular-nums font-semibold">
+                      <span className="text-cyan-signal tabular-nums font-semibold text-xs sm:text-sm">
                         {confidence.toFixed(1)}%
                       </span>
                     </div>
@@ -151,37 +150,37 @@ export function SignalSection() {
                     <motion.div
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4"
+                      className="grid grid-cols-2 gap-3 border-t border-border pt-4 sm:grid-cols-4 sm:gap-4"
                     >
                       <div>
-                        <span className="block text-[9px] tracking-[0.2em] text-cream-muted uppercase">
+                        <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
                           PATTERN MATCH
                         </span>
-                        <span className="font-display text-xl font-bold text-cream tabular-nums">
+                        <span className="font-display text-lg sm:text-xl font-bold text-cream tabular-nums">
                           {SIGNAL_PATTERNS[selected].confidence}%
                         </span>
                       </div>
                       <div>
-                        <span className="block text-[9px] tracking-[0.2em] text-cream-muted uppercase">
+                        <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
                           INTENT OUTPUT
                         </span>
-                        <span className="font-display text-xl font-bold text-medical">
+                        <span className="font-display text-lg sm:text-xl font-bold text-medical">
                           {selected}
                         </span>
                       </div>
                       <div>
-                        <span className="block text-[9px] tracking-[0.2em] text-cream-muted uppercase">
+                        <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
                           LATENCY
                         </span>
-                        <span className="font-display text-xl font-bold text-cyan-signal">
+                        <span className="font-display text-lg sm:text-xl font-bold text-cyan-signal">
                           12.4 ms
                         </span>
                       </div>
-                      <div className="flex items-end">
+                      <div className="col-span-2 flex items-end sm:col-span-1">
                         <button
                           type="button"
                           onClick={() => speakPhrase(selected)}
-                          className="inline-flex items-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-1.5 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18]"
+                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px]"
                           title="Replay Voice Speech Synthesis"
                         >
                           <Volume2 size={12} /> REPLAY VOICE
@@ -194,18 +193,18 @@ export function SignalSection() {
             </AnimatePresence>
           </div>
 
-          <div className="flex flex-col justify-between gap-3 rounded-sm border border-border bg-graphite-light/30 p-6 backdrop-blur-sm">
+          <div className="flex flex-col justify-between gap-3 rounded-sm border border-border bg-graphite-light/30 p-4 backdrop-blur-sm sm:p-6">
             <div>
-              <span className="mb-4 block font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase">
+              <span className="mb-3 block font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase sm:mb-4">
                 Select Muscle Command
               </span>
-              <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 gap-2.5 sm:gap-3">
                 {SIGNAL_COMMANDS.map((cmd) => (
                   <button
                     key={cmd}
                     type="button"
                     onClick={() => handleSelect(cmd)}
-                    className={`group flex items-center justify-between border px-5 py-4 text-left transition-all duration-200 ${
+                    className={`group flex items-center justify-between border p-3.5 text-left transition-all duration-200 sm:px-5 sm:py-4 min-h-[50px] ${
                       selected === cmd
                         ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_15px_var(--accent-glow)]'
                         : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
@@ -213,11 +212,11 @@ export function SignalSection() {
                     aria-pressed={selected === cmd}
                     aria-label={`Simulate ${cmd} muscle signal`}
                   >
-                    <div>
+                    <div className="min-w-0 pr-2">
                       <span className="block font-mono text-sm tracking-[0.2em] font-semibold text-cream">
                         {cmd}
                       </span>
-                      <span className="block font-mono text-[9px] text-cream-muted/70">
+                      <span className="block font-mono text-[8px] sm:text-[9px] text-cream-muted/70 truncate">
                         {cmd === 'YES' && 'Single Flex (Extensor)'}
                         {cmd === 'NO' && 'Double Twitch (Flexor)'}
                         {cmd === 'HELP' && 'Sustained Isometric Hold'}
@@ -225,7 +224,7 @@ export function SignalSection() {
                       </span>
                     </div>
                     <span
-                      className={`h-2 w-2 rounded-full transition-all ${
+                      className={`h-2 w-2 flex-shrink-0 rounded-full transition-all ${
                         selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)]' : 'bg-border group-hover:bg-cream/40'
                       }`}
                     />
@@ -234,7 +233,7 @@ export function SignalSection() {
               </div>
             </div>
 
-            <div className="border-t border-border pt-4 font-mono text-[10px] text-cream-muted/60">
+            <div className="border-t border-border pt-3 font-mono text-[9px] sm:text-[10px] text-cream-muted/60 sm:pt-4">
               ⚡ Real-time neural inference powered by ESP32-S3 TinyML engine.
             </div>
           </div>

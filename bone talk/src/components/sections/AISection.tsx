@@ -67,7 +67,7 @@ export function AISection() {
         </div>
 
         <div className="relative">
-          <div className="relative rounded-sm border border-border bg-graphite-light/50 p-8 backdrop-blur-sm md:p-10">
+          <div className="relative rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-8 md:p-10">
             <SignalParticleFlow active={inView} />
 
             <div className="relative space-y-0">
@@ -81,14 +81,14 @@ export function AISection() {
                   className="relative"
                 >
                   <div
-                    className={`flex items-center gap-4 py-3 ${
+                    className={`flex items-center gap-3 py-2.5 sm:gap-4 sm:py-3 ${
                       i === AI_PIPELINE.length - 1
                         ? 'text-medical'
                         : 'text-cream'
                     }`}
                   >
                     <div
-                      className={`flex h-8 w-8 items-center justify-center rounded-sm border font-mono text-[10px] ${
+                      className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-sm border font-mono text-[9px] sm:text-[10px] ${
                         inView && i <= 3
                           ? 'border-cyan-signal/40 bg-cyan-signal/[0.06] text-cyan-signal'
                           : i === AI_PIPELINE.length - 1
@@ -98,15 +98,15 @@ export function AISection() {
                     >
                       {String(i + 1).padStart(2, '0')}
                     </div>
-                    <span className="font-mono text-sm tracking-[0.2em] uppercase">
+                    <span className="font-mono text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase truncate">
                       {step}
                     </span>
                   </div>
 
                   {i < AI_PIPELINE.length - 1 && (
-                    <div className="ml-4 flex items-center py-1">
+                    <div className="ml-3.5 sm:ml-4 flex items-center py-1">
                       <motion.div
-                        className="h-6 w-px bg-gradient-to-b from-cyan-signal/40 to-transparent"
+                        className="h-5 sm:h-6 w-px bg-gradient-to-b from-cyan-signal/40 to-transparent"
                         initial={{ scaleY: 0 }}
                         whileInView={{ scaleY: 1 }}
                         viewport={{ once: true }}

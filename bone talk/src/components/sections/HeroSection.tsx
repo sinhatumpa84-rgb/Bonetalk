@@ -190,8 +190,8 @@ export function HeroSection() {
 
           <SplitLines
             lines={['THE BODY', 'HAS A VOICE.']}
-            className="mb-8"
-            lineClassName="font-display text-[clamp(2.75rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
+            className="mb-6 md:mb-8"
+            lineClassName="font-display text-[clamp(2.25rem,9.5vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
             delay={0.25}
           />
 
@@ -199,7 +199,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
-            className="mb-10 max-w-md text-sm leading-relaxed text-cream-muted md:text-base"
+            className="mb-8 max-w-md text-sm leading-relaxed text-cream-muted md:mb-10 md:text-base"
           >
             BoneTalk is a neck-worn assistive device that transforms muscle activity into meaningful
             speech using surface EMG sensing, embedded DSP, and TinyML AI.
@@ -209,15 +209,15 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8 }}
-            className="flex flex-col gap-4 sm:flex-row sm:items-center"
+            className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
-            <MagneticButton href="#technology" variant="primary">
+            <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
               GET STARTED <ArrowRight size={14} />
             </MagneticButton>
-            <MagneticButton href="#technology" variant="primary">
+            <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
               EXPLORE THE SYSTEM <ArrowRight size={14} />
             </MagneticButton>
-            <MagneticButton href="#how-it-works" variant="secondary">
+            <MagneticButton href="#how-it-works" variant="secondary" className="w-full sm:w-auto min-h-[44px] justify-center">
               SEE HOW IT WORKS <ArrowDown size={14} />
             </MagneticButton>
           </motion.div>
@@ -227,7 +227,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}
-            className="mt-12 flex flex-wrap items-center gap-6 border-t border-border/80 pt-6 font-mono text-[10px] text-cream-muted/70"
+            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/80 pt-6 font-mono text-[10px] text-cream-muted/70 md:mt-12"
           >
             <div>
               FORM FACTOR: <span className="text-cream font-medium">NECK WEARABLE</span>
@@ -246,7 +246,7 @@ export function HeroSection() {
 
         {/* Right Side: Seamless Immersive Visual (NO WHITE BOX) */}
         <motion.div
-          className="relative h-[55vh] min-h-[340px] md:h-[72vh] flex items-center justify-center"
+          className="relative flex flex-col items-center justify-center h-auto min-h-[300px] md:h-[72vh]"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -260,7 +260,7 @@ export function HeroSection() {
           />
 
           {/* Seamless Floating 3D / Fallback Container */}
-          <div className="relative h-full w-full max-w-[560px]">
+          <div className="relative h-[42vh] min-h-[280px] w-full max-w-[560px] md:h-full">
             {!lowPerf && !isMobile ? (
               <HeroErrorBoundary fallback={<HeroFallback />}>
                 <Suspense fallback={<HeroFallback />}>
@@ -275,47 +275,71 @@ export function HeroSection() {
               <HeroFallback />
             )}
 
-            {/* Technical Engineering Floating Annotations */}
-            {!isMobile &&
-              TECHNICAL_ANNOTATIONS.map((note, i) => {
-                const NoteIcon = note.icon
-                return (
-                  <motion.div
-                    key={note.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9 + i * 0.12 }}
-                    className={`absolute z-20 hidden md:block ${note.pos}`}
-                  >
-                    <div className="group flex items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-cyan-signal/50">
-                      <div className="flex h-5 w-5 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
-                        <NoteIcon size={11} />
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[9px] font-bold tracking-[0.2em] text-cream uppercase">
-                          {note.label}
-                        </span>
-                        <span className="block font-mono text-[8px] text-cream-muted/70">
-                          {note.sub}
-                        </span>
-                      </div>
+            {/* Technical Engineering Floating Annotations (Desktop) */}
+            {TECHNICAL_ANNOTATIONS.map((note, i) => {
+              const NoteIcon = note.icon
+              return (
+                <motion.div
+                  key={note.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 + i * 0.12 }}
+                  className={`absolute z-20 hidden md:block ${note.pos}`}
+                >
+                  <div className="group flex items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-cyan-signal/50">
+                    <div className="flex h-5 w-5 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
+                      <NoteIcon size={11} />
                     </div>
-                  </motion.div>
-                )
-              })}
+                    <div>
+                      <span className="block font-mono text-[9px] font-bold tracking-[0.2em] text-cream uppercase">
+                        {note.label}
+                      </span>
+                      <span className="block font-mono text-[8px] text-cream-muted/70">
+                        {note.sub}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
 
             {/* Initialization HUD Overlay */}
             {initSequence < 3 && (
-              <div className="absolute top-4 left-4 z-30 font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm">
+              <div className="absolute top-2 left-2 z-30 font-mono text-[8px] sm:text-[9px] text-cyan-signal/80 bg-graphite/80 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
                 <div>BONETALK SIGNAL ENGINE INITIALIZING...</div>
-                <div className="text-cream-muted text-[8px] mt-1">
+                <div className="text-cream-muted text-[7px] sm:text-[8px] mt-0.5 sm:mt-1 truncate">
                   EMG SENSOR ARRAY ...... {initSequence >= 1 ? 'READY ✓' : 'CALIBRATING'}
                 </div>
-                <div className="text-cream-muted text-[8px]">
+                <div className="text-cream-muted text-[7px] sm:text-[8px] truncate">
                   TINYML INFERENCE CORE .. {initSequence >= 2 ? 'READY ✓' : 'CALIBRATING'}
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Technical Engineering Labels (Mobile Grid below device) */}
+          <div className="mt-4 grid w-full max-w-md grid-cols-2 gap-2 sm:grid-cols-3 md:hidden">
+            {TECHNICAL_ANNOTATIONS.map((note) => {
+              const NoteIcon = note.icon
+              return (
+                <div
+                  key={note.id}
+                  className="flex items-center gap-2 rounded-sm border border-border/80 bg-graphite-light/70 px-2.5 py-2 backdrop-blur-sm"
+                >
+                  <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
+                    <NoteIcon size={10} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block font-mono text-[8px] font-bold tracking-[0.15em] text-cream uppercase truncate">
+                      {note.label}
+                    </span>
+                    <span className="block font-mono text-[7px] text-cream-muted/70 truncate">
+                      {note.sub}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </motion.div>
       </div>

@@ -14,16 +14,16 @@ export function Navigation() {
   return (
     <>
       <motion.header
-        className="fixed top-0 right-0 left-0 z-50 px-6 md:px-10"
+        className="fixed top-0 right-0 left-0 z-50 px-4 md:px-10"
         animate={{
-          paddingTop: scrolled ? 12 : 20,
-          paddingBottom: scrolled ? 12 : 20,
+          paddingTop: scrolled ? 10 : 16,
+          paddingBottom: scrolled ? 10 : 16,
         }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       >
         <motion.nav
           className={cn(
-            'mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border px-4 py-3 transition-[background-color,border-color,backdrop-filter] duration-300 md:px-6',
+            'mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border px-3.5 py-2.5 transition-[background-color,border-color,backdrop-filter] duration-300 md:px-6 md:py-3',
             scrolled
               ? 'border-[color:var(--nav-border-scrolled)] bg-[color:var(--nav-bg-scrolled)] backdrop-blur-md'
               : 'border-transparent bg-transparent'
@@ -57,11 +57,11 @@ export function Navigation() {
             </MagneticButton>
           </div>
 
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 lg:hidden">
             <ThemeToggle />
             <button
               type="button"
-              className="flex items-center justify-center p-2 text-cream"
+              className="flex h-9 w-9 items-center justify-center p-1.5 text-cream min-h-[36px] min-w-[36px]"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
@@ -78,20 +78,20 @@ export function Navigation() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col bg-graphite/95 pt-24 backdrop-blur-md lg:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 flex flex-col bg-graphite/98 pt-24 px-6 backdrop-blur-lg overflow-y-auto lg:hidden"
           >
-            <ul className="flex flex-col gap-6 px-8">
+            <ul className="flex flex-col gap-4">
               {NAV_LINKS.map((link, i) => (
                 <motion.li
                   key={link.href}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: i * 0.04 }}
                 >
                   <a
                     href={link.href}
-                    className="font-display text-2xl text-cream"
+                    className="block py-2 font-display text-xl sm:text-2xl text-cream tracking-wide hover:text-cyan-signal transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -99,10 +99,11 @@ export function Navigation() {
                 </motion.li>
               ))}
             </ul>
-            <div className="mt-10 px-8">
+            <div className="mt-8 pb-12">
               <MagneticButton
                 href="#experience"
                 variant="primary"
+                className="w-full min-h-[48px] justify-center"
                 onClick={() => setMobileOpen(false)}
               >
                 EXPERIENCE BONETALK →

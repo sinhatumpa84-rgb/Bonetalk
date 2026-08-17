@@ -8,6 +8,9 @@ export function useLenis() {
 
   useEffect(() => {
     if (reduced) return
+    // On mobile touch devices, preserve 100% native momentum scrolling
+    const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+    if (isTouch) return
 
     const lenis = new Lenis({
       duration: 1.2,

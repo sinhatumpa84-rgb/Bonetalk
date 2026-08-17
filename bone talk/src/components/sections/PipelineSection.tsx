@@ -194,10 +194,10 @@ export function PipelineSection() {
         />
       </div>
 
-      {/* Horizontal scrollable card track */}
+      {/* Horizontal scrollable card track (Desktop / Tablet) */}
       <div
         ref={scrollRef}
-        className="flex snap-x snap-mandatory gap-0 overflow-x-auto pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="hidden md:flex snap-x snap-mandatory gap-0 overflow-x-auto pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         <div className="w-6 flex-shrink-0 md:w-10" />
         {PIPELINE_STAGES.map((stage, i) => (
@@ -211,35 +211,24 @@ export function PipelineSection() {
         <div className="w-6 flex-shrink-0 md:w-10" />
       </div>
 
-      {/* Mobile vertical pipeline (unchanged) */}
-      <div className="mx-auto mt-12 max-w-md space-y-0 px-6 md:hidden">
-        {PIPELINE_STAGES.map((stage, i) => (
-          <div key={stage.id} className="relative flex gap-4">
-            <div className="flex flex-col items-center">
-              <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] ${
-                  i <= activeIndex
-                    ? 'border-cyan-signal text-cyan-signal'
-                    : 'border-border text-cream-muted'
-                }`}
-              >
+      {/* Mobile vertical pipeline */}
+      <div className="mx-auto mt-8 max-w-md space-y-3 px-6 md:hidden">
+        {PIPELINE_STAGES.map((stage) => (
+          <div
+            key={stage.id}
+            className="rounded-sm border border-border bg-graphite-light/40 p-4 backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[10px] tracking-[0.25em] text-cyan-signal font-semibold">
                 {stage.number}
-              </div>
-              {i < PIPELINE_STAGES.length - 1 && (
-                <div
-                  className={`w-px flex-1 ${
-                    i < activeIndex ? 'bg-cyan-signal/40' : 'bg-border'
-                  }`}
-                  style={{ minHeight: 40 }}
-                />
-              )}
-            </div>
-            <div className="pb-8">
-              <h3 className="font-display text-lg font-bold text-cream">
+              </span>
+              <h3 className="font-display text-base font-bold text-cream">
                 {stage.title}
               </h3>
-              <p className="mt-1 text-sm text-cream-muted">{stage.description}</p>
             </div>
+            <p className="mt-2 text-xs leading-relaxed text-cream-muted">
+              {stage.description}
+            </p>
           </div>
         ))}
       </div>

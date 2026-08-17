@@ -127,41 +127,41 @@ export function TeachSection() {
             </div>
           </div>
 
-          <div className="rounded-sm border border-border bg-graphite-light/60 p-6 backdrop-blur-sm md:p-8">
+          <div className="rounded-sm border border-border bg-graphite-light/60 p-4 backdrop-blur-sm sm:p-6 md:p-8">
             {phase === 'idle' && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex flex-col items-center py-6 text-center"
+                className="flex flex-col items-center py-4 text-center sm:py-6"
               >
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal sm:mb-6">
                   <Sparkles size={20} />
                 </div>
                 
-                <h3 className="font-display text-lg font-bold text-cream">
+                <h3 className="font-display text-base font-bold text-cream sm:text-lg">
                   Gesture Calibration Suite
                 </h3>
                 <p className="mt-1 max-w-xs text-xs text-cream-muted">
                   Teach BoneTalk a custom phrase by recording 3 muscle contraction trials.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-4 w-full max-w-sm">
-                  <MagneticButton variant="primary" onClick={() => startTraining('I NEED WATER')}>
+                <div className="mt-6 flex flex-col gap-3 w-full max-w-sm sm:mt-8 sm:gap-4">
+                  <MagneticButton variant="primary" onClick={() => startTraining('I NEED WATER')} className="w-full min-h-[44px] justify-center">
                     TRAIN &quot;I NEED WATER&quot;
                   </MagneticButton>
 
-                  <form onSubmit={handleCustomSubmit} className="flex gap-2">
+                  <form onSubmit={handleCustomSubmit} className="flex flex-col gap-2 sm:flex-row">
                     <input
                       type="text"
                       placeholder="ENTER CUSTOM PHRASE..."
                       value={customInput}
                       onChange={(e) => setCustomInput(e.target.value)}
-                      className="flex-1 rounded-sm border border-border bg-graphite px-3 py-2 font-mono text-xs text-cream placeholder-cream-muted/50 focus:border-cyan-signal focus:outline-none"
+                      className="flex-1 rounded-sm border border-border bg-graphite px-3 py-2.5 font-mono text-xs text-cream placeholder-cream-muted/50 focus:border-cyan-signal focus:outline-none min-h-[44px]"
                     />
                     <button
                       type="submit"
                       disabled={!customInput.trim()}
-                      className="rounded-sm border border-cyan-signal/40 bg-cyan-signal/[0.1] px-4 font-mono text-xs text-cyan-signal transition-colors hover:bg-cyan-signal/[0.2] disabled:opacity-40"
+                      className="rounded-sm border border-cyan-signal/40 bg-cyan-signal/[0.1] px-4 py-2 font-mono text-xs text-cyan-signal transition-colors hover:bg-cyan-signal/[0.2] disabled:opacity-40 min-h-[44px] flex items-center justify-center"
                     >
                       TRAIN
                     </button>
@@ -178,34 +178,33 @@ export function TeachSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
-                  <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
+                  <div className="mb-4 flex items-center justify-between border-b border-border pb-3 sm:mb-6 sm:pb-4">
                     <div>
-                      <span className="font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase block">
+                      <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase block">
                         Target Command
                       </span>
-                      <span className="font-mono text-sm font-bold text-cream uppercase">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-cream uppercase">
                         &quot;{commandText}&quot;
                       </span>
                     </div>
                     {phase === 'capturing' && (
-                      <span className="animate-pulse font-mono text-[10px] text-cyan-signal uppercase">
+                      <span className="animate-pulse font-mono text-[9px] sm:text-[10px] text-cyan-signal uppercase">
                         CAPTURING SIGNAL...
                       </span>
                     )}
                     {phase === 'trials' && (
-                      <span className="font-mono text-[10px] text-cyan-signal uppercase">
+                      <span className="font-mono text-[9px] sm:text-[10px] text-cyan-signal uppercase">
                         TRIAL 0{trial} IN PROGRESS
                       </span>
                     )}
                   </div>
 
-                  <p className="mb-3 font-mono text-xs tracking-[0.15em] text-cream uppercase">
+                  <p className="mb-2 sm:mb-3 font-mono text-[11px] sm:text-xs tracking-[0.15em] text-cream uppercase">
                     Perform Muscle Contraction
                   </p>
 
-                  <div className="overflow-hidden rounded-sm border border-border bg-graphite p-4">
+                  <div className="overflow-hidden rounded-sm border border-border bg-graphite p-2 sm:p-4">
                     <EMGWaveform
-                      width={500}
                       height={110}
                       amplitude={phase === 'learned' ? 0.75 : 1.1}
                       frequency={phase === 'learned' ? 2.8 : 3.5}

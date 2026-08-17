@@ -102,47 +102,50 @@ function HeroFallback() {
   )
 }
 
-// Technical Callouts Annotations with Thin Connecting Lines
+// Technical Callouts — dual pos classes:
+//   mobilePos: absolute position INSIDE the device container on small screens
+//   desktopPos: original absolute position on md+ screens (unchanged)
+// Both use `absolute` so no stacking ever occurs.
 const TECHNICAL_ANNOTATIONS = [
   {
     id: 'emg',
     label: 'EMG SENSOR',
     sub: 'Biopotential Electrodes',
     icon: Activity,
-    pos: 'top-10 left-0 md:-left-6',
-    line: 'M90,30 L160,110',
+    mobilePos: 'top-[8%] left-0',
+    desktopPos: 'top-10 -left-6',
   },
   {
     id: 'signal',
     label: 'MUSCLE SIGNAL',
     sub: 'Neck Muscle Activity',
     icon: Zap,
-    pos: 'bottom-28 left-0 md:-left-8',
-    line: 'M100,10 L160,-40',
+    mobilePos: 'bottom-[28%] left-0',
+    desktopPos: 'bottom-28 -left-8',
   },
   {
     id: 'esp32',
     label: 'ESP32-S3 POD',
     sub: '240MHz TinyML DSP',
     icon: Cpu,
-    pos: 'bottom-6 left-12 md:left-16',
-    line: 'M70,-10 L70,-60',
+    mobilePos: 'bottom-[6%] left-[10%]',
+    desktopPos: 'bottom-6 left-16',
   },
   {
     id: 'ai',
     label: 'AI RECOGNITION',
     sub: 'Gesture Classification',
     icon: Radio,
-    pos: 'top-16 right-0 md:-right-6',
-    line: 'M-10,30 L-80,100',
+    mobilePos: 'top-[18%] right-0',
+    desktopPos: 'top-16 -right-6',
   },
   {
     id: 'voice',
     label: 'VOICE OUTPUT',
     sub: 'Real-Time Speech Engine',
     icon: Volume2,
-    pos: 'bottom-24 right-0 md:-right-8',
-    line: 'M-10,-10 L-70,-50',
+    mobilePos: 'bottom-[22%] right-0',
+    desktopPos: 'bottom-24 -right-8',
   },
 ]
 
@@ -278,7 +281,10 @@ export function HeroSection() {
               <HeroFallback />
             )}
 
-            {/* Desktop Technical Engineering Floating Callouts (Unchanged on Desktop) */}
+            {/* Technical Engineering Floating Callouts — shown at ALL breakpoints.
+                On mobile: compact scaled-down cards, positioned absolutely inside
+                the device container using %-based insets that scale with container size.
+                On desktop: original design, unchanged. */}
             {TECHNICAL_ANNOTATIONS.map((note, i) => {
               const NoteIcon = note.icon
               return (
@@ -287,9 +293,26 @@ export function HeroSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 + i * 0.12 }}
-                  className={`absolute z-20 hidden md:block ${note.pos}`}
+                  // Mobile: %-based absolute pos inside container (scales with vw)
+                  // Desktop: original offset positions (unchanged)
+                  className={`absolute z-20 ${note.mobilePos} md:${note.desktopPos}`}
                 >
-                  <div className="group flex items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-cyan-signal/50">
+                  {/* Mobile card: compact */}
+                  <div className="md:hidden group flex items-center gap-1.5 rounded-sm border border-border/80 bg-graphite-light/80 px-1.5 py-1 backdrop-blur-md max-w-[110px]">
+                    <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
+                      <NoteIcon size={8} />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block font-mono text-[7px] font-bold tracking-[0.1em] text-cream uppercase leading-tight truncate">
+                        {note.label}
+                      </span>
+                      <span className="block font-mono text-[6px] text-cream-muted/70 leading-tight truncate">
+                        {note.sub}
+                      </span>
+                    </div>
+                  </div>
+                  {/* Desktop card: original design */}
+                  <div className="hidden md:flex group items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-cyan-signal/50">
                     <div className="flex h-5 w-5 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
                       <NoteIcon size={11} />
                     </div>
@@ -306,7 +329,7 @@ export function HeroSection() {
               )
             })}
 
-            {/* Desktop Initialization HUD Overlay */}
+            {/* Initialization HUD Overlay — desktop only */}
             {initSequence < 3 && (
               <div className="absolute top-2 left-2 z-30 hidden md:block font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
                 <div>BONETALK SIGNAL ENGINE INITIALIZING...</div>
@@ -320,7 +343,7 @@ export function HeroSection() {
             )}
           </div>
 
-          {/* Mobile EMG Neck Telemetry Card */}
+          {/* Mobile EMG Neck Telemetry Card — below device, mobile only */}
           <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-4 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md md:hidden">
             <div className="mb-2 flex items-center justify-between font-mono text-[9px]">
               <div className="flex items-center gap-2">
@@ -339,34 +362,6 @@ export function HeroSection() {
                 showGrid={true}
               />
             </div>
-          </div>
-
-          {/* Mobile Technical Labels Grid */}
-          <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 md:hidden">
-            {TECHNICAL_ANNOTATIONS.map((note, index) => {
-              const NoteIcon = note.icon
-              const isLast = index === TECHNICAL_ANNOTATIONS.length - 1
-              return (
-                <div
-                  key={note.id}
-                  className={`flex items-center gap-2.5 rounded-sm border border-border/80 bg-graphite-light/70 px-3 py-2 backdrop-blur-sm ${
-                    isLast ? 'sm:col-span-2 sm:max-w-[60%] sm:mx-auto w-full' : ''
-                  }`}
-                >
-                  <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal">
-                    <NoteIcon size={10} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="block font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.15em] text-cream uppercase truncate">
-                      {note.label}
-                    </span>
-                    <span className="block font-mono text-[7px] sm:text-[8px] text-cream-muted/70 truncate">
-                      {note.sub}
-                    </span>
-                  </div>
-                </div>
-              )
-            })}
           </div>
         </motion.div>
       </div>

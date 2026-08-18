@@ -39,7 +39,11 @@
   --nav-bg-scrolled: rgba(250, 249, 246, 0.92);
   --nav-border-scrolled: rgba(0, 0, 0, 0.06);
 
-  /* Layout Vertical Guide Lines */
+  /* Background Precision Engineering Grid Tokens - Light Mode */
+  --grid-primary: rgba(0, 0, 0, 0.055);
+  --grid-secondary: rgba(0, 0, 0, 0.025);
+  --grid-size: 60px;
+  --grid-subsize: 15px;
   --grid-line: rgba(0, 0, 0, 0.04);
   --grid-axis: rgba(0, 0, 0, 0.06);
 
@@ -80,6 +84,21 @@
   --accent-glow-soft: rgba(0, 168, 137, 0.05);
 }
 
+/* ─── RESPONSIVE GRID SCALE ───────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  :root {
+    --grid-size: 48px;
+    --grid-subsize: 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --grid-size: 36px;
+    --grid-subsize: 9px;
+  }
+}
+
 /* ─── DARK MODE ROOT TOKENS ──────────────────────────────────────────────── */
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -99,8 +118,13 @@ html[data-theme="dark"] {
 
   --nav-bg-scrolled: rgba(8, 9, 10, 0.90);
   --nav-border-scrolled: rgba(255, 255, 255, 0.06);
-  --grid-line: rgba(255, 255, 255, 0.035);
-  --grid-axis: rgba(255, 255, 255, 0.05);
+
+  /* Background Precision Engineering Grid Tokens - Dark Mode (Warm Muted Gold) */
+  --grid-primary: rgba(201, 170, 105, 0.10);
+  --grid-secondary: rgba(201, 170, 105, 0.045);
+  --grid-line: rgba(201, 170, 105, 0.06);
+  --grid-axis: rgba(201, 170, 105, 0.08);
+
   --selection-bg: rgba(0, 168, 137, 0.3);
   --emg-grid: rgba(255, 255, 255, 0.04);
   --emg-baseline: rgba(0, 168, 137, 0.25);

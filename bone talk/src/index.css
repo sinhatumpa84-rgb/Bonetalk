@@ -5,7 +5,7 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* ── Tailwind v4 Theme Color & Font Tokens ── */
+  /* ── Light Mode Canonical Palette Tokens ── */
   --color-graphite: #FAF9F6;
   --color-graphite-light: #F5F4F0;
   --color-graphite-elevated: #EDECE6;
@@ -46,6 +46,15 @@
   --grid-subsize: 15px;
   --grid-line: rgba(0, 0, 0, 0.04);
   --grid-axis: rgba(0, 0, 0, 0.06);
+
+  /* 3D Depth & Layered Shadow System - Light Mode */
+  --shadow-level-1: 0 2px 6px rgba(0, 0, 0, 0.03);
+  --shadow-level-2: 0 2px 8px rgba(0, 0, 0, 0.04), 0 10px 30px rgba(0, 0, 0, 0.06);
+  --shadow-level-3: 0 4px 14px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08), 0 20px 48px rgba(0, 0, 0, 0.10);
+  --shadow-device: radial-gradient(ellipse at center, rgba(0, 168, 137, 0.18) 0%, rgba(0, 0, 0, 0.12) 60%, transparent 100%);
+  --device-rim: rgba(0, 168, 137, 0.12);
+  --card-border-highlight: rgba(255, 255, 255, 0.6);
 
   /* Interactions */
   --selection-bg: rgba(0, 168, 137, 0.15);
@@ -124,6 +133,15 @@ html[data-theme="dark"] {
   --grid-secondary: rgba(201, 170, 105, 0.045);
   --grid-line: rgba(201, 170, 105, 0.06);
   --grid-axis: rgba(201, 170, 105, 0.08);
+
+  /* 3D Depth & Layered Shadow System - Dark Mode */
+  --shadow-level-1: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-level-2: 0 2px 8px rgba(0, 0, 0, 0.18), 0 16px 40px rgba(0, 0, 0, 0.30);
+  --shadow-level-3: 0 6px 18px rgba(0, 0, 0, 0.30), 0 24px 56px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.35), 0 28px 60px rgba(0, 0, 0, 0.50);
+  --shadow-device: radial-gradient(ellipse at center, rgba(0, 168, 137, 0.25) 0%, rgba(0, 0, 0, 0.75) 65%, transparent 100%);
+  --device-rim: rgba(0, 168, 137, 0.25);
+  --card-border-highlight: rgba(255, 255, 255, 0.08);
 
   --selection-bg: rgba(0, 168, 137, 0.3);
   --emg-grid: rgba(255, 255, 255, 0.04);
@@ -282,18 +300,88 @@ body {
   color: var(--color-cream-muted);
 }
 
-/* ─── EDITORIAL SURFACES & SEPARATORS ────────────────────────────────────── */
+/* ─── 3D DEPTH HIERARCHY & ELEVATED SURFACES ──────────────────────────────── */
 
 .surface-panel {
   background: var(--surface-base);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-base);
+  box-shadow: var(--shadow-level-2);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .surface-panel:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-border-strong);
+  }
 }
 
 .surface-instrument {
   background: var(--color-graphite);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── TACTILE BUTTON DEPTH ────────────────────────────────────────────────── */
+
+button,
+.btn-depth,
+a.inline-flex {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover:not(:disabled),
+  .btn-depth:hover:not(:disabled),
+  a.inline-flex:hover {
+    transform: translateY(-1.5px);
+    box-shadow: var(--shadow-level-2);
+  }
+
+  button:active:not(:disabled),
+  .btn-depth:active:not(:disabled),
+  a.inline-flex:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-level-1);
+  }
+}
+
+/* ─── 3D DEVICE VIEWPORT PRESENTATION ─────────────────────────────────────── */
+
+.device-viewport-shadow {
+  position: relative;
+  z-index: 4;
+}
+
+.device-viewport-shadow::after {
+  content: "";
+  position: absolute;
+  bottom: -6%;
+  left: 12%;
+  right: 12%;
+  height: 28%;
+  border-radius: 50%;
+  background: var(--shadow-device);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
 }
 
 .divider-hairline {
@@ -308,6 +396,7 @@ body {
   max-width: var(--content-max);
   margin-inline: auto;
   padding-inline: 1.5rem;
+  perspective: 1200px;
 }
 
 @media (min-width: 768px) {
@@ -330,6 +419,24 @@ body {
 @media (min-width: 768px) {
   .section-padding {
     padding-block: var(--section-gap-lg);
+  }
+}
+
+/* ─── REDUCED MOTION SAFEGUARD ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-panel,
+  .surface-instrument,
+  button,
+  .btn-depth,
+  a.inline-flex {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .device-viewport-shadow::after {
+    filter: none;
+    opacity: 0.5;
   }
 }
 

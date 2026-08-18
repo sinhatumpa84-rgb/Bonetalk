@@ -258,7 +258,7 @@ export function HeroSection() {
           />
 
           {/* Dedicated 3D BoneTalk Neck Device Container */}
-          <div className="relative w-[88vw] max-w-[420px] h-[clamp(300px,75vw,460px)] md:w-full md:max-w-[560px] md:h-[72vh] mx-auto flex items-center justify-center">
+          <div className="relative w-[88vw] max-w-[420px] h-[clamp(300px,75vw,460px)] md:w-full md:max-w-[560px] md:h-[72vh] mx-auto flex items-center justify-center device-viewport-shadow">
             {!reducedMotion ? (
               <HeroErrorBoundary fallback={<HeroFallback />}>
                 <Suspense fallback={<HeroFallback />}>

@@ -75,11 +75,10 @@ export function HumanConnectionSection() {
               </p>
               <button
                 type="button"
-                className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all ${
-                  activeAudio === item.raw
+                className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all ${activeAudio === item.raw
                     ? 'border-medical bg-medical/20 text-medical scale-110'
                     : 'border-border bg-glass text-cream-muted/50 group-hover:border-cyan-signal/40 group-hover:text-cyan-signal'
-                }`}
+                  }`}
                 aria-label={`Hear synthesized voice for ${item.raw}`}
               >
                 <Volume2 size={16} className={activeAudio === item.raw ? 'animate-pulse' : ''} />

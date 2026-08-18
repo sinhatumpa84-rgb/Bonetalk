@@ -21,11 +21,11 @@ export function MagneticButton({
   const baseStyles = cn(
     'group relative inline-flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase transition-colors duration-200 cursor-pointer',
     variant === 'primary' &&
-      'border border-cream/20 bg-cream/[0.04] px-6 py-3 hover:border-cyan-signal/40 hover:bg-cyan-signal/[0.06]',
+    'border border-cream/20 bg-cream/[0.04] px-6 py-3 hover:border-cyan-signal/40 hover:bg-cyan-signal/[0.06]',
     variant === 'secondary' &&
-      'px-2 py-2 text-cream-muted hover:text-cream',
+    'px-2 py-2 text-cream-muted hover:text-cream',
     variant === 'ghost' &&
-      'border border-border px-5 py-2.5 hover:border-cyan-signal/30',
+    'border border-border px-5 py-2.5 hover:border-cyan-signal/30',
     className
   )
 

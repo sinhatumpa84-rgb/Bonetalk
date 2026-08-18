@@ -361,11 +361,10 @@ export function HardwareSection() {
                 key={comp.id}
                 type="button"
                 onClick={() => setSelectedComp(comp.id)}
-                className={`border p-3 text-left transition-all duration-200 sm:p-4 min-h-[44px] ${
-                  isSelected
+                className={`border p-3 text-left transition-all duration-200 sm:p-4 min-h-[44px] ${isSelected
                     ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_12px_var(--accent-glow-soft)]'
                     : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
-                }`}
+                  }`}
               >
                 <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.2em] text-cyan-signal uppercase block">
                   {comp.label}

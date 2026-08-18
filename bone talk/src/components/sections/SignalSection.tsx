@@ -108,7 +108,7 @@ export function SignalSection() {
                 className="w-full"
                 showGrid={true}
               />
-              
+
               {/* Telemetry Corner Overlays */}
               <div className="pointer-events-none absolute top-2 left-3 font-mono text-[8px] sm:text-[9px] text-cream-muted/60">
                 100 μV / div
@@ -204,11 +204,10 @@ export function SignalSection() {
                     key={cmd}
                     type="button"
                     onClick={() => handleSelect(cmd)}
-                    className={`group flex items-center justify-between border p-3.5 text-left transition-all duration-200 sm:px-5 sm:py-4 min-h-[50px] ${
-                      selected === cmd
+                    className={`group flex items-center justify-between border p-3.5 text-left transition-all duration-200 sm:px-5 sm:py-4 min-h-[50px] ${selected === cmd
                         ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_15px_var(--accent-glow)]'
                         : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
-                    }`}
+                      }`}
                     aria-pressed={selected === cmd}
                     aria-label={`Simulate ${cmd} muscle signal`}
                   >
@@ -224,9 +223,8 @@ export function SignalSection() {
                       </span>
                     </div>
                     <span
-                      className={`h-2 w-2 flex-shrink-0 rounded-full transition-all ${
-                        selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)]' : 'bg-border group-hover:bg-cream/40'
-                      }`}
+                      className={`h-2 w-2 flex-shrink-0 rounded-full transition-all ${selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)]' : 'bg-border group-hover:bg-cream/40'
+                        }`}
                     />
                   </button>
                 ))}

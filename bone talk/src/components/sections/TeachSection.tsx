@@ -137,7 +137,7 @@ export function TeachSection() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-cyan-signal/30 bg-cyan-signal/[0.08] text-cyan-signal sm:mb-6">
                   <Sparkles size={20} />
                 </div>
-                
+
                 <h3 className="font-display text-base font-bold text-cream sm:text-lg">
                   Gesture Calibration Suite
                 </h3>
@@ -221,17 +221,15 @@ export function TeachSection() {
                       {[1, 2, 3].map((t) => (
                         <div
                           key={t}
-                          className={`flex items-center justify-between rounded-sm border px-4 py-2 font-mono text-xs transition-all ${
-                            trial >= t
+                          className={`flex items-center justify-between rounded-sm border px-4 py-2 font-mono text-xs transition-all ${trial >= t
                               ? 'border-medical/40 bg-medical/[0.06] text-cream'
                               : 'border-border/60 bg-graphite/40 text-cream-muted/40'
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center gap-3">
                             <span
-                              className={`h-2 w-2 rounded-full ${
-                                trial >= t ? 'bg-medical' : 'bg-border'
-                              }`}
+                              className={`h-2 w-2 rounded-full ${trial >= t ? 'bg-medical' : 'bg-border'
+                                }`}
                             />
                             <span>TRIAL 0{t} — {t === 1 ? 'Extensor Flex' : t === 2 ? 'Flexor Hold' : 'Peak Burst'}</span>
                           </div>
@@ -286,4 +284,3 @@ export function TeachSection() {
     </section>
   )
 }
-

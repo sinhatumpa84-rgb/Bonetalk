@@ -81,20 +81,18 @@ export function AISection() {
                   className="relative"
                 >
                   <div
-                    className={`flex items-center gap-3 py-2.5 sm:gap-4 sm:py-3 ${
-                      i === AI_PIPELINE.length - 1
+                    className={`flex items-center gap-3 py-2.5 sm:gap-4 sm:py-3 ${i === AI_PIPELINE.length - 1
                         ? 'text-medical'
                         : 'text-cream'
-                    }`}
+                      }`}
                   >
                     <div
-                      className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-sm border font-mono text-[9px] sm:text-[10px] ${
-                        inView && i <= 3
+                      className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-sm border font-mono text-[9px] sm:text-[10px] ${inView && i <= 3
                           ? 'border-cyan-signal/40 bg-cyan-signal/[0.06] text-cyan-signal'
                           : i === AI_PIPELINE.length - 1
                             ? 'border-medical/40 bg-medical/[0.06] text-medical'
                             : 'border-border text-cream-muted'
-                      }`}
+                        }`}
                     >
                       {String(i + 1).padStart(2, '0')}
                     </div>
@@ -129,12 +127,12 @@ export function AISection() {
                   animate={
                     inView
                       ? {
-                          height: [
-                            4 + Math.random() * 20,
-                            4 + Math.random() * 30,
-                            4 + Math.random() * 15,
-                          ],
-                        }
+                        height: [
+                          4 + Math.random() * 20,
+                          4 + Math.random() * 30,
+                          4 + Math.random() * 15,
+                        ],
+                      }
                       : { height: 4 }
                   }
                   transition={{

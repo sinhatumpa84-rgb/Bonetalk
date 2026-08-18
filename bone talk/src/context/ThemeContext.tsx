@@ -11,6 +11,29 @@ export type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'bonetalk-theme'
 
+/** Safe localStorage reader with exception handling */
+function safeGetItem(key: string): string | null {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key)
+    }
+  } catch {
+    // Storage access may be blocked in strict private browsing or if storage quota is exceeded
+  }
+  return null
+}
+
+/** Safe localStorage writer with exception handling */
+function safeSetItem(key: string, value: string): void {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value)
+    }
+  } catch {
+    // Gracefully ignore storage quota / permission errors
+  }
+}
+
 /**
  * Read the initial theme synchronously.
  * Priority: localStorage → 'light' (never prefers-color-scheme).
@@ -18,8 +41,7 @@ const STORAGE_KEY = 'bonetalk-theme'
  * before React hydrates, so there is no flash.
  */
 function getInitialTheme(): Theme {
-  if (typeof window === 'undefined') return 'light'
-  const stored = window.localStorage.getItem(STORAGE_KEY)
+  const stored = safeGetItem(STORAGE_KEY)
   if (stored === 'dark') return 'dark'
   return 'light'
 }
@@ -36,12 +58,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(getInitialTheme)
 
   const setTheme = useCallback((next: Theme) => {
+    const validTheme: Theme = next === 'dark' ? 'dark' : 'light'
     const root = document.documentElement
     // Apply transition attribute for smooth color transitions
     root.setAttribute('data-theme-transition', '')
-    root.setAttribute('data-theme', next)
-    window.localStorage.setItem(STORAGE_KEY, next)
-    setThemeState(next)
+    root.setAttribute('data-theme', validTheme)
+    safeSetItem(STORAGE_KEY, validTheme)
+    setThemeState(validTheme)
 
     window.setTimeout(() => {
       root.removeAttribute('data-theme-transition')
@@ -57,11 +80,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     const root = document.documentElement
     const attr = root.getAttribute('data-theme')
-    // If index.html script set 'dark' and our state says 'light' (or vice
-    // versa), reconcile by trusting localStorage (already read in getInitialTheme)
     root.setAttribute('data-theme', theme)
     if (!attr) {
-      window.localStorage.setItem(STORAGE_KEY, theme)
+      safeSetItem(STORAGE_KEY, theme)
     }
   }, [theme])
 

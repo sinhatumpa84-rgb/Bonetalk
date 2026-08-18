@@ -242,17 +242,32 @@ export function MultilingualSignalHub() {
   const handleSimulatePlayback = () => {
     setIsPlayingAudio(true)
 
-    // Web Speech Synthesis if available
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(selectedNode.samplePhrase)
-      utterance.lang = selectedNode.code
-      utterance.rate = 0.95
-      utterance.onend = () => setIsPlayingAudio(false)
-      utterance.onerror = () => setIsPlayingAudio(false)
-      window.speechSynthesis.speak(utterance)
-    } else {
-      setTimeout(() => setIsPlayingAudio(false), 2400)
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    const resetPlayback = () => {
+      if (timer) clearTimeout(timer)
+      setIsPlayingAudio(false)
+    }
+
+    // Safety timeout: automatically reset state after 4 seconds even if onend doesn't fire
+    timer = setTimeout(resetPlayback, 4000)
+
+    try {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+        const phrase = selectedNode.samplePhrase.slice(0, 150)
+        const utterance = new SpeechSynthesisUtterance(phrase)
+        utterance.lang = selectedNode.code
+        utterance.rate = 0.95
+        utterance.onend = resetPlayback
+        utterance.onerror = resetPlayback
+        window.speechSynthesis.speak(utterance)
+      } else {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(resetPlayback, 2000)
+      }
+    } catch {
+      resetPlayback()
     }
   }
 

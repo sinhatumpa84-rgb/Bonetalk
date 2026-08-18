@@ -10,23 +10,35 @@ export function LanguageSelector() {
   const [searchQuery, setSearchQuery] = useState('')
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click or Escape key
   useEffect(() => {
+    if (!isOpen) return
+
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsOpen(false)
       }
     }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
 
   // Filter languages based on search query
+  const sanitizedQuery = searchQuery.trim().slice(0, 40)
   const filteredLanguages = SUPPORTED_LANGUAGES.filter(
     (lang) =>
-      lang.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lang.nativeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lang.code.toLowerCase().includes(searchQuery.toLowerCase())
+      lang.name.toLowerCase().includes(sanitizedQuery.toLowerCase()) ||
+      lang.nativeName.toLowerCase().includes(sanitizedQuery.toLowerCase()) ||
+      lang.code.toLowerCase().includes(sanitizedQuery.toLowerCase())
   )
 
   const indianLanguages = filteredLanguages.filter((l) => l.region === 'india')
@@ -63,9 +75,10 @@ export function LanguageSelector() {
               <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-cream-muted" />
               <input
                 type="text"
+                maxLength={40}
                 placeholder="Search language..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value.slice(0, 40))}
                 className="w-full rounded-sm border border-border bg-graphite-light/70 pl-8 pr-3 py-1.5 font-mono text-xs text-cream placeholder-cream-muted/50 focus:border-cyan-signal focus:outline-none"
                 autoFocus
               />

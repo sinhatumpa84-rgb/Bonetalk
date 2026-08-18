@@ -16,7 +16,7 @@ interface EMGWaveformProps {
   showGrid?: boolean
 }
 
-function readThemeColors() {
+function readThemeColors(_currentTheme?: string) {
   const styles = getComputedStyle(document.documentElement)
   return {
     grid: styles.getPropertyValue('--emg-grid').trim() || 'rgba(0, 0, 0, 0.06)',
@@ -97,7 +97,7 @@ export function EMGWaveform({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const colors = readThemeColors()
+    const colors = readThemeColors(theme)
     const strokeColor = color ?? colors.signal
     const currentWidth = measuredWidth
 

@@ -27,7 +27,10 @@ export function TeachSection() {
   })
 
   const startTraining = (phraseToTrain?: string) => {
-    if (phraseToTrain) setCommandText(phraseToTrain)
+    if (phraseToTrain) {
+      const sanitized = phraseToTrain.trim().slice(0, 50)
+      if (sanitized) setCommandText(sanitized)
+    }
     setPhase('capturing')
     setTrial(0)
     setConfidence(0)
@@ -35,8 +38,17 @@ export function TeachSection() {
 
   const handleCustomSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (customInput.trim()) {
-      startTraining(customInput.trim().toUpperCase())
+    const sanitized = Array.from(customInput)
+      .filter((c) => {
+        const code = c.charCodeAt(0)
+        return code >= 32 && code !== 127
+      })
+      .join('')
+      .trim()
+      .slice(0, 50)
+
+    if (sanitized) {
+      startTraining(sanitized.toUpperCase())
       setCustomInput('')
     }
   }
@@ -194,9 +206,10 @@ export function TeachSection() {
                     <form onSubmit={handleCustomSubmit} className="flex flex-col gap-2 sm:flex-row">
                       <input
                         type="text"
+                        maxLength={50}
                         placeholder={t.teach.enterCustom}
                         value={customInput}
-                        onChange={(e) => setCustomInput(e.target.value)}
+                        onChange={(e) => setCustomInput(e.target.value.slice(0, 50))}
                         className="flex-1 rounded-sm border border-border bg-graphite px-3 py-2.5 font-mono text-xs text-cream placeholder-cream-muted/50 focus:border-cyan-signal focus:outline-none min-h-[44px]"
                       />
                       <button

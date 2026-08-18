@@ -487,3 +487,28 @@ a.inline-flex {
   background: var(--color-border-strong);
   border-radius: 2px;
 }
+
+/* ─── SECTION NAV ENTRANCE ──────────────────────────────────────────────── */
+
+[data-section-enter] > .section-container,
+[data-section-enter] > div:first-child {
+  animation: section-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes section-enter {
+  from {
+    opacity: 0.88;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-section-enter] > .section-container,
+  [data-section-enter] > div:first-child {
+    animation: none;
+  }
+}

@@ -1,14 +1,16 @@
 import { Suspense, lazy, useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, ArrowRight, Cpu, Activity, Zap, Radio, Volume2 } from 'lucide-react'
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+
 import { useScrollProgress } from '../../hooks/useScrollProgress'
 import { useReducedMotion, useIsMobile } from '../../hooks/useMediaQuery'
 import { EMGWaveform } from '../ui/EMGWaveform'
 import { HeroErrorBoundary } from '../three/HeroErrorBoundary'
 import { useLanguage } from '../../context/LanguageContext'
+import { SCROLL_EXIT, SCROLL_EXIT_MOBILE } from '../../lib/motion'
 
 const HeroScene = lazy(() =>
   import('../three/HeroScene').then((m) => ({ default: m.HeroScene }))
@@ -101,6 +103,17 @@ export function HeroSection() {
   const intensity = 0.5 + progress * 0.5
   const { t } = useLanguage()
 
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  })
+
+  const exit = isMobile ? SCROLL_EXIT_MOBILE : SCROLL_EXIT
+  const textY = useTransform(scrollYProgress, [0, 1], [...exit.textY].reverse() as [number, number])
+  const deviceScale = useTransform(scrollYProgress, [0, 1], [...exit.deviceScale].reverse() as [number, number])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [1, 0.75, exit.heroOpacity[0]])
+
+
   const [initSequence, setInitSequence] = useState(0)
 
   useEffect(() => {
@@ -159,7 +172,10 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-graphite" />
 
       <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 items-center gap-8 px-4 pt-24 sm:px-6 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
-        <div className="relative z-10">
+        <motion.div
+          className="relative z-10"
+          style={reducedMotion ? undefined : { y: textY, opacity: heroOpacity }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -224,13 +240,14 @@ export function HeroSection() {
               {t.hero.commsLabel} <span className="text-cyan-signal font-medium">MQTT Protocol</span>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         <motion.div
           className="relative flex flex-col items-center justify-center w-full"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          style={reducedMotion ? undefined : { scale: deviceScale, opacity: heroOpacity }}
         >
           <div
             className="pointer-events-none absolute inset-0 transition-opacity duration-700"

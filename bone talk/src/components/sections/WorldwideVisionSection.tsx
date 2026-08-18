@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Globe, ArrowRight, ShieldCheck, Zap } from 'lucide-react'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { MultilingualSignalHub } from '../ui/MultilingualSignalHub'
 import {
   TOTAL_LANGUAGES_COUNT,
   INDIAN_LANGUAGES_COUNT,
@@ -9,22 +10,9 @@ import {
 } from '../../lib/languages'
 import { useLanguage } from '../../context/LanguageContext'
 
-const FEATURED_SCRIPTS = [
-  { lang: 'English', script: 'English', loc: 'USA / UK' },
-  { lang: 'Bengali', script: 'বাংলা', loc: 'India / BD' },
-  { lang: 'Hindi', script: 'हिन्दी', loc: 'India' },
-  { lang: 'Spanish', script: 'Español', loc: 'Spain / LATAM' },
-  { lang: 'French', script: 'Français', loc: 'France' },
-  { lang: 'German', script: 'Deutsch', loc: 'Germany' },
-  { lang: 'Arabic', script: 'العربية', loc: 'Middle East' },
-  { lang: 'Chinese', script: '中文', loc: 'East Asia' },
-  { lang: 'Japanese', script: '日本語', loc: 'Japan' },
-  { lang: 'Korean', script: '한국어', loc: 'Korea' },
-]
-
 export function WorldwideVisionSection() {
   const sectionRef = useRef<HTMLElement>(null)
-  const { currentLanguage, t } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <section
@@ -146,82 +134,8 @@ export function WorldwideVisionSection() {
           </span>
         </div>
 
-        {/* SVG World Map & Signal Hub Visual */}
-        <div className="surface-panel p-6 sm:p-10 relative overflow-hidden mb-16">
-          <div className="flex items-center justify-between border-b border-border pb-4 mb-6 font-mono text-[9px] text-cream-muted">
-            <div className="flex items-center gap-2">
-              <span className="status-dot status-dot--pulse" />
-              <span className="font-semibold text-cream">{t.worldwide.mapTitle} ({currentLanguage.nativeName})</span>
-            </div>
-            <span>{t.worldwide.mapLatency}</span>
-          </div>
-
-          <div className="relative aspect-[21/9] min-h-[260px] w-full surface-instrument p-4 flex items-center justify-center overflow-hidden">
-            <svg viewBox="0 0 1000 450" className="w-full h-full opacity-90" aria-label="BoneTalk Global Network Map">
-              <defs>
-                <linearGradient id="pathGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="var(--color-cyan-signal)" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="var(--color-medical)" stopOpacity="0.2" />
-                </linearGradient>
-              </defs>
-
-              <path d="M120 100 Q180 80 260 120 Q220 220 160 200 Q100 160 120 100 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-              <path d="M240 230 Q300 240 280 340 Q220 380 210 290 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-              <path d="M460 90 Q540 80 560 150 Q480 180 440 130 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-              <path d="M460 180 Q560 190 540 320 Q460 330 440 240 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-              <path d="M580 90 Q820 70 840 200 Q720 260 600 220 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-              <path d="M780 290 Q880 280 860 360 Q760 370 780 290 Z" fill="var(--surface-elevated)" stroke="var(--color-border)" strokeWidth="1" />
-
-              <path d="M700 160 Q550 80 480 130" stroke="url(#pathGrad1)" strokeWidth="1.5" strokeDasharray="4 4" fill="none" className="animate-pulse" />
-              <path d="M700 160 Q450 140 200 140" stroke="url(#pathGrad1)" strokeWidth="1.5" strokeDasharray="5 3" fill="none" />
-              <path d="M480 130 Q350 250 250 290" stroke="url(#pathGrad1)" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
-              <path d="M700 160 Q780 220 820 320" stroke="url(#pathGrad1)" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
-
-              <g transform="translate(700, 160)">
-                <circle cx="0" cy="0" r="8" fill="var(--color-cyan-signal)" opacity="0.3" className="animate-ping" />
-                <circle cx="0" cy="0" r="4" fill="var(--color-cyan-signal)" />
-                <text x="10" y="4" fill="var(--color-cyan-signal)" fontSize="10" fontWeight="bold" fontFamily="monospace">NEW DELHI [HUB]</text>
-              </g>
-
-              <g transform="translate(480, 130)">
-                <circle cx="0" cy="0" r="4" fill="var(--color-cream)" />
-                <text x="-50" y="-8" fill="var(--color-cream-muted)" fontSize="9" fontFamily="monospace">LONDON</text>
-              </g>
-
-              <g transform="translate(220, 140)">
-                <circle cx="0" cy="0" r="4" fill="var(--color-cream)" />
-                <text x="-60" y="4" fill="var(--color-cream-muted)" fontSize="9" fontFamily="monospace">NEW YORK</text>
-              </g>
-
-              <g transform="translate(820, 150)">
-                <circle cx="0" cy="0" r="4" fill="var(--color-cream)" />
-                <text x="10" y="4" fill="var(--color-cream-muted)" fontSize="9" fontFamily="monospace">TOKYO</text>
-              </g>
-
-              <g transform="translate(820, 320)">
-                <circle cx="0" cy="0" r="4" fill="var(--color-cream)" />
-                <text x="10" y="4" fill="var(--color-cream-muted)" fontSize="9" fontFamily="monospace">SYDNEY</text>
-              </g>
-
-              <g transform="translate(260, 300)">
-                <circle cx="0" cy="0" r="4" fill="var(--color-cream)" />
-                <text x="-70" y="14" fill="var(--color-cream-muted)" fontSize="9" fontFamily="monospace">SÃO PAULO</text>
-              </g>
-            </svg>
-          </div>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-2 font-mono text-xs">
-            {FEATURED_SCRIPTS.map((item) => (
-              <div
-                key={item.lang}
-                className="inline-flex items-center gap-2 rounded-sm border border-border bg-graphite/80 px-3 py-1.5 text-cream"
-              >
-                <span className="font-bold text-cyan-signal">{item.script}</span>
-                <span className="text-[10px] text-cream-muted">({item.lang})</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Multilingual Biopotential Telemetry Hub Visual */}
+        <MultilingualSignalHub />
 
         {/* Statement Banner */}
         <div className="surface-panel p-8 sm:p-12 text-center max-w-4xl mx-auto">

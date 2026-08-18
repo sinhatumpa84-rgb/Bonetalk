@@ -223,6 +223,7 @@ export interface TranslationSchema {
     statementTitle: string
     statementBody: string
     decentralizedTag: string
+    globalSignalActive: string
     pLocal: string
     pRegional: string
     pNational: string
@@ -492,6 +493,7 @@ export const en: TranslationSchema = {
     statementBody:
       'From local communication to global connection, BoneTalk is built to make assistive communication accessible across the world — giving every individual the power to express themselves naturally.',
     decentralizedTag: 'DECENTRALIZED SPEECH SYNTHESIS',
+    globalSignalActive: 'GLOBAL SIGNAL ACTIVE',
     pLocal: 'LOCAL',
     pRegional: 'REGIONAL',
     pNational: 'NATIONAL',
@@ -744,6 +746,7 @@ export const TRANSLATIONS: Record<string, TranslationSchema> = {
       statementTitle: 'एक संकेत। कई भाषाएं। एक मानव आवाज़।',
       statementBody: 'स्थानीय संचार से लेकर वैश्विक संपर्क तक, बोनटॉक को सहायक संचार को दुनिया भर में सुलभ बनाने के लिए बनाया गया है।',
       decentralizedTag: 'विकेंद्रीकृत वाणी संश्लेषण',
+      globalSignalActive: 'वैश्विक सिग्नल सक्रिय',
       pLocal: 'स्थानीय',
       pRegional: 'क्षेत्रीय',
       pNational: 'राष्ट्रीय',
@@ -929,6 +932,7 @@ export const TRANSLATIONS: Record<string, TranslationSchema> = {
       statementTitle: 'একটি সংকেত। বহু ভাষা। এক মানব স্বর।',
       statementBody: 'স্থানীয় যোগাযোগ থেকে বৈশ্বিক সংযোগ পর্যন্ত, বোনটক সহায়ক যোগাযোগকে বিশ্বব্যাপী সহজলভ্য করার জন্য নির্মিত।',
       decentralizedTag: 'বিকেন্দ্রীভূত স্পিচ সিন্থেসিস',
+      globalSignalActive: 'গ্লোবাল সিগন্যাল সক্রিয়',
       pLocal: 'স্থানীয়',
       pRegional: 'আঞ্চলিক',
       pNational: 'জাতীয়',

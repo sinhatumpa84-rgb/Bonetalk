@@ -40,7 +40,9 @@ export function useLenis() {
 
 export function scrollToSection(id: string) {
   const el = document.getElementById(id)
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+  if (!el) return
+
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  el.setAttribute('data-section-enter', 'true')
+  window.setTimeout(() => el.removeAttribute('data-section-enter'), 700)
 }

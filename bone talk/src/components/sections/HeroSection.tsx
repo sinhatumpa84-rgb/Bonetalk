@@ -15,6 +15,7 @@ const HeroScene = lazy(() =>
 )
 
 function HeroFallback() {
+  const { t } = useLanguage()
   return (
     <div className="relative flex h-full w-full items-center justify-center bg-transparent">
       <div className="relative aspect-square w-full max-w-[420px] p-4">
@@ -82,7 +83,7 @@ function HeroFallback() {
 
         <div className="absolute bottom-4 left-1/2 w-full max-w-[280px] -translate-x-1/2 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md">
           <div className="mb-1.5 flex items-center justify-between font-mono text-[9px]">
-            <span className="text-cyan-signal font-semibold">EMG NECK TELEMETRY</span>
+            <span className="text-cyan-signal font-semibold">{t.hero.annotations.emgLabel} NECK TELEMETRY</span>
             <span className="text-cream-muted/70">1000 Hz</span>
           </div>
           <EMGWaveform width={250} height={50} intensity={0.9} className="w-full opacity-90" showGrid={false} />
@@ -299,7 +300,7 @@ export function HeroSection() {
               <div className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal animate-pulse" />
                 <span className="font-semibold text-cyan-signal uppercase tracking-wider">
-                  EMG NECK TELEMETRY
+                  {t.hero.annotations.emgLabel} TELEMETRY
                 </span>
               </div>
               <span className="text-cream-muted/70">1000 Hz</span>

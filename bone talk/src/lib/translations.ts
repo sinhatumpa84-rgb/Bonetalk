@@ -34,6 +34,15 @@ export interface TranslationSchema {
       esp32Sub: string
     }
   }
+  story: {
+    title1Line1: string
+    title1Line2: string
+    sub1: string
+    emgLabel: string
+    signalActive: string
+    title2Line1: string
+    title2Line2: string
+  }
   pipeline: {
     eyebrow: string
     title: string
@@ -71,23 +80,67 @@ export interface TranslationSchema {
     intentOutput: string
     latency: string
     playVoiceBtn: string
+    footerNote: string
+    cmdSub: {
+      yes: string
+      no: string
+      help: string
+      water: string
+    }
   }
   hardware: {
     eyebrow: string
-    title: string
+    titleLine1: string
+    titleLine2: string
     description: string
     specTitle: string
+    hardwareParams: string
+    clickToInspect: string
     processor: string
     vectorExt: string
     sramPsram: string
     power: string
     systemStatus: string
     emgSensor: string
+    signalAcquisition: string
     esp32s3: string
+    wirelessTelemetry: string
     aiModel: string
     signalState: string
     wirelessState: string
     aiProcessing: string
+    specs: {
+      emgTitle: string
+      emgSummary: string
+      emgElectrodes: string
+      emgInputRange: string
+      emgBandwidth: string
+      emgImpedance: string
+      afeTitle: string
+      afeSummary: string
+      afeAdcRes: string
+      afeSamplingRate: string
+      afeCmrr: string
+      afeNoiseFloor: string
+      mcuTitle: string
+      mcuSummary: string
+      mcuProcessor: string
+      mcuVectorExt: string
+      mcuSram: string
+      mcuPower: string
+      wirelessTitle: string
+      wirelessSummary: string
+      wirelessProtocol: string
+      wirelessLatency: string
+      wirelessRange: string
+      wirelessSecurity: string
+      aiTitle: string
+      aiSummary: string
+      aiModelSize: string
+      aiInferenceSpeed: string
+      aiFeatures: string
+      aiAccuracy: string
+    }
   }
   teach: {
     eyebrow: string
@@ -136,7 +189,8 @@ export interface TranslationSchema {
   }
   ai: {
     eyebrow: string
-    title: string
+    titleLine1: string
+    titleLine2: string
     description: string
     feature1Title: string
     feature1Desc: string
@@ -144,12 +198,23 @@ export interface TranslationSchema {
     feature2Desc: string
     feature3Title: string
     feature3Desc: string
+    steps: {
+      s1: string
+      s2: string
+      s3: string
+      s4: string
+      s5: string
+      s6: string
+    }
   }
   worldwide: {
     eyebrow: string
     titleLine1: string
     titleLine2: string
     description: string
+    totalSupported: string
+    indianRegionalStat: string
+    internationalStat: string
     totalLanguages: string
     indianRegional: string
     international: string
@@ -157,6 +222,7 @@ export interface TranslationSchema {
     mapLatency: string
     statementTitle: string
     statementBody: string
+    decentralizedTag: string
     pLocal: string
     pRegional: string
     pNational: string
@@ -167,6 +233,15 @@ export interface TranslationSchema {
     line1: string
     line2: string
     subtitle: string
+  }
+  final: {
+    r1Line1: string
+    r1Line2: string
+    r2Line1: string
+    r2Line2: string
+    subtitle: string
+    coreActive: string
+    signalFidelity: string
   }
   footer: {
     readyToExperience: string
@@ -221,6 +296,15 @@ export const en: TranslationSchema = {
       esp32Sub: '240MHz TinyML DSP',
     },
   },
+  story: {
+    title1Line1: 'WHEN WORDS',
+    title1Line2: 'CANNOT ESCAPE.',
+    sub1: 'Communication should not depend on vocal chords.',
+    emgLabel: 'EMG Signal Telemetry',
+    signalActive: 'Signal Active',
+    title2Line1: 'BUT MUSCLES',
+    title2Line2: 'STILL SPEAK.',
+  },
   pipeline: {
     eyebrow: 'HOW IT WORKS',
     title: 'From Muscle Signal to Voice',
@@ -251,7 +335,7 @@ export const en: TranslationSchema = {
     eyebrow: 'REAL-TIME INTERACTION',
     title: 'Reading the Signal',
     description:
-      'Experience how BoneTalk converts subtle surface biopotential fluctuations into clean digital intent output in milliseconds.',
+      'Sub-millivolt electrical telemetry captured directly from surface EMG electrodes. Click any command below to test real-time pattern matching.',
     oscilloscopeTitle: 'LIVE EMG OSCILLOSCOPE STREAM',
     hzRate: '1000 Hz Sampling',
     selectCommand: 'SELECT MUSCLE COMMAND TO SIMULATE',
@@ -260,24 +344,68 @@ export const en: TranslationSchema = {
     intentOutput: 'INTENT OUTPUT',
     latency: 'LATENCY',
     playVoiceBtn: 'PLAY SYNTHESIZED VOICE',
+    footerNote: '⚡ Real-time neural inference powered by ESP32-S3 TinyML engine.',
+    cmdSub: {
+      yes: 'Single Flex (Extensor)',
+      no: 'Double Twitch (Flexor)',
+      help: 'Sustained Isometric Hold',
+      water: 'Sequential Dual Burst',
+    },
   },
   hardware: {
     eyebrow: 'PHYSICAL ARCHITECTURE',
-    title: 'Hardware Sub-Systems',
+    titleLine1: 'THE HARDWARE',
+    titleLine2: 'BEHIND THE VOICE.',
     description:
       'Clinical-grade analog front-end integrated with edge TinyML compute on the ESP32-S3 silicon platform.',
-    specTitle: 'ESP32-S3 Microcontroller',
-    processor: 'Dual-Core LX7 @ 240MHz',
-    vectorExt: 'DSP & Neural Accel',
-    sramPsram: '512 KB SRAM + 8MB',
-    power: '< 45 mW Peak',
+    specTitle: 'TECHNICAL SPEC',
+    hardwareParams: 'HARDWARE PARAMETERS',
+    clickToInspect: 'Click elements in diagram to inspect sub-system',
+    processor: 'Processor',
+    vectorExt: 'Vector Extensions',
+    sramPsram: 'SRAM / PSRAM',
+    power: 'Power Consumption',
     systemStatus: 'SYSTEM STATUS',
     emgSensor: 'EMG SENSOR',
-    esp32s3: 'ESP32-S3',
+    signalAcquisition: 'ANALOG FRONT-END',
+    esp32s3: 'ESP32-S3 POD',
+    wirelessTelemetry: 'BLE / WI-FI TELEMETRY',
     aiModel: 'AI MODEL',
     signalState: 'SIMULATED',
-    wirelessState: 'N/A',
+    wirelessState: 'WIRELESS',
     aiProcessing: 'AI PROCESSING',
+    specs: {
+      emgTitle: 'EMG Surface Sensor Array',
+      emgSummary: 'Clinical-grade Ag/AgCl differential surface electrode array measuring biopotential muscle activity with low contact impedance.',
+      emgElectrodes: 'Electrodes',
+      emgInputRange: 'Input Range',
+      emgBandwidth: 'Bandwidth',
+      emgImpedance: 'Impedance',
+      afeTitle: 'Analog Front-End (AFE)',
+      afeSummary: 'Ultra-low-noise instrumental amplifier with programmable gain (PGA) and integrated 24-bit delta-sigma ADC.',
+      afeAdcRes: 'ADC Resolution',
+      afeSamplingRate: 'Sampling Rate',
+      afeCmrr: 'CMRR',
+      afeNoiseFloor: 'Noise Floor',
+      mcuTitle: 'ESP32-S3 Microcontroller',
+      mcuSummary: '32-bit Xtensa dual-core LX7 microcontroller running at 240 MHz with vector instructions for TinyML inference.',
+      mcuProcessor: 'Processor',
+      mcuVectorExt: 'Vector Extensions',
+      mcuSram: 'SRAM / PSRAM',
+      mcuPower: 'Power Consumption',
+      wirelessTitle: 'Wireless Telemetry System',
+      wirelessSummary: 'Ultra-low latency Bluetooth 5.0 Low Energy (BLE) and 2.4 GHz Wi-Fi transceivers for continuous real-time streaming.',
+      wirelessProtocol: 'Protocol',
+      wirelessLatency: 'Latency',
+      wirelessRange: 'Range',
+      wirelessSecurity: 'Security',
+      aiTitle: 'On-Device TinyML Classifier',
+      aiSummary: 'Quantized neural network model executing real-time feature extraction and gesture pattern classification on embedded hardware.',
+      aiModelSize: 'Model Size',
+      aiInferenceSpeed: 'Inference Speed',
+      aiFeatures: 'Features',
+      aiAccuracy: 'Accuracy',
+    },
   },
   teach: {
     eyebrow: 'ADAPTIVE NEURAL PERSONALIZATION',
@@ -327,7 +455,8 @@ export const en: TranslationSchema = {
   },
   ai: {
     eyebrow: 'EMBEDDED INTELLIGENCE',
-    title: 'Deterministic Signal Transformation',
+    titleLine1: 'FROM SIGNAL',
+    titleLine2: 'TO INTENT.',
     description:
       'Direct digital signal processing eliminates ambiguity. Raw microvolt fluctuations pass through digital bandpass filtering, statistical feature extraction, and TinyML neural classification.',
     feature1Title: '96.4% Accuracy',
@@ -336,6 +465,14 @@ export const en: TranslationSchema = {
     feature2Desc: 'Ultra-low latency inference executing on onboard ESP32-S3 vector hardware.',
     feature3Title: 'Zero Cloud Dependency',
     feature3Desc: '100% private on-device execution with total user data privacy.',
+    steps: {
+      s1: 'RAW EMG SIGNAL',
+      s2: 'BANDPASS FILTER',
+      s3: 'FEATURE EXTRACTION',
+      s4: 'PATTERN RECOGNITION',
+      s5: 'NEURAL CLASSIFIER',
+      s6: 'INTENT OUTPUT',
+    },
   },
   worldwide: {
     eyebrow: 'GLOBAL ACCESSIBILITY & IMPACT',
@@ -343,6 +480,9 @@ export const en: TranslationSchema = {
     titleLine2: 'DESIGNED FOR THE WORLD.',
     description:
       'Communication has no borders. BoneTalk is designed to help people communicate across languages, regions, and cultures — transforming muscle signals into meaningful words and speech wherever they are.',
+    totalSupported: 'TOTAL SUPPORTED',
+    indianRegionalStat: 'INDIAN REGIONAL',
+    internationalStat: 'INTERNATIONAL',
     totalLanguages: 'Global Languages',
     indianRegional: 'Regional Languages',
     international: 'International Languages',
@@ -351,6 +491,7 @@ export const en: TranslationSchema = {
     statementTitle: 'ONE SIGNAL. MANY LANGUAGES. ONE HUMAN VOICE.',
     statementBody:
       'From local communication to global connection, BoneTalk is built to make assistive communication accessible across the world — giving every individual the power to express themselves naturally.',
+    decentralizedTag: 'DECENTRALIZED SPEECH SYNTHESIS',
     pLocal: 'LOCAL',
     pRegional: 'REGIONAL',
     pNational: 'NATIONAL',
@@ -361,6 +502,15 @@ export const en: TranslationSchema = {
     line1: 'A VOICE',
     line2: 'IS MORE THAN SOUND.',
     subtitle: "It's the innate human ability to communicate:",
+  },
+  final: {
+    r1Line1: 'WHEN THE VOICE',
+    r1Line2: 'IS SILENT,',
+    r2Line1: 'COMMUNICATION',
+    r2Line2: "DOESN'T HAVE TO BE.",
+    subtitle: 'AI-Powered Assistive Communication System',
+    coreActive: 'BoneTalk Core Active',
+    signalFidelity: '100% Signal Fidelity',
   },
   footer: {
     readyToExperience: 'READY TO EXPERIENCE BONETALK?',
@@ -384,18 +534,32 @@ function createTranslation(override: DeepPartial<TranslationSchema>): Translatio
       ...(override.hero || {}),
       annotations: { ...en.hero.annotations, ...(override.hero?.annotations || {}) },
     },
+    story: { ...en.story, ...(override.story || {}) },
     pipeline: {
       ...en.pipeline,
       ...(override.pipeline || {}),
       steps: { ...en.pipeline.steps, ...(override.pipeline?.steps || {}) },
     },
-    signal: { ...en.signal, ...(override.signal || {}) },
-    hardware: { ...en.hardware, ...(override.hardware || {}) },
+    signal: {
+      ...en.signal,
+      ...(override.signal || {}),
+      cmdSub: { ...en.signal.cmdSub, ...(override.signal?.cmdSub || {}) },
+    },
+    hardware: {
+      ...en.hardware,
+      ...(override.hardware || {}),
+      specs: { ...en.hardware.specs, ...(override.hardware?.specs || {}) },
+    },
     teach: { ...en.teach, ...(override.teach || {}) },
     voicePanel: { ...en.voicePanel, ...(override.voicePanel || {}) },
-    ai: { ...en.ai, ...(override.ai || {}) },
+    ai: {
+      ...en.ai,
+      ...(override.ai || {}),
+      steps: { ...en.ai.steps, ...(override.ai?.steps || {}) },
+    },
     worldwide: { ...en.worldwide, ...(override.worldwide || {}) },
     human: { ...en.human, ...(override.human || {}) },
+    final: { ...en.final, ...(override.final || {}) },
     footer: { ...en.footer, ...(override.footer || {}) },
   } as TranslationSchema
 }
@@ -405,112 +569,372 @@ export const TRANSLATIONS: Record<string, TranslationSchema> = {
   en,
   hi: createTranslation({
     nav: { technology: 'तकनीक', howItWorks: 'यह कैसे काम करता है', ai: 'एआई', hardware: 'हार्डवेयर', worldwide: 'वैश्विक', vision: 'दृष्टिकोण', experience: 'बोनटॉक का अनुभव करें' },
-    hero: { eyebrow: 'गले में पहनी जाने वाली सहायक तंत्रिका तकनीक / 2026', line1: 'शरीर के पास', line2: 'एक आवाज़ है।', description: 'बोनटॉक एक गले में पहना जाने वाला सहायक उपकरण है जो मांसपेशियों की गतिविधि को स्पष्ट और सार्थक बोली में परिवर्तित करता है।', getStarted: 'शुरू करें', exploreSystem: 'सिस्टम देखें', seeHowItWorks: 'देखें कैसे काम करता है' },
+    hero: {
+      eyebrow: 'गले में पहनी जाने वाली सहायक तंत्रिका तकनीक / 2026',
+      line1: 'शरीर के पास',
+      line2: 'एक आवाज़ है।',
+      description: 'बोनटॉक एक गले में पहना जाने वाला सहायक उपकरण है जो मांसपेशियों की गतिविधि को स्पष्ट और सार्थक बोली में परिवर्तित करता है।',
+      getStarted: 'शुरू करें',
+      exploreSystem: 'सिस्टम देखें',
+      seeHowItWorks: 'देखें कैसे काम करता है',
+      annotations: {
+        emgLabel: 'EMG सेंसर',
+        emgSub: 'बायोपोटेंशियल इलेक्ट्रोड',
+        aiLabel: 'AI पहचान',
+        aiSub: 'इशारा वर्गीकरण',
+        signalLabel: 'मांसपेशी संकेत',
+        signalSub: 'गर्दन मांसपेशी गतिविधि',
+        voiceLabel: 'आवाज़ आउटपुट',
+        voiceSub: 'रियल-टाइम स्पीच इंजन',
+        esp32Label: 'ESP32-S3 पॉड',
+        esp32Sub: '240MHz TinyML DSP',
+      },
+    },
+    story: {
+      title1Line1: 'जब शब्द',
+      title1Line2: 'बाहर नहीं आ पाते।',
+      sub1: 'संचार केवल वोकल कॉर्ड पर निर्भर नहीं होना चाहिए।',
+      emgLabel: 'EMG सिग्नल टेलीमेट्री',
+      signalActive: 'सिग्नल सक्रिय',
+      title2Line1: 'लेकिन मांसपेशियां',
+      title2Line2: 'अब भी बोलती हैं।',
+    },
+    signal: {
+      eyebrow: 'वास्तविक समय संपर्क',
+      title: 'सिग्नल पढ़ना',
+      description: 'सतह EMG इलेक्ट्रोड से सीधे प्राप्त विद्युत डेटा। वास्तविक समय पैटर्न मिलान के लिए नीचे दिए गए किसी भी आदेश पर क्लिक करें।',
+      oscilloscopeTitle: 'लाइव EMG ऑसिलोस्कोप स्ट्रीम',
+      selectCommand: 'सिमुलेट करने के लिए मांसपेशी कमांड चुनें',
+      signalDetected: 'सिग्नल पता चला',
+      patternMatch: 'पैटर्न मैच',
+      intentOutput: 'इरादा आउटपुट',
+      latency: 'विलंबता',
+      playVoiceBtn: 'आवाज़ बजाएं',
+      footerNote: '⚡ ESP32-S3 TinyML इंजन द्वारा संचालित वास्तविक समय तंत्रिका निष्पादन।',
+      cmdSub: {
+        yes: 'सिंगल फ्लेक्स (एक्सटेंसर)',
+        no: 'डबल ट्विच (फ्लेक्सॉर)',
+        help: 'निरंतर आइसोमेट्रिक होल्ड',
+        water: 'क्रमिक डुअल बर्स्ट',
+      },
+    },
+    hardware: {
+      eyebrow: 'भौतिक वास्तुकला',
+      titleLine1: 'आवाज़ के पीछे',
+      titleLine2: 'हार्डवेयर।',
+      description: 'ESP32-S3 सिलिकॉन प्लेटफॉर्म पर एज TinyML कंप्यूट के साथ एकीकृत क्लिनिकल-ग्रेड एनालॉग फ्रंट-एंड।',
+      specTitle: 'तकनीकी विवरण',
+      hardwareParams: 'हार्डवेयर पैरामीटर',
+      clickToInspect: 'उप-प्रणाली का निरीक्षण करने के लिए आरेख में तत्वों पर क्लिक करें',
+      processor: 'प्रोसेसर',
+      vectorExt: 'वेक्टर एक्सटेंशन',
+      sramPsram: 'SRAM / PSRAM',
+      power: 'बिजली की खपत',
+      emgSensor: 'EMG सेंसर',
+      signalAcquisition: 'एनालॉग फ्रंट-एंड',
+      esp32s3: 'ESP32-S3 पॉड',
+      wirelessTelemetry: 'वायरलेस टेलीमेट्री',
+      aiProcessing: 'AI प्रोसेसिंग',
+      specs: {
+        emgTitle: 'EMG सरफेस सेंसर ऐरे',
+        emgSummary: 'कम संपर्क प्रतिबाधा के साथ बायोपोटेंशियल मांसपेशी गतिविधि को मापने वाला क्लिनिकल-ग्रेड इलेक्ट्रोड ऐरे।',
+        emgElectrodes: 'इलेक्ट्रोड',
+        emgInputRange: 'इनपुट रेंज',
+        emgBandwidth: 'बैंडविड्थ',
+        emgImpedance: 'प्रतिबाधा',
+        afeTitle: 'एनालॉग फ्रंट-एंड (AFE)',
+        afeSummary: 'प्रोग्राम करने योग्य लाभ और एकीकृत 24-बिट डेल्टा-सिग्मा ADC के साथ कम शोर वाला एम्पलीफायर।',
+        afeAdcRes: 'ADC रिज़ॉल्यूशन',
+        afeSamplingRate: 'सैंपलिंग दर',
+        afeCmrr: 'CMRR',
+        afeNoiseFloor: 'नॉइज़ फ़्लोर',
+        mcuTitle: 'ESP32-S3 माइक्रोकंट्रोलर',
+        mcuSummary: 'TinyML अनुमान के लिए वेक्टर निर्देशों के साथ 240 मेगाहर्ट्ज पर चलने वाला 32-बिट डुअल-कोर माइक्रोकंट्रोलर।',
+        mcuProcessor: 'प्रोसेसर',
+        mcuVectorExt: 'वेक्टर एक्सटेंशन',
+        mcuSram: 'SRAM / PSRAM',
+        mcuPower: 'बिजली की खपत',
+        wirelessTitle: 'वायरलेस टेलीमेट्री सिस्टम',
+        wirelessSummary: 'निरंतर वास्तविक समय स्ट्रीमिंग के लिए कम विलंबता ब्लूटूथ 5.0 और वाई-फाई।',
+        wirelessProtocol: 'प्रोटोकॉल',
+        wirelessLatency: 'विलंबता',
+        wirelessRange: 'रेंज',
+        wirelessSecurity: 'सुरक्षा',
+        aiTitle: 'ऑन-डिवाइस TinyML क्लासिफायर',
+        aiSummary: 'एंबेडेड हार्डवेयर पर वास्तविक समय फीचर निष्कर्षण और पैटर्न वर्गीकरण निष्पादित करने वाला तंत्रिका नेटवर्क।',
+        aiModelSize: 'मॉडल का आकार',
+        aiInferenceSpeed: 'अनुमान गति',
+        aiFeatures: 'सुविधाएं',
+        aiAccuracy: 'सटीकता',
+      },
+    },
+    teach: {
+      eyebrow: 'अनुकूली तंत्रिका वैयक्तीकरण',
+      titleLine1: 'इसे अपनी भाषा',
+      titleLine2: 'सिखाएं।',
+      description: 'प्रत्येक उपयोगकर्ता का एक विशिष्ट तंत्रिका-मांसपेशी हस्ताक्षर होता है। बोनटॉक 60 सेकंड से भी कम समय में आपकी मांसपेशियों के इशारों को सीखता है।',
+      activeVocab: 'सक्रिय प्रशिक्षित शब्दावली',
+      clickToPlay: 'आवाज़ सुनने के लिए क्लिक करें',
+      calibrationTitle: 'इशारा अंशांकन सूट',
+      calibrationDesc: '3 मांसपेशी संकुचन परीक्षणों को रिकॉर्ड करके बोनटॉक को एक कस्टम वाक्यांश सिखाएं।',
+      trainHi: 'प्रशिक्षित करें "हाय"',
+      trainWater: 'प्रशिक्षित करें "मुझे पानी चाहिए"',
+      enterCustom: 'कस्टम वाक्यांश दर्ज करें...',
+      trainBtn: 'प्रशिक्षित करें',
+      targetCmd: 'लक्ष्य कमांड',
+      capturing: 'सिग्नल रिकॉर्ड हो रहा है...',
+      trialProgress: 'परीक्षण जारी है',
+      learnedStatus: 'पैटर्न सीखा गया ✓',
+      performContraction: 'मांसपेशी संकुचन करें',
+      calibratedCheck: 'कैलिब्रेटेड ✓',
+      aiConfidence: 'AI सटीकता',
+      trainAnother: 'दूसरा कमांड प्रशिक्षित करें →',
+      t1Name: 'एक्सटेंसर फ्लेक्स',
+      t2Name: 'फ्लेक्सॉर होल्ड',
+      t3Name: 'पीक बर्स्ट',
+    },
+    voicePanel: {
+      engineTitle: 'आवाज़ आउटपुट इंजन',
+      voiceConfigBtn: 'आवाज़ सेटिंग्स',
+      trainedCmdLabel: 'प्रशिक्षित कमांड',
+      aiConfidenceLabel: 'AI सटीकता',
+      readyBadge: 'तैयार',
+      speechParams: 'वाणी पैरामीटर',
+      synthesisVoice: 'संश्लेषण आवाज़',
+      speedRate: 'गति दर',
+      pitch: 'पिच',
+      volume: 'मात्रा',
+      testVoiceBtn: 'आवाज़ कॉन्फ़िगरेशन का परीक्षण करें',
+      playVoiceBtn: 'आवाज़ चलाएं',
+      speakingState: 'बोल रहा है...',
+      unavailableState: 'आवाज़ आउटपुट अनुपलब्ध',
+      synthesizingMsg: 'वाणी ऑडियो का संश्लेषण किया जा रहा है',
+      commandSpokenMsg: '✓ कमांड बोला गया',
+      speechReadyMsg: 'वाणी तैयार है — ऑडियो चलाने के लिए क्लिक करें',
+      unsupportedMsg: 'इस ब्राउज़र में वाणी संश्लेषण समर्थित नहीं है।',
+    },
+    ai: {
+      eyebrow: 'एंबेडेड बुद्धिमत्ता',
+      titleLine1: 'सिग्नल से',
+      titleLine2: 'इरादे तक।',
+      description: 'सीधा डिजिटल सिग्नल प्रोसेसिंग अस्पष्टता को समाप्त करता है।',
+      steps: {
+        s1: 'रॉ EMG सिग्नल',
+        s2: 'डिजिटल फ़िल्टर',
+        s3: 'फीचर निष्कर्षण',
+        s4: 'पैटर्न पहचान',
+        s5: 'न्यूरल क्लासिफायर',
+        s6: 'इरादा आउटपुट',
+      },
+    },
     pipeline: { eyebrow: 'यह कैसे काम करता है', title: 'मांसपेशियों के संकेत से आवाज़ तक', description: 'बोनटॉक प्राकृतिक मांसपेशियों की गतिविधि को वास्तविक समय में बोली जाने वाली भाषा में बदलता है।' },
-    worldwide: { titleLine1: 'एक आवाज़ के लिए निर्मित।', titleLine2: 'पूरी दुनिया के लिए डिज़ाइन किया गया।', description: 'संचार की कोई सीमाएँ नहीं होतीं। बोनटॉक लोगों को भाषाओं, क्षेत्रों और संस्कृतियों के पार संवाद करने में मदद करता है।' },
+    worldwide: {
+      eyebrow: 'वैश्विक पहुंच और प्रभाव',
+      titleLine1: 'एक आवाज़ के लिए निर्मित।',
+      titleLine2: 'पूरी दुनिया के लिए डिज़ाइन किया गया।',
+      description: 'संचार की कोई सीमाएँ नहीं होतीं। बोनटॉक लोगों को भाषाओं, क्षेत्रों और संस्कृतियों के पार संवाद करने में मदद करता है।',
+      totalSupported: 'कुल समर्थित',
+      indianRegionalStat: 'भारतीय क्षेत्रीय',
+      internationalStat: 'अंतर्राष्ट्रीय',
+      totalLanguages: 'वैश्विक भाषाएं',
+      indianRegional: 'क्षेत्रीय भाषाएं',
+      international: 'अंतर्राष्ट्रीय भाषाएं',
+      mapTitle: 'विश्वव्यापी बायोपोटेंशियल मानचित्र',
+      mapLatency: 'अनुवाद विलंबता < 15 एमएस',
+      statementTitle: 'एक संकेत। कई भाषाएं। एक मानव आवाज़।',
+      statementBody: 'स्थानीय संचार से लेकर वैश्विक संपर्क तक, बोनटॉक को सहायक संचार को दुनिया भर में सुलभ बनाने के लिए बनाया गया है।',
+      decentralizedTag: 'विकेंद्रीकृत वाणी संश्लेषण',
+      pLocal: 'स्थानीय',
+      pRegional: 'क्षेत्रीय',
+      pNational: 'राष्ट्रीय',
+      pGlobal: 'वैश्विक',
+    },
+    human: { eyebrow: 'मानवीय उद्देश्य और गरिमा', line1: 'एक आवाज़', line2: 'ध्वनि से बढ़कर है।', subtitle: 'यह संवाद करने की जन्मजात मानवीय क्षमता है:' },
+    final: { r1Line1: 'जब आवाज़', r1Line2: 'शांत हो जाती है,', r2Line1: 'तब भी संचार', r2Line2: 'रुकना नहीं चाहिए।', subtitle: 'AI-संचालित सहायक संचार प्रणाली', coreActive: 'बोनटॉक कोर सक्रिय', signalFidelity: '100% सिग्नल सटीकता' },
   }),
   bn: createTranslation({
     nav: { technology: 'প্রযুক্তি', howItWorks: 'কীভাবে কাজ করে', ai: 'এআই', hardware: 'হার্ডওয়্যার', worldwide: 'বিশ্বব্যাপী', vision: 'ভিশন', experience: 'অভিজ্ঞতা নিন' },
-    hero: { eyebrow: 'গলায় পরার সহায়ক নিউরোটেকনোলজি / ২০২৬', line1: 'দেহেরও', line2: 'একটি স্বর আছে।', description: 'বোনটক একটি গলায় পরা পরিধানযোগ্য ডিভাইস যা পেশীর কার্যকলাপকে স্পষ্ট বাক্যে রূপান্তরিত করে।', getStarted: 'শুরু করুন', exploreSystem: 'সিস্টেম দেখুন', seeHowItWorks: 'কীভাবে কাজ করে দেখুন' },
+    hero: {
+      eyebrow: 'গলায় পরার সহায়ক নিউরোটেকনোলজি / ২০২৬',
+      line1: 'দেহেরও',
+      line2: 'একটি স্বর আছে।',
+      description: 'বোনটক একটি গলায় পরা পরিধানযোগ্য ডিভাইস যা পেশীর কার্যকলাপকে স্পষ্ট বাক্যে রূপান্তরিত করে।',
+      getStarted: 'শুরু করুন',
+      exploreSystem: 'সিস্টেম দেখুন',
+      seeHowItWorks: 'কীভাবে কাজ করে দেখুন',
+      annotations: {
+        emgLabel: 'EMG সেন্সর',
+        emgSub: 'বায়োপটেনশিয়াল ইলেকট্রোড',
+        aiLabel: 'AI সনাক্তকরণ',
+        aiSub: 'ইঙ্গিত শ্রেণীকরণ',
+        signalLabel: 'পেশীর সিগন্যাল',
+        signalSub: 'ঘাড়ের পেশীর কার্যকলাপ',
+        voiceLabel: 'ভয়েস আউটপুট',
+        voiceSub: 'রিয়েল-টাইম স্পিচ ইঞ্জিন',
+        esp32Label: 'ESP32-S3 পড',
+        esp32Sub: '২৪০মেগাহার্টজ TinyML DSP',
+      },
+    },
+    story: {
+      title1Line1: 'যখন বাক্য',
+      title1Line2: 'বের হতে পারে না।',
+      sub1: 'যোগাযোগ শুধুমাত্র ভোকাল কর্ডের ওপর নির্ভর করা উচিত নয়।',
+      emgLabel: 'EMG সিগন্যাল টেলিমেট্রি',
+      signalActive: 'সিগন্যাল সক্রিয়',
+      title2Line1: 'কিন্তু পেশীগুলো',
+      title2Line2: 'এখনও কথা বলে।',
+    },
+    signal: {
+      eyebrow: 'রিয়েল-টাইম ইন্টারেকশন',
+      title: 'সিগন্যাল পাঠ করা',
+      description: 'সারফেস EMG ইলেকট্রোড থেকে সংগৃহীত বায়োপটেনশিয়াল সিগন্যাল। প্যাটার্ন ম্যাচ টেস্ট করতে নিচের যেকোনো কমান্ড নির্বাচন করুন।',
+      oscilloscopeTitle: 'লাইভ EMG অসিলোস্কোপ স্ট্রিম',
+      selectCommand: 'পেশীর কমান্ড নির্বাচন করুন',
+      signalDetected: 'সিগন্যাল শনাক্ত হয়েছে',
+      patternMatch: 'প্যাটার্ন ম্যাচ',
+      intentOutput: 'অভিপ্রায় আউটপুট',
+      latency: 'লেটেন্সি',
+      playVoiceBtn: 'কণ্ঠস্বর বাজান',
+      footerNote: '⚡ ESP32-S3 TinyML ইঞ্জিন দ্বারা পরিচালিত রিয়েল-টাইম প্রসেসিং।',
+      cmdSub: {
+        yes: 'একক সংকোচন (এক্সটেনসর)',
+        no: 'দ্বিগুণ ফ্লিক (ফ্লেক্সর)',
+        help: 'দীর্ঘস্থায়ী আইসোমেট্রিক হোল্ড',
+        water: 'পর্যায়ক্রমিক দ্বৈত সংকেত',
+      },
+    },
+    hardware: {
+      eyebrow: 'শারীরিক স্থাপত্য',
+      titleLine1: 'কণ্ঠস্বরের নেপথ্যে',
+      titleLine2: 'হার্ডওয়্যার।',
+      description: 'ESP32-S3 সিলিকন প্ল্যাটফর্মে TinyML কম্পিউটের সাথে সমন্বিত ক্লিনিকাল-গ্রেড অ্যানালগ ফ্রন্ট-এন্ড।',
+      specTitle: 'টেকনিক্যাল স্পেক',
+      hardwareParams: 'হার্ডওয়্যার প্যারামিটার',
+      clickToInspect: 'সাব-সিস্টেম পরীক্ষা করতে ডায়াগ্রামের উপাদানগুলোতে ক্লিক করুন',
+      processor: 'প্রসেসর',
+      vectorExt: 'ভেক্টর এক্সটেনশন',
+      sramPsram: 'SRAM / PSRAM',
+      power: 'বিদ্যুৎ ব্যবহার',
+      emgSensor: 'EMG সেন্সর',
+      signalAcquisition: 'অ্যানালগ ফ্রন্ট-এন্ড',
+      esp32s3: 'ESP32-S3 পড',
+      wirelessTelemetry: 'ওয়্যারলেস টেলিমেট্রি',
+      aiProcessing: 'AI প্রসেসিং',
+      specs: {
+        emgTitle: 'EMG সারফেস সেন্সর অারে',
+        emgSummary: 'ক্লিনিকাল-গ্রেড ইলেক্ট্রোডের মাধ্যমে বায়োপটেনশিয়াল পেশীর কার্যকলাপ পরিমাপক প্রযুক্তি।',
+        emgElectrodes: 'ইলেকট্রোড',
+        emgInputRange: 'ইনপুট রেঞ্জ',
+        emgBandwidth: 'ব্যান্ডউইথ',
+        emgImpedance: 'ইম্পিডেন্স',
+        afeTitle: 'অ্যানালগ ফ্রন্ট-এন্ড (AFE)',
+        afeSummary: 'প্রোগ্রামেবল গেইন এবং ২৪-বিট ডেল্টা-সিগমা ADC সহ লো-নয়েজ অ্যাম্প্লিফায়ার।',
+        afeAdcRes: 'ADC রেজোলিউশন',
+        afeSamplingRate: 'স্যাম্পলিং রেট',
+        afeCmrr: 'CMRR',
+        afeNoiseFloor: 'নয়েজ ফ্লোর',
+        mcuTitle: 'ESP32-S3 মাইক্রোকন্ট্রোলার',
+        mcuSummary: 'TinyML ইনফারেন্সের জন্য ২৪০ মেগাহার্টজে চলা ৩২-বিট ডুয়াল-কোর মাইক্রোকন্ট্রোলার।',
+        mcuProcessor: 'প্রসেসর',
+        mcuVectorExt: 'ভেক্টর এক্সটেনশন',
+        mcuSram: 'SRAM / PSRAM',
+        mcuPower: 'পাওয়ার ব্যবহার',
+        wirelessTitle: 'ওয়্যারলেস টেলিমেট্রি সিস্টেম',
+        wirelessSummary: 'রিয়েল-টাইম স্ট্রিমিংয়ের জন্য ব্লুটুথ ৫.০ এবং ওয়াই-ফাই।',
+        wirelessProtocol: 'প্রোটোকল',
+        wirelessLatency: 'লেটেন্সি',
+        wirelessRange: 'রেঞ্জ',
+        wirelessSecurity: 'সিকিউরিটি',
+        aiTitle: 'অন-ডিভাইস TinyML ক্লাসিফায়ার',
+        aiSummary: 'এমবেডেড হার্ডওয়্যারে রিয়েল-টাইমে পেশীর সিগন্যাল ও প্যাটার্ন শ্রেণীকরণকারী কৃত্রিম বুদ্ধিমত্তা।',
+        aiModelSize: 'মডেল সাইজ',
+        aiInferenceSpeed: 'ইনফারেন্স স্পিড',
+        aiFeatures: 'ফিচারসমূহ',
+        aiAccuracy: 'সঠিকতা',
+      },
+    },
+    teach: {
+      eyebrow: 'এডাপ্টিভ নিউরাল পার্সোনালাইজেশন',
+      titleLine1: 'আপনার ভাষাই',
+      titleLine2: 'শিক্ষা দিন।',
+      description: 'প্রতিটি ব্যবহারকারীর একটি অনন্য পেশী সংকেত রয়েছে। বোনটক ৬০ সেকেন্ডেরও কম সময়ে আপনার পেশীর সংকেত ক্যালিব্রেট করে সেটিকে স্পষ্ট বাচনে পরিণত করে।',
+      activeVocab: 'সক্রিয় প্রশিক্ষিত শব্দভাণ্ডার',
+      clickToPlay: 'কণ্ঠস্বর শুনতে ক্লিক করুন',
+      calibrationTitle: 'ইঙ্গিত ক্যালিব্রেশন স্যুট',
+      calibrationDesc: '৩টি সংকোচন পরীক্ষা রেকর্ড করে বোনটককে আপনার নিজস্ব বাক্য শেখান।',
+      trainHi: 'প্রশিক্ষণ দিন "হাই"',
+      trainWater: 'প্রশিক্ষণ দিন "আমার জল চাই"',
+      enterCustom: 'কাস্টম বাক্য লিখুন...',
+      trainBtn: 'প্রশিক্ষণ',
+      targetCmd: 'টার্গেট কমান্ড',
+      capturing: 'সিগন্যাল রেকর্ড হচ্ছে...',
+      trialProgress: 'পরীক্ষা চলছে',
+      learnedStatus: 'প্যাটার্ন শেখা হয়েছে ✓',
+      performContraction: 'পেশীর সংকোচন করুন',
+      calibratedCheck: 'ক্যালিব্রেটেড ✓',
+      aiConfidence: 'AI সঠিকতা',
+      trainAnother: 'অন্য কমান্ড প্রশিক্ষণ দিন →',
+      t1Name: 'একক ফ্লেক্স',
+      t2Name: 'ফ্লেক্সর হোল্ড',
+      t3Name: 'পিক বার্স্ট',
+    },
+    voicePanel: {
+      engineTitle: 'ভয়েস আউটপুট ইঞ্জিন',
+      voiceConfigBtn: 'ভয়েস সেটিং',
+      trainedCmdLabel: 'প্রশিক্ষিত কমান্ড',
+      aiConfidenceLabel: 'AI সঠিকতা',
+      readyBadge: 'প্রস্তুত',
+      speechParams: 'স্পিচ প্যারামিটার',
+      synthesisVoice: 'সিন্থেসিস ভয়েস',
+      speedRate: 'গতির হার',
+      pitch: 'পিচ',
+      volume: 'ভলিউম',
+      testVoiceBtn: 'ভয়েস সেটআপ টেস্ট করুন',
+      playVoiceBtn: 'কণ্ঠস্বর বাজান',
+      speakingState: 'কথা বলছে...',
+      unavailableState: 'ভয়েস আউটপুট অনুপস্থিত',
+      synthesizingMsg: 'কণ্ঠস্বর অডিও প্রসেসিং হচ্ছে',
+      commandSpokenMsg: '✓ কমান্ড উচ্চারিত হয়েছে',
+      speechReadyMsg: 'স্পিচ প্রস্তুত — অডিও শুনতে ক্লিক করুন',
+      unsupportedMsg: 'এই ব্রাউজারে স্পিচ সিন্থেসিস সমর্থিত নয়।',
+    },
+    ai: {
+      eyebrow: 'এমবেডেড বুদ্ধিমত্তা',
+      titleLine1: 'পেশীর সিগন্যাল থেকে',
+      titleLine2: 'অভিপ্রায় পর্যন্ত।',
+      description: 'ডিজিটাল সিগন্যাল প্রসেসিং দ্বারা অস্পষ্টতা দূর করা হয়।',
+      steps: {
+        s1: 'রও EMG সিগন্যাল',
+        s2: 'ডিজিটাল ফিল্টার',
+        s3: 'ফিচার নিষ্কাশন',
+        s4: 'প্যাটার্ন চিহ্নিতকরণ',
+        s5: 'নিউরল ক্লাসিফায়ার',
+        s6: 'অভিপ্রায় আউটপুট',
+      },
+    },
     pipeline: { eyebrow: 'কীভাবে কাজ করে', title: 'পেশীর সিগন্যাল থেকে কণ্ঠস্বরে', description: 'বোনটক রিয়েল-টাইমে পেশীর স্বাভাবিক সংকেতকে বাচনে রূপান্তর করে।' },
-    worldwide: { titleLine1: 'একটি স্বরের জন্য নির্মিত।', titleLine2: 'সমগ্র বিশ্বের জন্য ডিজাইন করা।', description: 'যোগাযোগের কোনো সীমানা নেই। বোনটক ভাষা, অঞ্চল ও সংস্কৃতির সীমা ছাড়িয়ে মানুষকে ভাব প্রকাশে সাহায্য করে।' },
-  }),
-  es: createTranslation({
-    nav: { technology: 'Tecnología', howItWorks: 'Cómo funciona', ai: 'IA', hardware: 'Hardware', worldwide: 'Mundial', vision: 'Visión', experience: 'EXPERIMENTAR BONETALK' },
-    hero: { eyebrow: 'NEUROTECNOLOGÍA ASISTIVA PARA EL CUELLO / 2026', line1: 'EL CUERPO', line2: 'TIENE VOZ.', description: 'BoneTalk es un dispositivo asistivo para el cuello que transforma la actividad muscular en habla con significado.', getStarted: 'EMPEZAR', exploreSystem: 'EXPLORAR SISTEMA', seeHowItWorks: 'VER CÓMO FUNCIONA' },
-    pipeline: { eyebrow: 'CÓMO FUNCIONA', title: 'De la señal muscular a la voz', description: 'BoneTalk interpreta la actividad muscular natural y convierte su mensaje en palabras habladas en tiempo real.' },
-    worldwide: { titleLine1: 'CREADO PARA UNA VOZ.', titleLine2: 'DISEÑADO PARA EL MUNDO.', description: 'La comunicación no tiene fronteras. BoneTalk ayuda a las personas a comunicarse a través de idiomas y culturas.' },
-  }),
-  fr: createTranslation({
-    nav: { technology: 'Technologie', howItWorks: 'Comment ça marche', ai: 'IA', hardware: 'Matériel', worldwide: 'Mondial', vision: 'Vision', experience: 'EXPÉRIMENTER BONETALK' },
-    hero: { eyebrow: 'NEUROTECHNOLOGIE D’ASSISTANCE AU COU / 2026', line1: 'LE CORPS', line2: 'A UNE VOIX.', description: 'BoneTalk est un appareil d’assistance porté au cou qui transforme l’activité musculaire en parole expressive.', getStarted: 'COMMENCER', exploreSystem: 'EXPLORER LE SYSTÈME', seeHowItWorks: 'VOIR COMMENT ÇA MARCHE' },
-    pipeline: { eyebrow: 'COMMENT ÇA MARCHE', title: 'Du signal musculaire à la voix', description: 'BoneTalk interprète l’activité musculaire naturelle et transforme votre intention en parole en temps réel.' },
-    worldwide: { titleLine1: 'CONÇU POUR UNE VOIX.', titleLine2: 'PENSIÉ POUR LE MONDE.', description: 'La communication n’a pas de frontières. BoneTalk aide les gens à communiquer au-delà des langues et des cultures.' },
-  }),
-  de: createTranslation({
-    nav: { technology: 'Technologie', howItWorks: 'Funktionsweise', ai: 'KI', hardware: 'Hardware', worldwide: 'Weltweit', vision: 'Vision', experience: 'BONETALK ERLEBEN' },
-    hero: { eyebrow: 'NEUROTECHNOLOGIE FÜR DEN NACKEN / 2026', line1: 'DER KÖRPER', line2: 'HAT EINE STIMME.', description: 'BoneTalk ist ein Nackengerät, das Muskelaktivität in verständliche Sprache umwandelt.', getStarted: 'JETZT STARTEN', exploreSystem: 'SYSTEM ENTDECKEN', seeHowItWorks: 'FUNKTIONSWEISE SEHEN' },
-    pipeline: { eyebrow: 'FUNKTIONSWEISE', title: 'Vom Muskelsignal zur Stimme', description: 'BoneTalk übersetzt Muskelaktivität in Echtzeit in gesprochene Worte.' },
-    worldwide: { titleLine1: 'FÜR EINE STIMME GEBAUT.', titleLine2: 'FÜR DIE WELT ENTWICKELT.', description: 'Kommunikation kennt keine Grenzen. BoneTalk verbindet Menschen über Sprachen und Kulturen hinweg.' },
-  }),
-  ar: createTranslation({
-    nav: { technology: 'التكنولوجيا', howItWorks: 'كيف يعمل', ai: 'الذكاء الاصطناعي', hardware: 'الأجهزة', worldwide: 'العالمية', vision: 'الرؤية', experience: 'تجربة بونتوك' },
-    hero: { eyebrow: 'تكنولوجيا الأعصاب المساعدة للرقبة / 2026', line1: 'للجسم', line2: 'صوت يعبر عنه.', description: 'بونتوك جهاز مساعد يرتدى على الرقبة يحول النشاط العضلي إلى كلام واضح ومفهوم.', getStarted: 'ابدأ الآن', exploreSystem: 'استكشف النظام', seeHowItWorks: 'شاهد كيف يعمل' },
-    pipeline: { eyebrow: 'كيف يعمل', title: 'من الإشارة العضلية إلى الصوت', description: 'يقوم بونتوك بتحويل إشارات العضلات إلى كلمات منطوقة في الوقت الفعلي.' },
-    worldwide: { titleLine1: 'صُمم لصوت واحد.', titleLine2: 'بُني للعالم أجمع.', description: 'التواصل لا يعرف الحدود. بونتوك يربط البشر عبر اللغات والثقافات.' },
-  }),
-  zh: createTranslation({
-    nav: { technology: '技术', howItWorks: '工作原理', ai: '人工智能', hardware: '硬件', worldwide: '全球分布', vision: '愿景', experience: '体验 BONETALK' },
-    hero: { eyebrow: '颈戴式辅助神经技术 / 2026', line1: '身体', line2: '也有声音。', description: 'BoneTalk 是一款颈戴式辅助设备，利用肌电信号与嵌入式 AI 将肌肉活动转化为清晰的语音。', getStarted: '立即开始', exploreSystem: '探索系统', seeHowItWorks: '了解工作原理' },
-    pipeline: { eyebrow: '工作原理', title: '从肌肉信号到声音', description: 'BoneTalk 实时将自然肌肉活动转化为有意义的语言。' },
-    worldwide: { titleLine1: '为发声而生。', titleLine2: '为世界而设计。', description: '沟通没有国界。BoneTalk 致力于跨越语言与文化，让每个人拥有表达的力量。' },
-  }),
-  ja: createTranslation({
-    nav: { technology: 'テクノロジー', howItWorks: '仕組み', ai: 'AI', hardware: 'ハードウェア', worldwide: '世界展開', vision: 'ビジョン', experience: 'BONETALKを体験' },
-    hero: { eyebrow: '首装着型支援ニューロテクノロジー / 2026', line1: '身体には', line2: '声がある。', description: 'BoneTalkは、筋肉の動きを明確な音声に変換する首装着型の支援デバイスです。', getStarted: '今すぐ始める', exploreSystem: 'システムを見る', seeHowItWorks: '仕組みを見る' },
-    pipeline: { eyebrow: '仕組み', title: '筋 signals から音声へ', description: 'BoneTalkは筋肉活動をリアルタイムで自然な話し言葉に変換します。' },
-    worldwide: { titleLine1: 'ひとつの声のために。', titleLine2: '世界のために設計。', description: 'コミュニケーションに国境はありません。BoneTalkは言葉や文化を超えて人々をつなぎます。' },
-  }),
-  ko: createTranslation({
-    nav: { technology: '기술', howItWorks: '작동 원리', ai: '인공지능', hardware: '하드웨어', worldwide: '글로벌', vision: '비전', experience: 'BONETALK 체험하기' },
-    hero: { eyebrow: '목 착용형 보조 신경 기술 / 2026', line1: '몸에는', line2: '목소리가 있습니다.', description: 'BoneTalk은 근육 신호를 명확한 음성으로 변환하는 목 착용형 보조 디바이스입니다.', getStarted: '시작하기', exploreSystem: '시스템 탐색', seeHowItWorks: '작동 원리 보기' },
-    pipeline: { eyebrow: '작동 원리', title: '근육 신호에서 음성으로', description: 'BoneTalk은 실시간으로 자연스러운 근육 활동을 음성 언어로 변환합니다.' },
-    worldwide: { titleLine1: '하나의 목소리를 위해.', titleLine2: '전 세계를 위해 설계되었습니다.', description: '소통에는 경계가 없습니다. BoneTalk은 언어와 문화를 넘어 의사소통을 돕습니다.' },
-  }),
-  gu: createTranslation({
-    nav: { technology: 'ટેકનોલોજી', howItWorks: 'કેવી રીતે કામ કરે છે', ai: 'AI', hardware: 'હાર્ડવેર', worldwide: 'વૈશ્વિક', vision: 'દ્રષ્ટિકોણ', experience: 'બોનટોક અનુભવો' },
-    hero: { eyebrow: 'ગળામાં પહેરાતી ન્યુરોટેકનોલોજી / 2026', line1: 'શરીર પાસે', line2: 'એક અવાજ છે.', description: 'બોનટોક ગળામાં પહેરાતું સાધન છે જે સ્નાયુઓની પ્રવૃત્તિને સ્પષ્ટ અવાજમાં રૂપાંતરિત કરે છે.', getStarted: 'શરૂ કરો', exploreSystem: 'સિસ્ટમ જુઓ', seeHowItWorks: 'કામગીરી જુઓ' },
-  }),
-  kn: createTranslation({
-    nav: { technology: 'ತಂತ್ರಜ್ಞಾನ', howItWorks: 'ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ', ai: 'AI', hardware: 'ಹಾರ್ಡ್‌ವೇರ್', worldwide: 'ಜಾಗತಿಕ', vision: 'ದೃಷ್ಟಿಕೋನ', experience: 'ಬೋನ್ ಟಾಕ್ ಅನುಭವಿಸಿ' },
-    hero: { eyebrow: 'ಕುತ್ತಿಗೆಗೆ ಧರಿಸುವ ನ್ಯೂರೋ ತಂತ್ರಜ್ಞಾನ / 2026', line1: 'ದೇಹಕ್ಕೆ', line2: 'ಒಂದು ಧ್ವನಿಯಿದೆ.', description: 'ಬೋನ್ ಟಾಕ್ ಕುತ್ತಿಗೆಗೆ ಧರಿಸುವ ಸಾಧನವಾಗಿದ್ದು, ಸ್ನಾಯುಗಳ ಚಟುವಟಿಕೆಯನ್ನು ಸ್ಪಷ್ಟ ಮಾತನ್ನಾಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ.', getStarted: 'ಪ್ರಾರಂಭಿಸಿ', exploreSystem: 'ವ್ಯವಸ್ಥೆ ಪರಿಶೀಲಿಸಿ', seeHowItWorks: 'ಕಾರ್ಯವಿಧಾನ ನೋಡಿ' },
-  }),
-  ml: createTranslation({
-    nav: { technology: 'സാങ്കേതികവിദ്യ', howItWorks: 'പ്രവർത്തനം', ai: 'എഐ', hardware: 'ഹാർഡ്‌വെയർ', worldwide: 'ആഗോള', vision: 'വിഷൻ', experience: 'ബോൺടോക്ക് അനുഭവിക്കുക' },
-    hero: { eyebrow: 'കഴുത്തിൽ ധരിക്കുന്ന ന്യൂറോസാങ്കേതികവിദ്യ / 2026', line1: 'ശരീരത്തിന്', line2: 'ഒരു ശബ്ദമുണ്ട്.', description: 'പേശികളുടെ ചലനത്തെ വ്യക്തമായ ശബ്ദമാക്കി മാറ്റുന്ന ഉപകരണമാണ് ബോൺടോക്ക്.', getStarted: 'തുടങ്ങുക', exploreSystem: 'സിസ്റ്റം കാണുക', seeHowItWorks: 'പ്രവർത്തനം കാണുക' },
-  }),
-  mr: createTranslation({
-    nav: { technology: 'तंत्रज्ञान', howItWorks: 'हे कसे कार्य करते', ai: 'एआय', hardware: 'हार्डवेअर', worldwide: 'जागतिक', vision: 'दृष्टिकोन', experience: 'बोनाटॉक अनुभवा' },
-    hero: { eyebrow: 'मानमध्ये परिधान करण्याचे न्यूरोतंत्रज्ञान / २०२६', line1: 'शरीराला', line2: 'एक आवाज आहे.', description: 'बोनटॉक हे मानात घातले जाणारे उपकरण आहे जे स्नायूंच्या हालचालींचे स्पष्ट आवाजात रूपांतर करते.', getStarted: 'सुरू करा', exploreSystem: 'सिस्टम पहा', seeHowItWorks: 'कार्यपद्धती पहा' },
-  }),
-  ta: createTranslation({
-    nav: { technology: 'தொழில்நுட்பம்', howItWorks: 'செயல்பாடு', ai: 'செயற்கை நுண்ணறிவு', hardware: 'ஹார்டுவேர்', worldwide: 'உலகளாவிய', vision: 'பார்வை', experience: 'போன்டாக் அனுபவியுங்கள்' },
-    hero: { eyebrow: 'கழுத்தில் அணியும் நிய黙ரோ தொழில்நுட்பம் / 2026', line1: 'உடலுக்கு', line2: 'ஒரு குரல் உள்ளது.', description: 'போன்டாக் தசை இயக்கங்களை தெளிவான பேச்சாக மாற்றும் ஒரு அதிநவீன கருவியாகும்.', getStarted: 'தொடங்குங்கள்', exploreSystem: 'அமைப்பை பார்க்க', seeHowItWorks: 'செயல்முறை பார்க்க' },
-  }),
-  te: createTranslation({
-    nav: { technology: 'సాంకేతికత', howItWorks: 'ఎలా పనిచేస్తుంది', ai: 'AI', hardware: 'హార్డ్‌వేర్', worldwide: 'ప్రపంచవ్యాప్తంగా', vision: 'విజన్', experience: 'బోన్‌టాక్ అనుభవించండి' },
-    hero: { eyebrow: 'మెడకు ధరించే న్యూరో సాంకేతికత / 2026', line1: 'శరీరానికి', line2: 'ఒక స్వరం ఉంది.', description: 'బోన్‌టాక్ కండరాల కదలికలను స్పష్టమైన మాటలుగా మార్చే ఒక అధునాతన పరికరం.', getStarted: 'ప్రారంభించండి', exploreSystem: 'వ్యవస్థను చూడండి', seeHowItWorks: 'పనితీరు చూడండి' },
-  }),
-  pa: createTranslation({
-    nav: { technology: 'ਤਕਨਾਲੋਜੀ', howItWorks: 'ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ', ai: 'AI', hardware: 'ਹਾਰਡਵੇਅਰ', worldwide: 'ਵਿਸ਼ਵਵਿਆਪੀ', vision: 'ਦ੍ਰਿਸ਼ਟੀਕੋਣ', experience: 'ਬੋਨਟਾਕ ਦਾ ਅਨੁਭਵ ਕਰੋ' },
-    hero: { eyebrow: 'ਗਰਦਨ ਵਿੱਚ ਪਹਿਨਣ ਵਾਲੀ ਤਕਨਾਲੋਜੀ / 2026', line1: 'ਸਰੀਰ ਦੀ', line2: 'ਇੱਕ ਆਵਾਜ਼ ਹੈ।', description: 'ਬੋਨਟਾਕ ਮਾਸਪੇਸ਼ੀਆਂ ਦੀ ਗਤੀਵਿਧੀ ਨੂੰ ਸਪੱਸ਼ਟ ਆਵਾਜ਼ ਵਿੱਚ ਬਦਲਣ ਵਾਲਾ ਇੱਕ ਸਾਧਨ ਹੈ।', getStarted: 'ਸ਼ੁਰੂ ਕਰੋ', exploreSystem: 'ਸਿਸਟਮ ਵੇਖੋ', seeHowItWorks: 'ਕੰਮ ਵੇਖੋ' },
-  }),
-  ur: createTranslation({
-    nav: { technology: 'ٹیکنالوجی', howItWorks: 'یہ کیسے کام کرتا ہے', ai: 'مصنوئی ذہانت', hardware: 'ہارڈ ویئر', worldwide: 'عالمگیر', vision: 'وژن', experience: 'بون ٹاک کا تجربہ کریں' },
-    hero: { eyebrow: 'گردن میں پہنی جانے والی نیورو ٹیکنالوجی / 2026', line1: 'جسم کے پاس', line2: 'ایک آواز ہے۔', description: 'بون ٹاک ایک جدید آلہ ہے جو عضلاتی سرگرمی کو واضح گفتگو میں تبدیل کرتا ہے۔', getStarted: 'شروع کریں', exploreSystem: 'سسٹم دیکھیں', seeHowItWorks: 'طریقہ کار دیکھیں' },
-  }),
-  or: createTranslation({
-    nav: { technology: 'ପ୍ରଯୁକ୍ତିବିଦ୍ୟା', howItWorks: 'କିପରି କାର୍ଯ୍ୟ କରେ', ai: 'AI', hardware: 'ହାର୍ଡୱେର୍', worldwide: 'ବିଶ୍ୱବ୍ୟାପୀ', vision: 'ଦୃଷ୍ଟିକୋଣ', experience: 'ବୋନଟକ୍ ଅନୁଭବ କରନ୍ତୁ' },
-    hero: { eyebrow: 'ବେକରେ ପିନ୍ଧାଯାଉଥିବା ନ୍ୟୁରୋ ପ୍ରଯୁକ୍ତିବିଦ୍ୟା / ୨୦୨୬', line1: 'ଶରୀରର', line2: 'ଏକ ସ୍ୱର ଅଛି।', description: 'ବୋନଟକ୍ ମାଂସପେଶୀର କାର୍ଯ୍ୟକଳାପକୁ ସ୍ପଷ୍ଟ ସ୍ୱରରେ ରୂପାନ୍ତରିତ କରିଥାଏ।', getStarted: 'ଆରମ୍ଭ କରନ୍ତୁ', exploreSystem: 'ସିଷ୍ଟମ ଦେଖନ୍ତୁ', seeHowItWorks: 'କାର୍ଯ୍ୟପ୍ରଣାଳୀ ଦେଖନ୍ତୁ' },
-  }),
-  as: createTranslation({
-    nav: { technology: 'প্ৰযুক্তি', howItWorks: 'ই কেনেদৰে কাম কৰে', ai: 'এআই', hardware: 'হাৰ্ডৱেৰ', worldwide: 'বিশ্বব্যাপী', vision: 'দৃষ্টিভংগী', experience: 'বোনটক অনুভৱ কৰক' },
-    hero: { eyebrow: 'ডিঙিত পৰা নিউৰ’প্ৰযুক্তি / ২০২৬', line1: 'শৰীৰৰো', line2: 'এটা মাত আছে।', description: 'বোনটক এবিধ ডিঙিত পিন্ধা সঁজুলি যিয়ে পেশীৰ ক্ৰিয়াকলাপক স্পষ্ট মাতলৈ ৰূপান্তৰ কৰে।', getStarted: 'আৰম্ভ কৰক', exploreSystem: 'চিষ্টেম চাওক', seeHowItWorks: 'কাম কৰা প্ৰক্ৰিয়া চাওক' },
-  }),
-  ks: createTranslation({
-    nav: { technology: 'تکنالوجی', howItWorks: 'کِتھ کَن چُھ کام کَران', ai: 'اے آئی', hardware: 'ہارڈویئر', worldwide: 'عالمی', vision: 'وژن', experience: 'بون ٹاک تچربہ کَریو' },
-    hero: { eyebrow: 'گردنہِ پیٹھ لاگنہٕ ینی واجیٚل تکنالوجی / 2026', line1: 'جسمَس چُھ', line2: 'اَکھ آواز۔', description: 'بون ٹاک چُھ پٹھن ہنزِ حرکژہِ صاف کلامَس منز بَڈلاوان۔', getStarted: 'شروع کَریو', exploreSystem: 'سسٹم وچھیو', seeHowItWorks: 'طریقہ وچھیو' },
-  }),
-  mai: createTranslation({
-    nav: { technology: 'तकनीक', howItWorks: 'ई कोना काज करैत अछि', ai: 'एआई', hardware: 'हार्डवेयर', worldwide: 'वैश्विक', vision: 'दृष्टिकोण', experience: 'बोनटॉक अनुभव करू' },
-    hero: { eyebrow: 'गर्दनि मे पहिरल जाए वाला न्यूरो तकनीक / २०२६', line1: 'शरीर लग', line2: 'एकटा आवाज अछि।', description: 'बोनटॉक गर्दन मे पहिरल जाए वाला उपकरण अछि जे मांसपेशीक गतिविधि केँ आवाज मे बदलैत अछि।', getStarted: 'शुरू करू', exploreSystem: 'सिस्टम देखू', seeHowItWorks: 'काज देखू' },
-  }),
-  mni: createTranslation({
-    nav: { technology: 'તકનીકી', howItWorks: 'કરામતી', ai: 'AI', hardware: 'હાર્ડવેર', worldwide: 'તાઈબંગપાન', vision: 'મંગલ', experience: 'બોનટોક અનુભવો' },
-    hero: { eyebrow: 'ન્યુરોટેકનોલોજી / ૨૦૨૬', line1: 'હકચાંગગી', line2: 'ખોન્જેલ લૈયી', description: 'બોનટોક હકચાંગગી ખોન્જેલ ઓન્થોકપા પોટલમન્યુ.', getStarted: 'હોઉબિયુ', exploreSystem: 'યેન્ગબિયુ', seeHowItWorks: 'યેન્ગબિયુ' },
-  }),
-  ne: createTranslation({
-    nav: { technology: 'प्रविधि', howItWorks: 'कसरी काम गर्छ', ai: 'एआई', hardware: 'हार्डवेयर', worldwide: 'विश्वव्यापी', vision: 'दृष्टिकोण', experience: 'बोनटक अनुभव गर्नुहोस्' },
-    hero: { eyebrow: 'घाँटीमा लगाइने न्युरो प्रविधि / २०२६', line1: 'शरीरको', line2: 'एउटा आवाज छ।', description: 'बोनटक घाँटीमा लगाइने उपकरण हो जसले मांसपेशीको गतिविधि स्पष्ट बोलीमा बदल्छ।', getStarted: 'शुरू गर्नुहोस्', exploreSystem: 'प्रणाली हेर्नुहोस्', seeHowItWorks: 'काम हेर्नुहोस्' },
+    worldwide: {
+      eyebrow: 'বিশ্বব্যাপী সুযোগ ও প্রভাব',
+      titleLine1: 'একটি স্বরের জন্য নির্মিত।',
+      titleLine2: 'সমগ্র বিশ্বের জন্য ডিজাইন করা।',
+      description: 'যোগাযোগের কোনো সীমানা নেই। বোনটক ভাষা, অঞ্চল ও সংস্কৃতির সীমা ছাড়িয়ে মানুষকে ভাব প্রকাশে সাহায্য করে।',
+      totalSupported: 'মোট সমর্থিত',
+      indianRegionalStat: 'ভারতীয় আঞ্চলিক',
+      internationalStat: 'আন্তর্জাতিক',
+      totalLanguages: 'বিশ্বব্যাপী ভাষা',
+      indianRegional: 'আঞ্চলিক ভাষা',
+      international: 'আন্তর্জাতিক ভাষা',
+      mapTitle: 'বিশ্বব্যাপী বায়োপটেনশিয়াল ম্যাপ',
+      mapLatency: 'অনুবাদ সময় < ১৫ মি.সে',
+      statementTitle: 'একটি সংকেত। বহু ভাষা। এক মানব স্বর।',
+      statementBody: 'স্থানীয় যোগাযোগ থেকে বৈশ্বিক সংযোগ পর্যন্ত, বোনটক সহায়ক যোগাযোগকে বিশ্বব্যাপী সহজলভ্য করার জন্য নির্মিত।',
+      decentralizedTag: 'বিকেন্দ্রীভূত স্পিচ সিন্থেসিস',
+      pLocal: 'স্থানীয়',
+      pRegional: 'আঞ্চলিক',
+      pNational: 'জাতীয়',
+      pGlobal: 'বিশ্বব্যাপী',
+    },
+    human: { eyebrow: 'মানবিক উদ্দেশ্য ও মর্যাদা', line1: 'একটি স্বর', line2: 'শব্দের চেয়েও বেশি কিছু।', subtitle: 'এটি মানুষের ভাব প্রকাশের জন্মগত অনুভূতি:' },
+    final: { r1Line1: 'কণ্ঠস্বর যখন', r1Line2: 'নীরব হয়ে যায়,', r2Line1: 'যোগাযোগ তখনও', r2Line2: 'থেমে থাকে না।', subtitle: 'AI-চালিত সহায়ক যোগাযোগ ব্যবস্থা', coreActive: 'বোনটক কোর সক্রিয়', signalFidelity: '১০০% সিগন্যাল সঠিকতা' },
   }),
 }

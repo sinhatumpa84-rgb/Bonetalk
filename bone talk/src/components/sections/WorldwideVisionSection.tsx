@@ -80,7 +80,7 @@ export function WorldwideVisionSection() {
             className="surface-panel p-6 text-center border-t-2 border-t-cyan-signal"
           >
             <span className="block font-mono text-[9px] text-cream-muted uppercase tracking-widest mb-1">
-              TOTAL SUPPORTED
+              {t.worldwide.totalSupported}
             </span>
             <span className="font-display text-4xl sm:text-5xl font-bold text-cream tabular-nums">
               {TOTAL_LANGUAGES_COUNT}
@@ -98,7 +98,7 @@ export function WorldwideVisionSection() {
             className="surface-panel p-6 text-center border-t-2 border-t-medical"
           >
             <span className="block font-mono text-[9px] text-cream-muted uppercase tracking-widest mb-1">
-              INDIAN REGIONAL
+              {t.worldwide.indianRegionalStat}
             </span>
             <span className="font-display text-4xl sm:text-5xl font-bold text-cream tabular-nums">
               {INDIAN_LANGUAGES_COUNT}
@@ -116,7 +116,7 @@ export function WorldwideVisionSection() {
             className="surface-panel p-6 text-center border-t-2 border-t-cyan-signal"
           >
             <span className="block font-mono text-[9px] text-cream-muted uppercase tracking-widest mb-1">
-              INTERNATIONAL
+              {t.worldwide.internationalStat}
             </span>
             <span className="font-display text-4xl sm:text-5xl font-bold text-cream tabular-nums">
               {INTERNATIONAL_LANGUAGES_COUNT}
@@ -226,7 +226,7 @@ export function WorldwideVisionSection() {
         {/* Statement Banner */}
         <div className="surface-panel p-8 sm:p-12 text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full bg-cyan-signal/10 px-3 py-1 text-cyan-signal text-[10px] font-mono mb-4 uppercase font-bold">
-            <Zap size={12} /> <ShieldCheck size={12} /> DECENTRALIZED SPEECH SYNTHESIS
+            <Zap size={12} /> <ShieldCheck size={12} /> {t.worldwide.decentralizedTag}
           </div>
 
           <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-cream uppercase mb-4">

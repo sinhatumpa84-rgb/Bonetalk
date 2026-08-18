@@ -17,10 +17,10 @@ export function VoiceOutputPanel({
   onReTrainRequested,
   className = '',
 }: VoiceOutputPanelProps) {
-  const { currentLanguage, translateCommand } = useLanguage()
+  const { currentLanguage, translateCommand, t } = useLanguage()
   const [speechState, setSpeechState] = useState<'idle' | 'speaking' | 'completed' | 'unsupported'>('idle')
   const [showSettings, setShowSettings] = useState(false)
-  
+
   // Voice Settings State
   const [rate, setRate] = useState(1.0)
   const [pitch, setPitch] = useState(1.0)
@@ -43,7 +43,6 @@ export function VoiceOutputPanel({
       if (voices.length > 0) {
         setSelectedVoiceName((prev) => {
           if (prev) return prev
-          // Match voice language if available
           const langMatch = voices.find((v) => v.lang.startsWith(currentLanguage.code))
           const defaultVoice = langMatch || voices.find((v) => v.lang.startsWith('en')) || voices[0]
           return defaultVoice ? defaultVoice.name : ''
@@ -96,7 +95,7 @@ export function VoiceOutputPanel({
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-cyan-signal animate-pulse" />
           <span className="font-mono text-[10px] tracking-[0.25em] text-cyan-signal uppercase font-semibold">
-            VOICE OUTPUT ENGINE ({currentLanguage.nativeName})
+            {t.voicePanel.engineTitle} ({currentLanguage.nativeName})
           </span>
         </div>
 
@@ -113,7 +112,7 @@ export function VoiceOutputPanel({
               title="Voice Engine Settings"
             >
               <Settings size={12} />
-              <span>VOICE CONFIG</span>
+              <span>{t.voicePanel.voiceConfigBtn}</span>
             </button>
           )}
         </div>
@@ -123,7 +122,7 @@ export function VoiceOutputPanel({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 items-center mb-6">
         <div className="rounded-sm border border-border bg-graphite p-3.5">
           <span className="block font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase mb-1">
-            TRAINED COMMAND ({currentLanguage.name})
+            {t.voicePanel.trainedCmdLabel} ({currentLanguage.name})
           </span>
           <span className="font-mono text-base font-bold text-cream uppercase tracking-wide">
             &quot;{localizedText}&quot; <span className="text-xs text-cream-muted font-normal">[{command}]</span>
@@ -133,19 +132,19 @@ export function VoiceOutputPanel({
         <div className="rounded-sm border border-border bg-graphite p-3.5 flex items-center justify-between">
           <div>
             <span className="block font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase mb-1">
-              AI CONFIDENCE
+              {t.voicePanel.aiConfidenceLabel}
             </span>
             <span className="font-mono text-base font-bold text-cyan-signal tabular-nums">
               {confidence > 0 ? `${confidence.toFixed(1)}%` : 'CALIBRATED'}
             </span>
           </div>
           <span className="inline-flex items-center gap-1 text-[10px] font-mono text-medical font-medium">
-            <CheckCircle2 size={13} /> READY
+            <CheckCircle2 size={13} /> {t.voicePanel.readyBadge}
           </span>
         </div>
       </div>
 
-      {/* Voice Settings Panel (Compact Dropdown) */}
+      {/* Voice Settings Panel */}
       <AnimatePresence>
         {showSettings && isSupported && (
           <motion.div
@@ -156,14 +155,14 @@ export function VoiceOutputPanel({
           >
             <div className="rounded-sm border border-border/80 bg-graphite p-4 space-y-4">
               <span className="block font-mono text-[10px] tracking-[0.2em] text-cyan-signal uppercase font-bold">
-                SPEECH PARAMETERS ({currentLanguage.name})
+                {t.voicePanel.speechParams} ({currentLanguage.name})
               </span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Voice Selection */}
                 <div>
                   <label className="block font-mono text-[9px] text-cream-muted uppercase mb-1">
-                    SYNTHESIS VOICE
+                    {t.voicePanel.synthesisVoice}
                   </label>
                   <select
                     value={selectedVoiceName}
@@ -185,7 +184,7 @@ export function VoiceOutputPanel({
                 {/* Speed / Rate */}
                 <div>
                   <div className="flex justify-between font-mono text-[9px] text-cream-muted uppercase mb-1">
-                    <span>SPEED RATE</span>
+                    <span>{t.voicePanel.speedRate}</span>
                     <span className="text-cream">{rate.toFixed(1)}x</span>
                   </div>
                   <input
@@ -202,7 +201,7 @@ export function VoiceOutputPanel({
                 {/* Pitch */}
                 <div>
                   <div className="flex justify-between font-mono text-[9px] text-cream-muted uppercase mb-1">
-                    <span>PITCH</span>
+                    <span>{t.voicePanel.pitch}</span>
                     <span className="text-cream">{pitch.toFixed(1)}</span>
                   </div>
                   <input
@@ -219,7 +218,7 @@ export function VoiceOutputPanel({
                 {/* Volume */}
                 <div>
                   <div className="flex justify-between font-mono text-[9px] text-cream-muted uppercase mb-1">
-                    <span>VOLUME</span>
+                    <span>{t.voicePanel.volume}</span>
                     <span className="text-cream">{Math.round(volume * 100)}%</span>
                   </div>
                   <input
@@ -240,7 +239,7 @@ export function VoiceOutputPanel({
                   onClick={() => handlePlayVoice(localizedText)}
                   className="inline-flex items-center gap-1.5 rounded-sm border border-cyan-signal/40 bg-cyan-signal/[0.1] px-3 py-1 font-mono text-[10px] text-cyan-signal hover:bg-cyan-signal/[0.2] transition-colors cursor-pointer"
                 >
-                  <Play size={11} /> TEST VOICE CONFIG
+                  <Play size={11} /> {t.voicePanel.testVoiceBtn}
                 </button>
               </div>
             </div>
@@ -250,7 +249,6 @@ export function VoiceOutputPanel({
 
       {/* Main Interactive Play Voice Area */}
       <div className="flex flex-col items-center justify-center p-6 rounded-sm border border-border bg-graphite text-center relative overflow-hidden">
-        
         {/* Animated Speech Equalizer Waveform */}
         <div className="h-10 flex items-center justify-center gap-1 mb-4">
           {[12, 24, 38, 54, 42, 28, 16, 32, 48, 22].map((height, i) => (
@@ -289,17 +287,17 @@ export function VoiceOutputPanel({
           {speechState === 'speaking' ? (
             <>
               <Volume2 size={18} className="text-cyan-signal animate-bounce" />
-              <span>SPEAKING...</span>
+              <span>{t.voicePanel.speakingState}</span>
             </>
           ) : speechState === 'unsupported' ? (
             <>
               <VolumeX size={18} />
-              <span>VOICE OUTPUT UNAVAILABLE</span>
+              <span>{t.voicePanel.unavailableState}</span>
             </>
           ) : (
             <>
               <Volume2 size={18} className="text-cyan-signal group-hover:scale-110 transition-transform" />
-              <span>PLAY VOICE &quot;{localizedText}&quot;</span>
+              <span>{t.voicePanel.playVoiceBtn} &quot;{localizedText}&quot;</span>
             </>
           )}
         </button>
@@ -309,7 +307,7 @@ export function VoiceOutputPanel({
           {speechState === 'speaking' && (
             <span className="text-cyan-signal animate-pulse flex items-center justify-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal" />
-              SYNTHESIZING SPEECH AUDIO ({currentLanguage.name})
+              {t.voicePanel.synthesizingMsg} ({currentLanguage.name})
             </span>
           )}
 
@@ -320,20 +318,20 @@ export function VoiceOutputPanel({
               className="text-medical font-medium flex items-center justify-center gap-1.5"
             >
               <CheckCircle2 size={14} />
-              <span>✓ COMMAND SPOKEN — &quot;{localizedText}&quot;</span>
+              <span>{t.voicePanel.commandSpokenMsg} — &quot;{localizedText}&quot;</span>
             </motion.div>
           )}
 
           {speechState === 'idle' && (
             <span className="text-cream-muted">
-              SPEECH READY — Click to synthesize vocal audio ({currentLanguage.nativeName})
+              {t.voicePanel.speechReadyMsg} ({currentLanguage.nativeName})
             </span>
           )}
 
           {speechState === 'unsupported' && (
             <span className="text-amber-500/90 flex items-center justify-center gap-1.5">
               <AlertCircle size={14} />
-              Speech synthesis is not supported in this browser.
+              {t.voicePanel.unsupportedMsg}
             </span>
           )}
         </div>
@@ -344,10 +342,9 @@ export function VoiceOutputPanel({
             onClick={onReTrainRequested}
             className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] text-cream-muted uppercase hover:text-cyan-signal transition-colors cursor-pointer"
           >
-            <RefreshCw size={11} /> TRAIN ANOTHER COMMAND
+            <RefreshCw size={11} /> {t.teach.trainAnother}
           </button>
         )}
-
       </div>
     </div>
   )

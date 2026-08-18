@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Cpu, Radio, Activity, Zap, ShieldCheck, X } from 'lucide-react'
-import { HARDWARE_COMPONENTS } from '../../lib/constants'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SplitLines } from '../ui/SplitText'
 import { useLanguage } from '../../context/LanguageContext'
@@ -13,78 +12,86 @@ interface DetailSpec {
   summary: string
 }
 
-const HARDWARE_DETAILS: Record<string, DetailSpec> = {
-  emg: {
-    title: 'EMG Surface Sensor Array',
-    icon: Activity,
-    summary: 'Clinical-grade Ag/AgCl differential surface electrode array measuring biopotential muscle activity with low contact impedance.',
-    specList: [
-      { label: 'Electrodes', value: '3x Gold-Plated Contacts' },
-      { label: 'Input Range', value: '±5 mV Differential' },
-      { label: 'Bandwidth', value: '10 Hz - 500 Hz' },
-      { label: 'Impedance', value: '10 GΩ DC Input' },
-    ],
-  },
-  acquisition: {
-    title: 'Analog Front-End (AFE)',
-    icon: Zap,
-    summary: 'Ultra-low-noise instrumental amplifier with programmable gain (PGA) and integrated 24-bit delta-sigma ADC.',
-    specList: [
-      { label: 'ADC Resolution', value: '24-Bit Delta-Sigma' },
-      { label: 'Sampling Rate', value: '1000 Samples / sec' },
-      { label: 'CMRR', value: '-110 dB' },
-      { label: 'Noise Floor', value: '1.0 μV RMS' },
-    ],
-  },
-  esp32: {
-    title: 'ESP32-S3 Microcontroller',
-    icon: Cpu,
-    summary: '32-bit Xtensa dual-core LX7 microcontroller running at 240 MHz with vector instructions for TinyML inference.',
-    specList: [
-      { label: 'Processor', value: 'Dual-Core LX7 @ 240MHz' },
-      { label: 'Vector Extensions', value: 'DSP & Neural Accel' },
-      { label: 'SRAM / PSRAM', value: '512 KB SRAM + 8MB' },
-      { label: 'Power Consumption', value: '< 45 mW Peak' },
-    ],
-  },
-  wireless: {
-    title: 'Wireless Telemetry System',
-    icon: Radio,
-    summary: 'Ultra-low latency Bluetooth 5.0 Low Energy (BLE) and 2.4 GHz Wi-Fi transceivers for continuous real-time streaming.',
-    specList: [
-      { label: 'Protocol', value: 'BLE 5.0 / 2.4 GHz Wi-Fi' },
-      { label: 'Latency', value: '< 12 ms End-to-End' },
-      { label: 'Range', value: 'Up to 15 Meters' },
-      { label: 'Security', value: 'AES-128 Hardware Enc' },
-    ],
-  },
-  ai: {
-    title: 'On-Device TinyML Classifier',
-    icon: ShieldCheck,
-    summary: 'Quantized neural network model executing real-time feature extraction and gesture pattern classification on embedded hardware.',
-    specList: [
-      { label: 'Model Size', value: '42 KB INT8 Quantized' },
-      { label: 'Inference Speed', value: '3.8 ms / window' },
-      { label: 'Features', value: 'RMS, MAV, ZCR, WAMP' },
-      { label: 'Accuracy', value: '> 96.4% Calibrated' },
-    ],
-  },
-}
-
-const COMPONENT_POSITIONS = [
-  { id: 'emg', x: '50%', y: '15%', label: 'EMG SENSOR' },
-  { id: 'acquisition', x: '20%', y: '35%', label: 'SIGNAL ACQUISITION' },
-  { id: 'esp32', x: '50%', y: '50%', label: 'ESP32-S3' },
-  { id: 'wireless', x: '80%', y: '65%', label: 'WIRELESS' },
-  { id: 'ai', x: '50%', y: '82%', label: 'AI PROCESSING' },
-]
-
 export function HardwareSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [selectedComp, setSelectedComp] = useState<string | null>('esp32')
   const { t } = useLanguage()
 
-  const detail = selectedComp ? HARDWARE_DETAILS[selectedComp] : null
+  const hardwareDetails: Record<string, DetailSpec> = {
+    emg: {
+      title: t.hardware.specs.emgTitle,
+      icon: Activity,
+      summary: t.hardware.specs.emgSummary,
+      specList: [
+        { label: t.hardware.specs.emgElectrodes, value: '3x Gold-Plated Contacts' },
+        { label: t.hardware.specs.emgInputRange, value: '±5 mV Differential' },
+        { label: t.hardware.specs.emgBandwidth, value: '10 Hz - 500 Hz' },
+        { label: t.hardware.specs.emgImpedance, value: '10 GΩ DC Input' },
+      ],
+    },
+    acquisition: {
+      title: t.hardware.specs.afeTitle,
+      icon: Zap,
+      summary: t.hardware.specs.afeSummary,
+      specList: [
+        { label: t.hardware.specs.afeAdcRes, value: '24-Bit Delta-Sigma' },
+        { label: t.hardware.specs.afeSamplingRate, value: '1000 Samples / sec' },
+        { label: t.hardware.specs.afeCmrr, value: '-110 dB' },
+        { label: t.hardware.specs.afeNoiseFloor, value: '1.0 μV RMS' },
+      ],
+    },
+    esp32: {
+      title: t.hardware.specs.mcuTitle,
+      icon: Cpu,
+      summary: t.hardware.specs.mcuSummary,
+      specList: [
+        { label: t.hardware.specs.mcuProcessor, value: 'Dual-Core LX7 @ 240MHz' },
+        { label: t.hardware.specs.mcuVectorExt, value: 'DSP & Neural Accel' },
+        { label: t.hardware.specs.mcuSram, value: '512 KB SRAM + 8MB' },
+        { label: t.hardware.specs.mcuPower, value: '< 45 mW Peak' },
+      ],
+    },
+    wireless: {
+      title: t.hardware.specs.wirelessTitle,
+      icon: Radio,
+      summary: t.hardware.specs.wirelessSummary,
+      specList: [
+        { label: t.hardware.specs.wirelessProtocol, value: 'BLE 5.0 / 2.4 GHz Wi-Fi' },
+        { label: t.hardware.specs.wirelessLatency, value: '< 12 ms End-to-End' },
+        { label: t.hardware.specs.wirelessRange, value: 'Up to 15 Meters' },
+        { label: t.hardware.specs.wirelessSecurity, value: 'AES-128 Hardware Enc' },
+      ],
+    },
+    ai: {
+      title: t.hardware.specs.aiTitle,
+      icon: ShieldCheck,
+      summary: t.hardware.specs.aiSummary,
+      specList: [
+        { label: t.hardware.specs.aiModelSize, value: '42 KB INT8 Quantized' },
+        { label: t.hardware.specs.aiInferenceSpeed, value: '3.8 ms / window' },
+        { label: t.hardware.specs.aiFeatures, value: 'RMS, MAV, ZCR, WAMP' },
+        { label: t.hardware.specs.aiAccuracy, value: '> 96.4% Calibrated' },
+      ],
+    },
+  }
+
+  const hardwareComponents = [
+    { id: 'emg', label: t.hardware.emgSensor, detail: 'Surface electrode array' },
+    { id: 'acquisition', label: t.hardware.signalAcquisition, detail: 'Analog front-end' },
+    { id: 'esp32', label: t.hardware.esp32s3, detail: 'Dual-core MCU' },
+    { id: 'wireless', label: t.hardware.wirelessState, detail: 'Wi-Fi / BLE' },
+    { id: 'ai', label: t.hardware.aiProcessing, detail: 'Pattern classifier' },
+  ]
+
+  const componentPositions = [
+    { id: 'emg', x: '50%', y: '15%', label: t.hardware.emgSensor },
+    { id: 'acquisition', x: '20%', y: '35%', label: t.hardware.signalAcquisition },
+    { id: 'esp32', x: '50%', y: '50%', label: t.hardware.esp32s3 },
+    { id: 'wireless', x: '80%', y: '65%', label: t.hardware.wirelessTelemetry },
+    { id: 'ai', x: '50%', y: '82%', label: t.hardware.aiProcessing },
+  ]
+
+  const detail = selectedComp ? hardwareDetails[selectedComp] : null
   const IconComponent = detail?.icon || Cpu
 
   return (
@@ -103,7 +110,7 @@ export function HardwareSection() {
               {t.hardware.eyebrow}
             </span>
             <SplitLines
-              lines={['THE HARDWARE', 'BEHIND THE VOICE.']}
+              lines={[t.hardware.titleLine1, t.hardware.titleLine2]}
               className="mt-2"
               lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
             />
@@ -121,8 +128,8 @@ export function HardwareSection() {
               className="h-full w-full"
               aria-label="BoneTalk hardware exploded view diagram"
             >
-              {COMPONENT_POSITIONS.slice(0, -1).map((pos, i) => {
-                const next = COMPONENT_POSITIONS[i + 1]
+              {componentPositions.slice(0, -1).map((pos, i) => {
+                const next = componentPositions[i + 1]
                 return (
                   <motion.line
                     key={`line-${i}`}
@@ -181,7 +188,7 @@ export function HardwareSection() {
                 />
                 <path d="M90 145 L110 135 L130 155 L150 145" stroke="var(--color-cyan-signal)" strokeWidth="1.5" fill="none" />
                 <text x="120" y="185" textAnchor="middle" fill={selectedComp === 'acquisition' ? 'var(--color-cyan-signal)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  ANALOG FRONT-END
+                  {t.hardware.signalAcquisition}
                 </text>
               </motion.g>
 
@@ -221,7 +228,7 @@ export function HardwareSection() {
                   -S3-
                 </text>
                 <text x="300" y="270" textAnchor="middle" fill={selectedComp === 'esp32' ? 'var(--color-cyan-signal)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  MCU &amp; DSP
+                  {t.hardware.esp32s3}
                 </text>
               </motion.g>
 
@@ -244,7 +251,7 @@ export function HardwareSection() {
                 <path d="M470 255 A10 10 0 0 1 490 255" stroke="var(--color-cyan-signal)" strokeWidth="1.5" fill="none" />
                 <path d="M465 250 A18 18 0 0 1 495 250" stroke="var(--color-cyan-signal)" strokeWidth="1" fill="none" opacity="0.6" />
                 <text x="480" y="295" textAnchor="middle" fill={selectedComp === 'wireless' ? 'var(--color-cyan-signal)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  BLE / WI-FI
+                  {t.hardware.wirelessTelemetry}
                 </text>
               </motion.g>
 
@@ -276,7 +283,7 @@ export function HardwareSection() {
                   />
                 ))}
                 <text x="300" y="380" textAnchor="middle" fill={selectedComp === 'ai' ? 'var(--color-medical)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  {t.hardware.aiProcessing || 'AI PROCESSING'}
+                  {t.hardware.aiProcessing}
                 </text>
               </motion.g>
             </svg>
@@ -324,8 +331,8 @@ export function HardwareSection() {
                   </p>
 
                   <div className="space-y-2 sm:space-y-3">
-                    <span className="font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase">
-                      Hardware Parameters
+                    <span className="font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase font-semibold">
+                      {t.hardware.hardwareParams}
                     </span>
                     <div className="grid grid-cols-1 gap-2">
                       {detail.specList.map((item, idx) => (
@@ -344,13 +351,13 @@ export function HardwareSection() {
             </AnimatePresence>
 
             <div className="mt-4 border-t border-border pt-3 text-center font-mono text-[9px] sm:text-[10px] text-cream-muted/60 sm:mt-6 sm:pt-4">
-              Click elements in diagram to inspect sub-system
+              {t.hardware.clickToInspect}
             </div>
           </div>
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5 md:gap-6 md:mt-12">
-          {HARDWARE_COMPONENTS.map((comp) => {
+          {hardwareComponents.map((comp) => {
             const isSelected = selectedComp === comp.id
             return (
               <button

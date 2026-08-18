@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { AI_PIPELINE } from '../../lib/constants'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SplitLines } from '../ui/SplitText'
 import { useLanguage } from '../../context/LanguageContext'
@@ -30,6 +29,15 @@ export function AISection() {
   const [inView, setInView] = useState(false)
   const { t } = useLanguage()
 
+  const aiPipelineSteps = [
+    t.ai.steps.s1,
+    t.ai.steps.s2,
+    t.ai.steps.s3,
+    t.ai.steps.s4,
+    t.ai.steps.s5,
+    t.ai.steps.s6,
+  ]
+
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
@@ -56,7 +64,7 @@ export function AISection() {
             {t.ai.eyebrow}
           </span>
           <SplitLines
-            lines={['FROM SIGNAL', 'TO INTENT.']}
+            lines={[t.ai.titleLine1, t.ai.titleLine2]}
             lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
           />
           <motion.p
@@ -75,9 +83,9 @@ export function AISection() {
             <SignalParticleFlow active={inView} />
 
             <div className="relative space-y-0">
-              {AI_PIPELINE.map((step, i) => (
+              {aiPipelineSteps.map((step, i) => (
                 <motion.div
-                  key={step}
+                  key={i}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -85,7 +93,7 @@ export function AISection() {
                   className="relative"
                 >
                   <div
-                    className={`flex items-center gap-3 py-2.5 sm:gap-4 sm:py-3 ${i === AI_PIPELINE.length - 1
+                    className={`flex items-center gap-3 py-2.5 sm:gap-4 sm:py-3 ${i === aiPipelineSteps.length - 1
                         ? 'text-medical'
                         : 'text-cream'
                       }`}
@@ -93,7 +101,7 @@ export function AISection() {
                     <div
                       className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-sm border font-mono text-[9px] sm:text-[10px] ${inView && i <= 3
                           ? 'border-cyan-signal/40 bg-cyan-signal/[0.06] text-cyan-signal'
-                          : i === AI_PIPELINE.length - 1
+                          : i === aiPipelineSteps.length - 1
                             ? 'border-medical/40 bg-medical/[0.06] text-medical'
                             : 'border-border text-cream-muted'
                         }`}
@@ -105,7 +113,7 @@ export function AISection() {
                     </span>
                   </div>
 
-                  {i < AI_PIPELINE.length - 1 && (
+                  {i < aiPipelineSteps.length - 1 && (
                     <div className="ml-3.5 sm:ml-4 flex items-center py-1">
                       <motion.div
                         className="h-5 sm:h-6 w-px bg-gradient-to-b from-cyan-signal/40 to-transparent"

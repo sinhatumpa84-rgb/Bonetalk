@@ -57,6 +57,19 @@ export function SignalSection() {
     return () => clearInterval(interval)
   }, [analyzing, selected, speakPhrase])
 
+  const getCmdSubtitle = (cmd: SignalCommand): string => {
+    switch (cmd) {
+      case 'YES':
+        return t.signal.cmdSub.yes
+      case 'NO':
+        return t.signal.cmdSub.no
+      case 'HELP':
+        return t.signal.cmdSub.help
+      case 'WATER':
+        return t.signal.cmdSub.water
+    }
+  }
+
   return (
     <section
       id="technology"
@@ -68,7 +81,7 @@ export function SignalSection() {
       <div className="relative mx-auto w-full max-w-[1400px] px-6 md:px-10">
         <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase">
+            <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase font-semibold">
               {t.signal.eyebrow}
             </span>
             <motion.h2
@@ -76,7 +89,7 @@ export function SignalSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="mt-2 font-display text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.02em] text-cream"
+              className="mt-2 font-display text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.02em] text-cream uppercase"
             >
               {t.signal.title}
             </motion.h2>
@@ -131,7 +144,7 @@ export function SignalSection() {
                   className="mt-6 space-y-4 font-mono text-xs md:mt-8"
                 >
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-                    <span className="tracking-[0.2em] text-cream-muted uppercase text-[10px] sm:text-xs">
+                    <span className="tracking-[0.2em] text-cream-muted uppercase text-[10px] sm:text-xs font-semibold">
                       {t.signal.signalDetected}
                     </span>
                     <div className="flex flex-1 items-center gap-3">
@@ -183,7 +196,7 @@ export function SignalSection() {
                         <button
                           type="button"
                           onClick={() => speakPhrase(selected)}
-                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px] cursor-pointer font-bold"
+                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px] cursor-pointer font-bold uppercase"
                           title="Replay Voice Speech Synthesis"
                         >
                           <Volume2 size={12} /> {t.signal.playVoiceBtn}
@@ -198,7 +211,7 @@ export function SignalSection() {
 
           <div className="flex flex-col justify-between gap-3 rounded-sm border border-border bg-graphite-light/30 p-4 backdrop-blur-sm sm:p-6 surface-panel">
             <div>
-              <span className="mb-3 block font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase sm:mb-4">
+              <span className="mb-3 block font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase sm:mb-4 font-semibold">
                 {t.signal.selectCommand}
               </span>
               <div className="grid grid-cols-1 gap-2.5 sm:gap-3">
@@ -220,10 +233,7 @@ export function SignalSection() {
                         {translateCommand(cmd)} <span className="text-[10px] font-normal text-cream-muted">({cmd})</span>
                       </span>
                       <span className="block font-mono text-[8px] sm:text-[9px] text-cream-muted/70 truncate">
-                        {cmd === 'YES' && 'Single Flex (Extensor)'}
-                        {cmd === 'NO' && 'Double Twitch (Flexor)'}
-                        {cmd === 'HELP' && 'Sustained Isometric Hold'}
-                        {cmd === 'WATER' && 'Sequential Dual Burst'}
+                        {getCmdSubtitle(cmd)}
                       </span>
                     </div>
                     <span
@@ -237,7 +247,7 @@ export function SignalSection() {
             </div>
 
             <div className="border-t border-border pt-3 font-mono text-[9px] sm:text-[10px] text-cream-muted/60 sm:pt-4">
-              ⚡ Real-time neural inference powered by ESP32-S3 TinyML engine.
+              {t.signal.footerNote}
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { useLanguage } from '../../context/LanguageContext'
 
 export function ScrollStorySection() {
   const sectionRef = useRef<HTMLElement>(null)
-  const { currentLanguage } = useLanguage()
+  const { t } = useLanguage()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
@@ -80,14 +80,14 @@ export function ScrollStorySection() {
 
             <motion.div style={{ opacity: text1Opacity }} className="mt-8 text-center md:mt-0 md:absolute md:bottom-20 md:left-0 md:text-left">
               <SplitLines
-                lines={['WHEN WORDS', 'CANNOT ESCAPE.']}
+                lines={[t.story.title1Line1, t.story.title1Line2]}
                 lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
               />
               <motion.p
                 style={{ opacity: text1Opacity }}
                 className="mt-6 max-w-sm text-sm text-cream-muted md:text-base"
               >
-                Communication should not depend on a vocal chord ({currentLanguage.nativeName}).
+                {t.story.sub1}
               </motion.p>
             </motion.div>
           </div>
@@ -101,7 +101,7 @@ export function ScrollStorySection() {
               <div className="mb-8 flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-signal/40 to-cyan-signal" />
                 <span className="font-mono text-[10px] tracking-[0.3em] text-cyan-signal uppercase font-semibold">
-                  EMG Signal Telemetry
+                  {t.story.emgLabel}
                 </span>
               </div>
 
@@ -116,7 +116,7 @@ export function ScrollStorySection() {
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 animate-pulse rounded-full bg-medical" />
                   <span className="font-mono text-[10px] tracking-[0.2em] text-medical uppercase font-bold">
-                    Signal Active
+                    {t.story.signalActive}
                   </span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function ScrollStorySection() {
               className="mt-12 md:mt-16"
             >
               <SplitLines
-                lines={['BUT MUSCLES', 'STILL SPEAK.']}
+                lines={[t.story.title2Line1, t.story.title2Line2]}
                 lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
                 delay={0.2}
               />

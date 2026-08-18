@@ -5,11 +5,11 @@ import { SplitLines } from '../ui/SplitText'
 import { useLanguage } from '../../context/LanguageContext'
 import { speechService } from '../../lib/speechService'
 
-const PHRASES = ['YES', 'NO', 'HELP', 'I NEED WATER']
+const PHRASES = ['YES', 'NO', 'HELP', 'WATER']
 
 export function HumanConnectionSection() {
   const [activeAudio, setActiveAudio] = useState<string | null>(null)
-  const { currentLanguage, translateCommand } = useLanguage()
+  const { currentLanguage, translateCommand, t } = useLanguage()
 
   const playVoice = (rawPhrase: string) => {
     const textToSpeak = translateCommand(rawPhrase)
@@ -35,12 +35,12 @@ export function HumanConnectionSection() {
       aria-label="Human connection"
     >
       <div className="mx-auto max-w-[1400px] px-6 text-center md:px-10">
-        <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase">
-          Human Purpose &amp; Dignity
+        <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase font-semibold">
+          {t.human.eyebrow}
         </span>
 
         <SplitLines
-          lines={['A VOICE', 'IS MORE THAN SOUND.']}
+          lines={[t.human.line1, t.human.line2]}
           className="mt-4 mb-16"
           lineClassName="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
         />
@@ -52,7 +52,7 @@ export function HumanConnectionSection() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mb-12 text-sm text-cream-muted md:text-base font-mono tracking-wide"
         >
-          It&apos;s the innate human ability to communicate ({currentLanguage.nativeName}):
+          {t.human.subtitle} ({currentLanguage.nativeName}):
         </motion.p>
 
         <div className="flex flex-col items-center gap-6 md:gap-8">

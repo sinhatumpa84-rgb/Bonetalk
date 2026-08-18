@@ -51,11 +51,11 @@ export function FinalRevealSection() {
             </motion.div>
 
             <SplitLines
-              lines={['WHEN THE VOICE', 'IS SILENT,']}
+              lines={[t.final.r1Line1, t.final.r1Line2]}
               lineClassName="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
             />
             <SplitLines
-              lines={['COMMUNICATION', "DOESN'T HAVE TO BE."]}
+              lines={[t.final.r2Line1, t.final.r2Line2]}
               className="mt-3"
               lineClassName="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cyan-signal/90"
               delay={0.25}
@@ -72,7 +72,7 @@ export function FinalRevealSection() {
                 BONETALK
               </h3>
               <p className="mt-3 font-mono text-xs tracking-[0.35em] text-cyan-signal uppercase font-medium">
-                AI-Powered Assistive Communication System ({currentLanguage.nativeName})
+                {t.final.subtitle} ({currentLanguage.nativeName})
               </p>
             </motion.div>
 
@@ -109,10 +109,10 @@ export function FinalRevealSection() {
                   <Activity size={24} className="animate-pulse" />
                 </div>
                 <span className="font-mono text-[10px] tracking-[0.3em] text-cream font-semibold uppercase block">
-                  BoneTalk Core Active
+                  {t.final.coreActive}
                 </span>
                 <span className="font-mono text-[9px] text-medical uppercase block mt-1">
-                  100% Signal Fidelity
+                  {t.final.signalFidelity}
                 </span>
               </div>
             </div>

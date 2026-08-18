@@ -8,6 +8,7 @@ import { useScrollProgress } from '../../hooks/useScrollProgress'
 import { useReducedMotion, useIsMobile } from '../../hooks/useMediaQuery'
 import { EMGWaveform } from '../ui/EMGWaveform'
 import { HeroErrorBoundary } from '../three/HeroErrorBoundary'
+import { useLanguage } from '../../context/LanguageContext'
 
 const HeroScene = lazy(() =>
   import('../three/HeroScene').then((m) => ({ default: m.HeroScene }))
@@ -16,9 +17,7 @@ const HeroScene = lazy(() =>
 function HeroFallback() {
   return (
     <div className="relative flex h-full w-full items-center justify-center bg-transparent">
-      {/* Seamless High-Quality 2D Neck-Worn Device Composition */}
       <div className="relative aspect-square w-full max-w-[420px] p-4">
-        {/* Soft Radial Ambient Cyan Glow */}
         <div className="absolute inset-0 rounded-full bg-cyan-signal/10 blur-3xl" />
 
         <svg viewBox="0 0 400 400" className="h-full w-full" aria-label="BoneTalk Neck Wearable Diagram">
@@ -33,24 +32,20 @@ function HeroFallback() {
             </linearGradient>
           </defs>
 
-          {/* Background Tech Circle */}
           <circle cx="200" cy="200" r="170" fill="url(#neckGlow)" stroke="var(--grid-line)" strokeWidth="1" />
           <circle cx="200" cy="200" r="130" fill="none" stroke="var(--signal-ring)" strokeDasharray="3 3" />
 
-          {/* Human Neck & Clavicle Silhouette */}
           <path
             d="M130 90 Q200 70 270 90 L280 240 Q200 270 120 240 Z"
             fill="var(--surface-elevated)"
             stroke="var(--stroke-muted)"
             strokeWidth="1"
           />
-          {/* Shoulder Slope */}
           <path
             d="M80 340 Q130 240 180 240 L220 240 Q270 240 320 340 Z"
             fill="var(--surface-base)"
           />
 
-          {/* BoneTalk Ergonomic Neck Collar Band */}
           <path
             d="M110 180 C 110 240, 290 240, 290 180"
             fill="none"
@@ -67,19 +62,15 @@ function HeroFallback() {
             strokeDasharray="6 4"
           />
 
-          {/* Central ESP32-S3 Processing Pod (Rests on front of neck) */}
           <g transform="translate(145, 205)">
             <rect x="0" y="0" width="110" height="50" rx="8" fill="var(--surface-elevated)" stroke="var(--color-cyan-signal)" strokeWidth="1.5" />
             <rect x="8" y="8" width="94" height="34" rx="4" fill="var(--surface-base)" />
-            {/* Status Micro LED */}
             <circle cx="55" cy="25" r="10" fill="none" stroke="var(--color-cyan-signal)" strokeWidth="2" />
             <circle cx="55" cy="25" r="4" fill="var(--color-cyan-signal)" className="animate-pulse" />
-            {/* Surface Gold Electrodes */}
             <circle cx="24" cy="25" r="6" fill="#D97706" />
             <circle cx="86" cy="25" r="6" fill="#D97706" />
           </g>
 
-          {/* EMG Waveform Signal Arc */}
           <path
             d="M120 160 Q 200 130 280 160"
             fill="none"
@@ -89,7 +80,6 @@ function HeroFallback() {
           />
         </svg>
 
-        {/* EMG Waveform HUD Overlay */}
         <div className="absolute bottom-4 left-1/2 w-full max-w-[280px] -translate-x-1/2 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md">
           <div className="mb-1.5 flex items-center justify-between font-mono text-[9px]">
             <span className="text-cyan-signal font-semibold">EMG NECK TELEMETRY</span>
@@ -102,64 +92,60 @@ function HeroFallback() {
   )
 }
 
-// Technical Callouts Annotations with static responsive position classes
-// Top-Left, Top-Right, Bottom-Left, Bottom-Right, and Bottom-Center
-const TECHNICAL_ANNOTATIONS = [
-  {
-    id: 'emg',
-    label: 'EMG SENSOR',
-    sub: 'Biopotential Electrodes',
-    icon: Activity,
-    className: 'top-3 left-1 sm:top-6 sm:left-2 md:top-10 md:-left-6',
-  },
-  {
-    id: 'ai',
-    label: 'AI RECOGNITION',
-    sub: 'Gesture Classification',
-    icon: Radio,
-    className: 'top-4 right-1 sm:top-8 sm:right-2 md:top-16 md:-right-6',
-  },
-  {
-    id: 'signal',
-    label: 'MUSCLE SIGNAL',
-    sub: 'Neck Muscle Activity',
-    icon: Zap,
-    className: 'bottom-16 left-1 sm:bottom-20 sm:left-2 md:bottom-28 md:-left-8',
-  },
-  {
-    id: 'voice',
-    label: 'VOICE OUTPUT',
-    sub: 'Real-Time Speech Engine',
-    icon: Volume2,
-    className: 'bottom-14 right-1 sm:bottom-18 sm:right-2 md:bottom-24 md:-right-8',
-  },
-  {
-    id: 'esp32',
-    label: 'ESP32-S3 POD',
-    sub: '240MHz TinyML DSP',
-    icon: Cpu,
-    className: 'bottom-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-6 md:left-16',
-  },
-]
-
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const progress = useScrollProgress(sectionRef)
-  // Only block 3D for users who explicitly prefer reduced motion.
-  // Mobile is NOT blocked — it gets the 3D scene with mobile-specific camera/quality.
   const reducedMotion = useReducedMotion()
   const isMobile = useIsMobile()
   const intensity = 0.5 + progress * 0.5
+  const { t } = useLanguage()
 
   const [initSequence, setInitSequence] = useState(0)
 
-  // Initialization Sequence simulation for telemetry
   useEffect(() => {
     const timer = setInterval(() => {
       setInitSequence((prev) => (prev < 3 ? prev + 1 : prev))
     }, 450)
     return () => clearInterval(timer)
   }, [])
+
+  const technicalAnnotations = [
+    {
+      id: 'emg',
+      label: t.hero.annotations.emgLabel,
+      sub: t.hero.annotations.emgSub,
+      icon: Activity,
+      className: 'top-3 left-1 sm:top-6 sm:left-2 md:top-10 md:-left-6',
+    },
+    {
+      id: 'ai',
+      label: t.hero.annotations.aiLabel,
+      sub: t.hero.annotations.aiSub,
+      icon: Radio,
+      className: 'top-4 right-1 sm:top-8 sm:right-2 md:top-16 md:-right-6',
+    },
+    {
+      id: 'signal',
+      label: t.hero.annotations.signalLabel,
+      sub: t.hero.annotations.signalSub,
+      icon: Zap,
+      className: 'bottom-16 left-1 sm:bottom-20 sm:left-2 md:bottom-28 md:-left-8',
+    },
+    {
+      id: 'voice',
+      label: t.hero.annotations.voiceLabel,
+      sub: t.hero.annotations.voiceSub,
+      icon: Volume2,
+      className: 'bottom-14 right-1 sm:bottom-18 sm:right-2 md:bottom-24 md:-right-8',
+    },
+    {
+      id: 'esp32',
+      label: t.hero.annotations.esp32Label,
+      sub: t.hero.annotations.esp32Sub,
+      icon: Cpu,
+      className: 'bottom-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-6 md:left-16',
+    },
+  ]
 
   return (
     <section
@@ -172,7 +158,6 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-graphite" />
 
       <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 items-center gap-8 px-4 pt-24 sm:px-6 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
-        {/* Left Column / Mobile Top Stack */}
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -182,12 +167,12 @@ export function HeroSection() {
           >
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal animate-ping" />
             <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase md:text-xs font-semibold">
-              NECK-WORN ASSISTIVE NEUROTECHNOLOGY / 2026
+              {t.hero.eyebrow}
             </span>
           </motion.div>
 
           <SplitLines
-            lines={['THE BODY', 'HAS A VOICE.']}
+            lines={[t.hero.line1, t.hero.line2]}
             className="mb-6 md:mb-8"
             lineClassName="font-display text-[clamp(2.25rem,9.5vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
             delay={0.25}
@@ -199,8 +184,7 @@ export function HeroSection() {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="mb-6 max-w-md text-sm leading-relaxed text-cream-muted sm:mb-8 md:mb-10 md:text-base"
           >
-            BoneTalk is a neck-worn assistive device that transforms muscle activity into meaningful
-            speech using surface EMG sensing, embedded DSP, and TinyML AI.
+            {t.hero.description}
           </motion.p>
 
           <motion.div
@@ -210,17 +194,16 @@ export function HeroSection() {
             className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
             <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
-              GET STARTED <ArrowRight size={14} />
+              {t.hero.getStarted} <ArrowRight size={14} />
             </MagneticButton>
             <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
-              EXPLORE THE SYSTEM <ArrowRight size={14} />
+              {t.hero.exploreSystem} <ArrowRight size={14} />
             </MagneticButton>
             <MagneticButton href="#how-it-works" variant="secondary" className="hidden md:inline-flex w-full sm:w-auto min-h-[44px] justify-center">
-              SEE HOW IT WORKS <ArrowDown size={14} />
+              {t.hero.seeHowItWorks} <ArrowDown size={14} />
             </MagneticButton>
           </motion.div>
 
-          {/* Desktop Telemetry Status Line (Preserved on Desktop) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -228,28 +211,26 @@ export function HeroSection() {
             className="mt-8 hidden md:flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/80 pt-6 font-mono text-[10px] text-cream-muted/70 md:mt-12"
           >
             <div>
-              FORM FACTOR: <span className="text-cream font-medium">NECK WEARABLE</span>
+              {t.hero.formFactorLabel} <span className="text-cream font-medium">{t.hero.formFactorVal}</span>
             </div>
             <div>
-              PROCESSOR: <span className="text-cyan-signal font-medium">ESP32-S3</span>
+              {t.hero.processorLabel} <span className="text-cyan-signal font-medium">ESP32-S3</span>
             </div>
             <div>
-              LATENCY: <span className="text-medical font-medium">&lt; 12.4 ms</span>
+              {t.hero.latencyLabel} <span className="text-medical font-medium">&lt; 12.4 ms</span>
             </div>
             <div>
-              COMMS: <span className="text-cyan-signal font-medium">MQTT Protocol</span>
+              {t.hero.commsLabel} <span className="text-cyan-signal font-medium">MQTT Protocol</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Right Column / Mobile 3D Model & Telemetry Stack */}
         <motion.div
           className="relative flex flex-col items-center justify-center w-full"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Subtle Ambient Radial Glow */}
           <div
             className="pointer-events-none absolute inset-0 transition-opacity duration-700"
             style={{
@@ -257,7 +238,6 @@ export function HeroSection() {
             }}
           />
 
-          {/* Dedicated 3D BoneTalk Neck Device Container */}
           <div className="relative w-[88vw] max-w-[420px] h-[clamp(300px,75vw,460px)] md:w-full md:max-w-[560px] md:h-[72vh] mx-auto flex items-center justify-center device-viewport-shadow">
             {!reducedMotion ? (
               <HeroErrorBoundary fallback={<HeroFallback />}>
@@ -274,8 +254,7 @@ export function HeroSection() {
               <HeroFallback />
             )}
 
-            {/* Technical Engineering Floating Callouts — positioned around avatar at ALL breakpoints */}
-            {TECHNICAL_ANNOTATIONS.map((note, i) => {
+            {technicalAnnotations.map((note, i) => {
               const NoteIcon = note.icon
               return (
                 <motion.div
@@ -302,7 +281,6 @@ export function HeroSection() {
               )
             })}
 
-            {/* Initialization HUD Overlay — desktop only */}
             {initSequence < 3 && (
               <div className="absolute top-2 left-2 z-30 hidden md:block font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
                 <div>BONETALK SIGNAL ENGINE INITIALIZING...</div>
@@ -316,7 +294,6 @@ export function HeroSection() {
             )}
           </div>
 
-          {/* Mobile EMG Neck Telemetry Card — below device, mobile only */}
           <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-4 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md md:hidden">
             <div className="mb-2 flex items-center justify-between font-mono text-[9px]">
               <div className="flex items-center gap-2">

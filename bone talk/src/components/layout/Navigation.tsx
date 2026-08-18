@@ -1,16 +1,27 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { NAV_LINKS, cn } from '../../lib/constants'
+import { cn } from '../../lib/constants'
 import { useScrollY } from '../../hooks/useScrollProgress'
 import { MagneticButton } from '../ui/MagneticButton'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { LanguageSelector } from '../ui/LanguageSelector'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function Navigation() {
   const scrollY = useScrollY()
   const scrolled = scrollY > 40
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { label: t.nav.technology, href: '#technology' },
+    { label: t.nav.howItWorks, href: '#how-it-works' },
+    { label: t.nav.ai, href: '#ai' },
+    { label: t.nav.hardware, href: '#hardware' },
+    { label: t.nav.worldwide, href: '#worldwide' },
+    { label: t.nav.vision, href: '#vision' },
+  ]
 
   return (
     <>
@@ -39,7 +50,7 @@ export function Navigation() {
           </a>
 
           <ul className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -55,7 +66,7 @@ export function Navigation() {
             <LanguageSelector />
             <ThemeToggle />
             <MagneticButton href="#experience" variant="ghost">
-              EXPERIENCE BONETALK
+              {t.nav.experience}
             </MagneticButton>
           </div>
 
@@ -85,7 +96,7 @@ export function Navigation() {
             className="fixed inset-0 z-40 flex flex-col bg-graphite/98 pt-24 px-6 backdrop-blur-lg overflow-y-auto lg:hidden"
           >
             <ul className="flex flex-col gap-4">
-              {NAV_LINKS.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <motion.li
                   key={link.href}
                   initial={{ opacity: 0, x: -20 }}
@@ -109,7 +120,7 @@ export function Navigation() {
                 className="w-full min-h-[48px] justify-center"
                 onClick={() => setMobileOpen(false)}
               >
-                EXPERIENCE BONETALK →
+                {t.nav.experience} →
               </MagneticButton>
             </div>
           </motion.div>

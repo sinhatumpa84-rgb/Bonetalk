@@ -1,61 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
-
-/*
- * Human-centered workflow steps.
- * No hardware model numbers, no engineering jargon.
- */
-const JOURNEY_STEPS = [
-  {
-    id: 'think',
-    number: '01',
-    title: 'Your Intent',
-    description:
-      'You think of what you want to say. Your brain prepares the speech.',
-    status: 'Ready',
-  },
-  {
-    id: 'capture',
-    number: '02',
-    title: 'Signal Capture',
-    description:
-      'Tiny brain signals related to speech are safely recorded.',
-    status: 'Capturing',
-  },
-  {
-    id: 'process',
-    number: '03',
-    title: 'Signal Processing',
-    description:
-      'The signals are cleaned and organized to find meaning.',
-    status: 'Processing',
-  },
-  {
-    id: 'understand',
-    number: '04',
-    title: 'Meaning Understanding',
-    description:
-      'Our intelligent system understands the intended message.',
-    status: 'Understanding',
-  },
-  {
-    id: 'language',
-    number: '05',
-    title: 'Language Generation',
-    description:
-      'The message is converted into natural, clear text.',
-    status: 'Generating',
-  },
-  {
-    id: 'voice',
-    number: '06',
-    title: 'Natural Speech',
-    description:
-      'The text is synthesized into realistic, audible speech.',
-    status: 'Speaking',
-  },
-] as const
+import { useLanguage } from '../../context/LanguageContext'
 
 /* ── SVG Illustration Components ── */
 
@@ -207,6 +153,16 @@ export function PipelineSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [activeIndex, setActiveIndex] = useState(5)
   const [hasEntered, setHasEntered] = useState(false)
+  const { t } = useLanguage()
+
+  const journeySteps = [
+    { id: 'think', number: '01', title: t.pipeline.steps.s1Title, description: t.pipeline.steps.s1Desc, status: t.pipeline.steps.s1Status },
+    { id: 'capture', number: '02', title: t.pipeline.steps.s2Title, description: t.pipeline.steps.s2Desc, status: t.pipeline.steps.s2Status },
+    { id: 'process', number: '03', title: t.pipeline.steps.s3Title, description: t.pipeline.steps.s3Desc, status: t.pipeline.steps.s3Status },
+    { id: 'understand', number: '04', title: t.pipeline.steps.s4Title, description: t.pipeline.steps.s4Desc, status: t.pipeline.steps.s4Status },
+    { id: 'language', number: '05', title: t.pipeline.steps.s5Title, description: t.pipeline.steps.s5Desc, status: t.pipeline.steps.s5Status },
+    { id: 'voice', number: '06', title: t.pipeline.steps.s6Title, description: t.pipeline.steps.s6Desc, status: t.pipeline.steps.s6Status },
+  ]
 
   useEffect(() => {
     const section = sectionRef.current
@@ -220,7 +176,7 @@ export function PipelineSection() {
           if (!hasEntered) setHasEntered(true)
           if (!interval) {
             interval = setInterval(() => {
-              setActiveIndex((prev) => (prev + 1) % JOURNEY_STEPS.length)
+              setActiveIndex((prev) => (prev + 1) % journeySteps.length)
             }, 3600)
           }
         } else if (interval) {
@@ -236,18 +192,18 @@ export function PipelineSection() {
       observer.disconnect()
       if (interval) clearInterval(interval)
     }
-  }, [hasEntered])
+  }, [hasEntered, journeySteps.length])
 
   return (
     <section
       ref={sectionRef}
+      id="how-it-works"
       className="relative section-padding border-b border-border overflow-hidden"
       aria-label="How BoneTalk translates your intention into voice"
     >
       <TechnicalGrid variant="default" />
 
       <div className="section-container relative z-10">
-
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -256,13 +212,13 @@ export function PipelineSection() {
           className="text-center max-w-2xl mx-auto mb-12 md:mb-16"
         >
           <span className="label-editorial mb-3 justify-center">
-            HOW IT WORKS
+            {t.pipeline.eyebrow}
           </span>
           <h2 className="heading-section">
-            From Muscle Signal to Voice
+            {t.pipeline.title}
           </h2>
           <p className="mt-4 body-editorial max-w-lg mx-auto">
-            BONEtalk interprets natural muscle activity and turns your intended message into spoken words&nbsp;— in real time.
+            {t.pipeline.description}
           </p>
         </motion.div>
 
@@ -273,11 +229,11 @@ export function PipelineSection() {
             <div
               className="absolute top-1/2 left-[8%] h-[2px] bg-cyan-signal/60 -translate-y-1/2 transition-all duration-700 ease-out rounded-full"
               style={{
-                width: `${(activeIndex / (JOURNEY_STEPS.length - 1)) * 84}%`,
+                width: `${(activeIndex / (journeySteps.length - 1)) * 84}%`,
               }}
             />
             <div className="flex justify-between px-[8%]">
-              {JOURNEY_STEPS.map((_, idx) => {
+              {journeySteps.map((_, idx) => {
                 const isActive = idx === activeIndex
                 const isPast = idx <= activeIndex
                 return (
@@ -306,7 +262,7 @@ export function PipelineSection() {
           </div>
 
           <div className="grid grid-cols-6 gap-3 max-w-5xl mx-auto">
-            {JOURNEY_STEPS.map((step, idx) => {
+            {journeySteps.map((step, idx) => {
               const isActive = idx === activeIndex
               const isPast = idx < activeIndex
               const IconComp = STEP_ICONS[idx]
@@ -323,7 +279,7 @@ export function PipelineSection() {
                   className={`
                     group relative rounded-lg border p-4 xl:p-5
                     flex flex-col items-center text-center
-                    cursor-pointer
+                    cursor-pointer surface-panel
                     transition-all duration-300 ease-out
                     ${isActive
                       ? 'border-cyan-signal/40 bg-cyan-signal/[0.04] shadow-[0_2px_20px_rgba(0,168,137,0.08)]'
@@ -370,7 +326,7 @@ export function PipelineSection() {
                       font-mono text-[10px] font-medium tracking-wider
                       transition-all duration-300
                       ${isActive
-                        ? 'bg-cyan-signal text-graphite'
+                        ? 'bg-cyan-signal text-graphite font-bold'
                         : isPast
                           ? 'bg-transparent border border-cyan-signal/30 text-cyan-signal/80'
                           : 'bg-transparent border border-border text-cream-muted/50'
@@ -391,12 +347,12 @@ export function PipelineSection() {
           <div
             className="absolute top-0 left-[18px] w-[2px] bg-cyan-signal/60 transition-all duration-700 ease-out rounded-full"
             style={{
-              height: `${(activeIndex / (JOURNEY_STEPS.length - 1)) * 100}%`,
+              height: `${(activeIndex / (journeySteps.length - 1)) * 100}%`,
             }}
           />
 
           <div className="space-y-4">
-            {JOURNEY_STEPS.map((step, idx) => {
+            {journeySteps.map((step, idx) => {
               const isActive = idx === activeIndex
               const isPast = idx < activeIndex
               const IconComp = STEP_ICONS[idx]
@@ -410,7 +366,7 @@ export function PipelineSection() {
                   transition={{ delay: idx * 0.06, duration: 0.4 }}
                   onClick={() => setActiveIndex(idx)}
                   className={`
-                    relative pl-11 pr-4 py-5 rounded-lg border
+                    relative pl-11 pr-4 py-5 rounded-lg border surface-panel
                     cursor-pointer
                     transition-all duration-300
                     ${isActive
@@ -473,7 +429,7 @@ export function PipelineSection() {
                         font-mono text-[9px] font-medium tracking-wider
                         transition-all duration-300
                         ${isActive
-                          ? 'bg-cyan-signal text-graphite'
+                          ? 'bg-cyan-signal text-graphite font-bold'
                           : isPast
                             ? 'border border-cyan-signal/30 text-cyan-signal/70'
                             : 'border border-border text-cream-muted/40'
@@ -488,7 +444,6 @@ export function PipelineSection() {
             })}
           </div>
         </div>
-
       </div>
     </section>
   )

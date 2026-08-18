@@ -8,22 +8,27 @@ import {
 } from '../../lib/constants'
 import { EMGWaveform } from '../ui/EMGWaveform'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { useLanguage } from '../../context/LanguageContext'
+import { speechService } from '../../lib/speechService'
 
 export function SignalSection() {
   const [selected, setSelected] = useState<SignalCommand | null>(null)
   const [analyzing, setAnalyzing] = useState(false)
   const [confidence, setConfidence] = useState(0)
   const [detected, setDetected] = useState(false)
+  const { currentLanguage, translateCommand, t } = useLanguage()
 
-  const speakPhrase = useCallback((text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = 0.95
-      utterance.pitch = 1.0
-      window.speechSynthesis.speak(utterance)
-    }
-  }, [])
+  const speakPhrase = useCallback((rawCmd: SignalCommand) => {
+    const textToSpeak = translateCommand(rawCmd)
+    const voices = speechService.getVoices()
+    const chosenVoice = voices.find((v) => v.lang.startsWith(currentLanguage.code)) || null
+
+    speechService.speak(textToSpeak, {
+      voice: chosenVoice,
+      rate: 0.95,
+      pitch: 1.0,
+    })
+  }, [currentLanguage.code, translateCommand])
 
   const handleSelect = (cmd: SignalCommand) => {
     setSelected(cmd)
@@ -55,7 +60,7 @@ export function SignalSection() {
   return (
     <section
       id="technology"
-      className="relative flex min-h-screen flex-col justify-center py-24 md:py-32"
+      className="relative flex min-h-screen flex-col justify-center py-24 md:py-32 border-b border-border"
       aria-label="Interactive signal reading"
     >
       <TechnicalGrid variant="default" />
@@ -64,7 +69,7 @@ export function SignalSection() {
         <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase">
-              Biomedical Signal Acquisition
+              {t.signal.eyebrow}
             </span>
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
@@ -73,34 +78,33 @@ export function SignalSection() {
               transition={{ duration: 0.7 }}
               className="mt-2 font-display text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.02em] text-cream"
             >
-              READING THE SIGNAL
+              {t.signal.title}
             </motion.h2>
           </div>
           <p className="max-w-sm text-xs leading-relaxed text-cream-muted md:text-sm">
-            Sub-millivolt electrical telemetry captured directly from surface EMG electrodes.
-            Click any command below to test real-time pattern matching.
+            {t.signal.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px] md:gap-8">
-          <div className="rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-6 md:p-8">
+          <div className="rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-6 md:p-8 surface-panel">
             <div className="mb-4 flex flex-col gap-2 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-signal" />
-                <span className="font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase">
-                  Live EMG Oscilloscope Stream
+                <span className="font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase font-semibold">
+                  {t.signal.oscilloscopeTitle}
                 </span>
               </div>
               <div className="flex flex-wrap items-center gap-3 font-mono text-[9px] sm:gap-4 sm:text-[10px]">
                 <span className="text-cream-muted/70">FS: <span className="text-cream">1000 Hz</span></span>
                 <span className="text-cream-muted/70">BAND: <span className="text-cream">20-450 Hz</span></span>
                 <span className="text-cyan-signal font-semibold">
-                  {selected ? `PATTERN: ${selected}` : 'AWAITING INPUT'}
+                  {selected ? `PATTERN: ${translateCommand(selected)}` : 'AWAITING INPUT'}
                 </span>
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-sm border border-border bg-graphite p-2 sm:p-4">
+            <div className="relative overflow-hidden rounded-sm border border-border bg-graphite p-2 sm:p-4 surface-instrument">
               <EMGWaveform
                 height={160}
                 command={selected}
@@ -109,7 +113,6 @@ export function SignalSection() {
                 showGrid={true}
               />
 
-              {/* Telemetry Corner Overlays */}
               <div className="pointer-events-none absolute top-2 left-3 font-mono text-[8px] sm:text-[9px] text-cream-muted/60">
                 100 μV / div
               </div>
@@ -129,7 +132,7 @@ export function SignalSection() {
                 >
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
                     <span className="tracking-[0.2em] text-cream-muted uppercase text-[10px] sm:text-xs">
-                      SIGNAL DETECTED
+                      {t.signal.signalDetected}
                     </span>
                     <div className="flex flex-1 items-center gap-3">
                       <div className="h-2 flex-1 overflow-hidden rounded-full bg-border">
@@ -154,7 +157,7 @@ export function SignalSection() {
                     >
                       <div>
                         <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
-                          PATTERN MATCH
+                          {t.signal.patternMatch}
                         </span>
                         <span className="font-display text-lg sm:text-xl font-bold text-cream tabular-nums">
                           {SIGNAL_PATTERNS[selected].confidence}%
@@ -162,15 +165,15 @@ export function SignalSection() {
                       </div>
                       <div>
                         <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
-                          INTENT OUTPUT
+                          {t.signal.intentOutput}
                         </span>
                         <span className="font-display text-lg sm:text-xl font-bold text-medical">
-                          {selected}
+                          {translateCommand(selected)}
                         </span>
                       </div>
                       <div>
                         <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
-                          LATENCY
+                          {t.signal.latency}
                         </span>
                         <span className="font-display text-lg sm:text-xl font-bold text-cyan-signal">
                           12.4 ms
@@ -180,10 +183,10 @@ export function SignalSection() {
                         <button
                           type="button"
                           onClick={() => speakPhrase(selected)}
-                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px]"
+                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px] cursor-pointer font-bold"
                           title="Replay Voice Speech Synthesis"
                         >
-                          <Volume2 size={12} /> REPLAY VOICE
+                          <Volume2 size={12} /> {t.signal.playVoiceBtn}
                         </button>
                       </div>
                     </motion.div>
@@ -193,10 +196,10 @@ export function SignalSection() {
             </AnimatePresence>
           </div>
 
-          <div className="flex flex-col justify-between gap-3 rounded-sm border border-border bg-graphite-light/30 p-4 backdrop-blur-sm sm:p-6">
+          <div className="flex flex-col justify-between gap-3 rounded-sm border border-border bg-graphite-light/30 p-4 backdrop-blur-sm sm:p-6 surface-panel">
             <div>
               <span className="mb-3 block font-mono text-[10px] tracking-[0.25em] text-cream-muted uppercase sm:mb-4">
-                Select Muscle Command
+                {t.signal.selectCommand}
               </span>
               <div className="grid grid-cols-1 gap-2.5 sm:gap-3">
                 {SIGNAL_COMMANDS.map((cmd) => (
@@ -204,16 +207,17 @@ export function SignalSection() {
                     key={cmd}
                     type="button"
                     onClick={() => handleSelect(cmd)}
-                    className={`group flex items-center justify-between border p-3.5 text-left transition-all duration-200 sm:px-5 sm:py-4 min-h-[50px] ${selected === cmd
+                    className={`group flex items-center justify-between border p-3.5 text-left transition-all duration-200 sm:px-5 sm:py-4 min-h-[50px] cursor-pointer ${
+                      selected === cmd
                         ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_15px_var(--accent-glow)]'
                         : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
-                      }`}
+                    }`}
                     aria-pressed={selected === cmd}
                     aria-label={`Simulate ${cmd} muscle signal`}
                   >
                     <div className="min-w-0 pr-2">
                       <span className="block font-mono text-sm tracking-[0.2em] font-semibold text-cream">
-                        {cmd}
+                        {translateCommand(cmd)} <span className="text-[10px] font-normal text-cream-muted">({cmd})</span>
                       </span>
                       <span className="block font-mono text-[8px] sm:text-[9px] text-cream-muted/70 truncate">
                         {cmd === 'YES' && 'Single Flex (Extensor)'}
@@ -223,8 +227,9 @@ export function SignalSection() {
                       </span>
                     </div>
                     <span
-                      className={`h-2 w-2 flex-shrink-0 rounded-full transition-all ${selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)]' : 'bg-border group-hover:bg-cream/40'
-                        }`}
+                      className={`h-2 w-2 flex-shrink-0 rounded-full transition-all ${
+                        selected === cmd ? 'bg-cyan-signal shadow-[0_0_8px_var(--color-cyan-signal)]' : 'bg-border group-hover:bg-cream/40'
+                      }`}
                     />
                   </button>
                 ))}
@@ -240,4 +245,3 @@ export function SignalSection() {
     </section>
   )
 }
-

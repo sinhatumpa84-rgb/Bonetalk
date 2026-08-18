@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { AI_PIPELINE } from '../../lib/constants'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SplitLines } from '../ui/SplitText'
+import { useLanguage } from '../../context/LanguageContext'
 
 function SignalParticleFlow({ active }: { active: boolean }) {
   if (!active) return null
@@ -27,6 +28,7 @@ function SignalParticleFlow({ active }: { active: boolean }) {
 export function AISection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [inView, setInView] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const el = sectionRef.current
@@ -43,13 +45,16 @@ export function AISection() {
     <section
       ref={sectionRef}
       id="ai"
-      className="relative py-24 md:py-40"
+      className="relative py-24 md:py-40 border-b border-border"
       aria-label="AI processing pipeline"
     >
       <TechnicalGrid variant="default" />
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
         <div>
+          <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase block font-semibold mb-2">
+            {t.ai.eyebrow}
+          </span>
           <SplitLines
             lines={['FROM SIGNAL', 'TO INTENT.']}
             lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
@@ -61,13 +66,12 @@ export function AISection() {
             transition={{ delay: 0.3 }}
             className="mt-8 max-w-md text-sm leading-relaxed text-cream-muted md:text-base"
           >
-            Real signal processing — filtering noise, extracting features, matching
-            patterns, and classifying intent. No black boxes. No generic brains.
+            {t.ai.description}
           </motion.p>
         </div>
 
         <div className="relative">
-          <div className="relative rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-8 md:p-10">
+          <div className="relative rounded-sm border border-border bg-graphite-light/50 p-4 backdrop-blur-sm sm:p-8 md:p-10 surface-panel">
             <SignalParticleFlow active={inView} />
 
             <div className="relative space-y-0">
@@ -117,7 +121,6 @@ export function AISection() {
               ))}
             </div>
 
-            {/* Processing visualization bars */}
             <div className="mt-8 flex items-end gap-1 border-t border-border pt-6">
               {Array.from({ length: 24 }).map((_, i) => (
                 <motion.div

@@ -2,12 +2,15 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { SUPPORTED_LANGUAGES } from '../lib/languages'
 import type { LanguageConfig } from '../lib/languages'
+import { TRANSLATIONS, en } from '../lib/translations'
+import type { TranslationSchema } from '../lib/translations'
 
 interface LanguageContextType {
   currentLanguage: LanguageConfig
   setLanguageByCode: (code: string) => void
   translateCommand: (command: string) => string
   languages: LanguageConfig[]
+  t: TranslationSchema
 }
 
 const STORAGE_KEY = 'bonetalk-language'
@@ -19,6 +22,7 @@ const LanguageContext = createContext<LanguageContextType>({
   setLanguageByCode: () => {},
   translateCommand: (cmd) => cmd,
   languages: SUPPORTED_LANGUAGES,
+  t: en,
 })
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -62,6 +66,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return command
   }
 
+  const t = TRANSLATIONS[currentLanguage.code] || TRANSLATIONS['en'] || en
+
   return (
     <LanguageContext.Provider
       value={{
@@ -69,6 +75,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLanguageByCode,
         translateCommand,
         languages: SUPPORTED_LANGUAGES,
+        t,
       }}
     >
       {children}

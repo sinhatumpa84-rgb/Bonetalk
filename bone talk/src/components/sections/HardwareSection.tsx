@@ -4,6 +4,7 @@ import { Cpu, Radio, Activity, Zap, ShieldCheck, X } from 'lucide-react'
 import { HARDWARE_COMPONENTS } from '../../lib/constants'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SplitLines } from '../ui/SplitText'
+import { useLanguage } from '../../context/LanguageContext'
 
 interface DetailSpec {
   title: string
@@ -81,6 +82,7 @@ const COMPONENT_POSITIONS = [
 export function HardwareSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [selectedComp, setSelectedComp] = useState<string | null>('esp32')
+  const { t } = useLanguage()
 
   const detail = selectedComp ? HARDWARE_DETAILS[selectedComp] : null
   const IconComponent = detail?.icon || Cpu
@@ -89,7 +91,7 @@ export function HardwareSection() {
     <section
       ref={sectionRef}
       id="hardware"
-      className="relative py-24 md:py-40"
+      className="relative py-24 md:py-40 border-b border-border"
       aria-label="Hardware showcase"
     >
       <TechnicalGrid variant="hardware" />
@@ -97,8 +99,8 @@ export function HardwareSection() {
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase">
-              Embedded Hardware Architecture
+            <span className="font-mono text-[10px] tracking-[0.35em] text-cyan-signal uppercase font-semibold">
+              {t.hardware.eyebrow}
             </span>
             <SplitLines
               lines={['THE HARDWARE', 'BEHIND THE VOICE.']}
@@ -107,20 +109,18 @@ export function HardwareSection() {
             />
           </div>
           <p className="max-w-sm text-xs leading-relaxed text-cream-muted md:text-sm">
-            Clinical-grade analog front-end integrated with high-efficiency embedded AI hardware.
-            Click any component to inspect technical specifications.
+            {t.hardware.description}
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px] md:mt-16 md:gap-12">
           {/* Exploded Diagram */}
-          <div className="relative mx-auto aspect-[4/3] w-full max-w-3xl rounded-sm border border-border bg-graphite-light/40 p-3 backdrop-blur-sm sm:p-6 md:aspect-[16/10]">
+          <div className="relative mx-auto aspect-[4/3] w-full max-w-3xl rounded-sm border border-border bg-graphite-light/40 p-3 backdrop-blur-sm sm:p-6 md:aspect-[16/10] surface-panel">
             <svg
               viewBox="0 0 600 400"
               className="h-full w-full"
               aria-label="BoneTalk hardware exploded view diagram"
             >
-              {/* Connection lines */}
               {COMPONENT_POSITIONS.slice(0, -1).map((pos, i) => {
                 const next = COMPONENT_POSITIONS[i + 1]
                 return (
@@ -159,7 +159,7 @@ export function HardwareSection() {
                 <circle cx="300" cy="65" r="4" fill="var(--color-cyan-signal)" />
                 <circle cx="312" cy="55" r="4" fill="var(--color-cyan-signal)" />
                 <text x="300" y="105" textAnchor="middle" fill={selectedComp === 'emg' ? 'var(--color-cyan-signal)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  EMG SENSORS
+                  {t.hardware.emgSensor}
                 </text>
               </motion.g>
 
@@ -201,7 +201,6 @@ export function HardwareSection() {
                   stroke={selectedComp === 'esp32' ? 'var(--color-cyan-signal)' : 'var(--cyan-stroke-dim)'}
                   strokeWidth={selectedComp === 'esp32' ? '2' : '1'}
                 />
-                {/* Pins */}
                 {[-1, 1].map((side) =>
                   [0, 1, 2, 3].map((i) => (
                     <line
@@ -242,7 +241,6 @@ export function HardwareSection() {
                   stroke={selectedComp === 'wireless' ? 'var(--color-cyan-signal)' : 'var(--cyan-stroke-dim)'}
                   strokeWidth={selectedComp === 'wireless' ? '2' : '1'}
                 />
-                {/* Signal arcs */}
                 <path d="M470 255 A10 10 0 0 1 490 255" stroke="var(--color-cyan-signal)" strokeWidth="1.5" fill="none" />
                 <path d="M465 250 A18 18 0 0 1 495 250" stroke="var(--color-cyan-signal)" strokeWidth="1" fill="none" opacity="0.6" />
                 <text x="480" y="295" textAnchor="middle" fill={selectedComp === 'wireless' ? 'var(--color-cyan-signal)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
@@ -278,14 +276,13 @@ export function HardwareSection() {
                   />
                 ))}
                 <text x="300" y="380" textAnchor="middle" fill={selectedComp === 'ai' ? 'var(--color-medical)' : 'var(--color-cream-muted)'} fontSize="10" fontFamily="monospace">
-                  AI PROCESSING
+                  {t.hardware.aiProcessing || 'AI PROCESSING'}
                 </text>
               </motion.g>
             </svg>
           </div>
 
-          {/* Interactive Specification Inspector Drawer */}
-          <div className="flex flex-col justify-between rounded-sm border border-border bg-graphite-light/60 p-4 backdrop-blur-sm sm:p-6">
+          <div className="flex flex-col justify-between rounded-sm border border-border bg-graphite-light/60 p-4 backdrop-blur-sm sm:p-6 surface-panel">
             <AnimatePresence mode="wait">
               {detail && (
                 <motion.div
@@ -302,8 +299,8 @@ export function HardwareSection() {
                         <IconComponent size={18} />
                       </div>
                       <div>
-                        <span className="font-mono text-[9px] tracking-[0.2em] text-cyan-signal uppercase">
-                          Technical Spec
+                        <span className="font-mono text-[9px] tracking-[0.2em] text-cyan-signal uppercase font-semibold">
+                          {t.hardware.specTitle}
                         </span>
                         <h3 className="font-display text-sm sm:text-base font-bold text-cream">
                           {detail.title}
@@ -314,7 +311,7 @@ export function HardwareSection() {
                       <button
                         type="button"
                         onClick={() => setSelectedComp(null)}
-                        className="text-cream-muted transition-colors hover:text-cream p-1"
+                        className="text-cream-muted transition-colors hover:text-cream p-1 cursor-pointer"
                         aria-label="Close details"
                       >
                         <X size={16} />
@@ -352,7 +349,6 @@ export function HardwareSection() {
           </div>
         </div>
 
-        {/* Quick Component Cards */}
         <div className="mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5 md:gap-6 md:mt-12">
           {HARDWARE_COMPONENTS.map((comp) => {
             const isSelected = selectedComp === comp.id
@@ -361,12 +357,13 @@ export function HardwareSection() {
                 key={comp.id}
                 type="button"
                 onClick={() => setSelectedComp(comp.id)}
-                className={`border p-3 text-left transition-all duration-200 sm:p-4 min-h-[44px] ${isSelected
+                className={`border p-3 text-left transition-all duration-200 sm:p-4 min-h-[44px] surface-panel cursor-pointer ${
+                  isSelected
                     ? 'border-cyan-signal/60 bg-cyan-signal/[0.08] shadow-[0_0_12px_var(--accent-glow-soft)]'
                     : 'border-border bg-glass hover:border-cream/30 hover:bg-cream/[0.03]'
-                  }`}
+                }`}
               >
-                <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.2em] text-cyan-signal uppercase block">
+                <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.2em] text-cyan-signal uppercase block font-semibold">
                   {comp.label}
                 </span>
                 <p className="mt-1 text-[11px] sm:text-xs text-cream-muted leading-tight">{comp.detail}</p>

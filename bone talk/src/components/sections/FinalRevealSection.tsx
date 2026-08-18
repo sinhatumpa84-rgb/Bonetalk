@@ -3,6 +3,7 @@ import { ArrowRight, Activity, Cpu, Brain, Volume2, UserCheck } from 'lucide-rea
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { useLanguage } from '../../context/LanguageContext'
 
 const ECOSYSTEM_NODES = [
   { name: 'USER', icon: UserCheck, detail: 'Muscle Movement' },
@@ -13,6 +14,8 @@ const ECOSYSTEM_NODES = [
 ]
 
 export function FinalRevealSection() {
+  const { currentLanguage, t } = useLanguage()
+
   return (
     <section
       id="experience"
@@ -69,7 +72,7 @@ export function FinalRevealSection() {
                 BONETALK
               </h3>
               <p className="mt-3 font-mono text-xs tracking-[0.35em] text-cyan-signal uppercase font-medium">
-                AI-Powered Assistive Communication System
+                AI-Powered Assistive Communication System ({currentLanguage.nativeName})
               </p>
             </motion.div>
 
@@ -81,10 +84,10 @@ export function FinalRevealSection() {
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 md:mt-12"
             >
               <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
-                EXPERIENCE BONETALK <ArrowRight size={14} />
+                {t.footer.experienceBtn} <ArrowRight size={14} />
               </MagneticButton>
               <MagneticButton href="#hardware" variant="secondary" className="w-full sm:w-auto min-h-[44px] justify-center">
-                INSPECT HARDWARE
+                {t.footer.documentationBtn}
               </MagneticButton>
             </motion.div>
           </div>
@@ -134,11 +137,11 @@ export function FinalRevealSection() {
           </div>
 
           <p className="text-xs text-cream-muted/70 max-w-md">
-            EMG Sensing + ESP32-S3 + TinyML Neural Inference. Assistive neurotechnology restoring expression.
+            {t.footer.ctaDesc}
           </p>
 
           <span className="font-mono text-[10px] text-cream-muted/50">
-            © 2026 BoneTalk Systems Inc.
+            {t.footer.copyright}
           </span>
         </footer>
       </div>

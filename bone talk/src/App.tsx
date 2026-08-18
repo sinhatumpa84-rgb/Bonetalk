@@ -6,6 +6,7 @@ import { PipelineSection } from './components/sections/PipelineSection'
 import { HardwareSection } from './components/sections/HardwareSection'
 import { TeachSection } from './components/sections/TeachSection'
 import { AISection } from './components/sections/AISection'
+import { WorldwideVisionSection } from './components/sections/WorldwideVisionSection'
 import { HumanConnectionSection } from './components/sections/HumanConnectionSection'
 import { FinalRevealSection } from './components/sections/FinalRevealSection'
 import { useLenis } from './hooks/useLenis'
@@ -24,6 +25,7 @@ function App() {
         <HardwareSection />
         <TeachSection />
         <AISection />
+        <WorldwideVisionSection />
         <HumanConnectionSection />
         <FinalRevealSection />
       </main>

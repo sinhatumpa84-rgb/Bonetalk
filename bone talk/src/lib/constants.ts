@@ -17,6 +17,7 @@ export const NAV_LINKS = [
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'AI', href: '#ai' },
   { label: 'Hardware', href: '#hardware' },
+  { label: 'Worldwide', href: '#worldwide' },
   { label: 'Vision', href: '#vision' },
 ] as const
 

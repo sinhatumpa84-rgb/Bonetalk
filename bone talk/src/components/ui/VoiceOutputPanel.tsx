@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Volume2, VolumeX, Settings, CheckCircle2, Play, AlertCircle, RefreshCw } from 'lucide-react'
 import { speechService } from '../../lib/speechService'
+import { useLanguage } from '../../context/LanguageContext'
 
 export interface VoiceOutputPanelProps {
   command: string
@@ -16,6 +17,7 @@ export function VoiceOutputPanel({
   onReTrainRequested,
   className = '',
 }: VoiceOutputPanelProps) {
+  const { currentLanguage, translateCommand } = useLanguage()
   const [speechState, setSpeechState] = useState<'idle' | 'speaking' | 'completed' | 'unsupported'>('idle')
   const [showSettings, setShowSettings] = useState(false)
   
@@ -27,6 +29,7 @@ export function VoiceOutputPanel({
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([])
 
   const isSupported = speechService.isSupported()
+  const localizedText = translateCommand(command)
 
   useEffect(() => {
     if (!isSupported) {
@@ -40,7 +43,9 @@ export function VoiceOutputPanel({
       if (voices.length > 0) {
         setSelectedVoiceName((prev) => {
           if (prev) return prev
-          const defaultVoice = voices.find((v) => v.lang.startsWith('en')) || voices[0]
+          // Match voice language if available
+          const langMatch = voices.find((v) => v.lang.startsWith(currentLanguage.code))
+          const defaultVoice = langMatch || voices.find((v) => v.lang.startsWith('en')) || voices[0]
           return defaultVoice ? defaultVoice.name : ''
         })
       }
@@ -50,7 +55,7 @@ export function VoiceOutputPanel({
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = loadVoices
     }
-  }, [isSupported])
+  }, [isSupported, currentLanguage])
 
   const handlePlayVoice = (overrideText?: string) => {
     if (!isSupported) {
@@ -58,7 +63,7 @@ export function VoiceOutputPanel({
       return
     }
 
-    const textToSpeak = overrideText || command
+    const textToSpeak = overrideText || localizedText
     if (!textToSpeak) return
 
     setSpeechState('speaking')
@@ -91,7 +96,7 @@ export function VoiceOutputPanel({
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-cyan-signal animate-pulse" />
           <span className="font-mono text-[10px] tracking-[0.25em] text-cyan-signal uppercase font-semibold">
-            VOICE OUTPUT ENGINE
+            VOICE OUTPUT ENGINE ({currentLanguage.nativeName})
           </span>
         </div>
 
@@ -118,10 +123,10 @@ export function VoiceOutputPanel({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 items-center mb-6">
         <div className="rounded-sm border border-border bg-graphite p-3.5">
           <span className="block font-mono text-[9px] tracking-[0.2em] text-cream-muted uppercase mb-1">
-            TRAINED COMMAND
+            TRAINED COMMAND ({currentLanguage.name})
           </span>
           <span className="font-mono text-base font-bold text-cream uppercase tracking-wide">
-            &quot;{command}&quot;
+            &quot;{localizedText}&quot; <span className="text-xs text-cream-muted font-normal">[{command}]</span>
           </span>
         </div>
 
@@ -151,7 +156,7 @@ export function VoiceOutputPanel({
           >
             <div className="rounded-sm border border-border/80 bg-graphite p-4 space-y-4">
               <span className="block font-mono text-[10px] tracking-[0.2em] text-cyan-signal uppercase font-bold">
-                SPEECH PARAMETERS
+                SPEECH PARAMETERS ({currentLanguage.name})
               </span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -232,7 +237,7 @@ export function VoiceOutputPanel({
               <div className="pt-2 flex justify-end">
                 <button
                   type="button"
-                  onClick={() => handlePlayVoice('Testing voice output synthesis.')}
+                  onClick={() => handlePlayVoice(localizedText)}
                   className="inline-flex items-center gap-1.5 rounded-sm border border-cyan-signal/40 bg-cyan-signal/[0.1] px-3 py-1 font-mono text-[10px] text-cyan-signal hover:bg-cyan-signal/[0.2] transition-colors cursor-pointer"
                 >
                   <Play size={11} /> TEST VOICE CONFIG
@@ -279,7 +284,7 @@ export function VoiceOutputPanel({
               ? 'border-border bg-graphite-light text-cream-muted cursor-not-allowed opacity-60'
               : 'border-cyan-signal/60 bg-cyan-signal/10 hover:bg-cyan-signal/20 text-cream hover:border-cyan-signal shadow-sm'
           }`}
-          aria-label={`Play voice audio for ${command}`}
+          aria-label={`Play voice audio for ${localizedText}`}
         >
           {speechState === 'speaking' ? (
             <>
@@ -294,7 +299,7 @@ export function VoiceOutputPanel({
           ) : (
             <>
               <Volume2 size={18} className="text-cyan-signal group-hover:scale-110 transition-transform" />
-              <span>PLAY VOICE &quot;{command}&quot;</span>
+              <span>PLAY VOICE &quot;{localizedText}&quot;</span>
             </>
           )}
         </button>
@@ -304,7 +309,7 @@ export function VoiceOutputPanel({
           {speechState === 'speaking' && (
             <span className="text-cyan-signal animate-pulse flex items-center justify-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-signal" />
-              SYNTHESIZING SPEECH AUDIO
+              SYNTHESIZING SPEECH AUDIO ({currentLanguage.name})
             </span>
           )}
 
@@ -315,13 +320,13 @@ export function VoiceOutputPanel({
               className="text-medical font-medium flex items-center justify-center gap-1.5"
             >
               <CheckCircle2 size={14} />
-              <span>✓ COMMAND SPOKEN — &quot;{command}&quot;</span>
+              <span>✓ COMMAND SPOKEN — &quot;{localizedText}&quot;</span>
             </motion.div>
           )}
 
           {speechState === 'idle' && (
             <span className="text-cream-muted">
-              SPEECH READY — Click to synthesize vocal audio
+              SPEECH READY — Click to synthesize vocal audio ({currentLanguage.nativeName})
             </span>
           )}
 

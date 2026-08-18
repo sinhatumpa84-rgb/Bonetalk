@@ -5,6 +5,7 @@ import { NAV_LINKS, cn } from '../../lib/constants'
 import { useScrollY } from '../../hooks/useScrollProgress'
 import { MagneticButton } from '../ui/MagneticButton'
 import { ThemeToggle } from '../ui/ThemeToggle'
+import { LanguageSelector } from '../ui/LanguageSelector'
 
 export function Navigation() {
   const scrollY = useScrollY()
@@ -51,6 +52,7 @@ export function Navigation() {
           </ul>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <LanguageSelector />
             <ThemeToggle />
             <MagneticButton href="#experience" variant="ghost">
               EXPERIENCE BONETALK
@@ -58,6 +60,7 @@ export function Navigation() {
           </div>
 
           <div className="flex items-center gap-1.5 lg:hidden">
+            <LanguageSelector />
             <ThemeToggle />
             <button
               type="button"

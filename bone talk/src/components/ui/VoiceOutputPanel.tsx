@@ -37,9 +37,12 @@ export function VoiceOutputPanel({
     const loadVoices = () => {
       const voices = speechService.getVoices()
       setAvailableVoices(voices)
-      if (voices.length > 0 && !selectedVoiceName) {
-        const defaultVoice = voices.find((v) => v.lang.startsWith('en')) || voices[0]
-        if (defaultVoice) setSelectedVoiceName(defaultVoice.name)
+      if (voices.length > 0) {
+        setSelectedVoiceName((prev) => {
+          if (prev) return prev
+          const defaultVoice = voices.find((v) => v.lang.startsWith('en')) || voices[0]
+          return defaultVoice ? defaultVoice.name : ''
+        })
       }
     }
 
@@ -47,7 +50,7 @@ export function VoiceOutputPanel({
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = loadVoices
     }
-  }, [isSupported, selectedVoiceName])
+  }, [isSupported])
 
   const handlePlayVoice = (overrideText?: string) => {
     if (!isSupported) {

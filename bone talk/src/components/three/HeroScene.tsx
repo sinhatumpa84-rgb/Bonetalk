@@ -140,7 +140,7 @@ function NeckDeviceModel({
         </mesh>
       </group>
 
-      {/* 2. BoneTalk Neck-Worn Device (Ergonomic Collar & Pod) */}
+      {/* 2. SAAKANTHA Neck-Worn Device (Ergonomic Collar & Pod) */}
       <group position={[0, 0.12, 0.12]}>
         {/* Main Ergonomic Neck Collar Band */}
         <mesh rotation={[Math.PI / 2.2, 0, 0]}>
@@ -257,11 +257,11 @@ export function HeroScene({
   // WebGL context loss recovery — prevents blank/frozen canvas on mobile GPU pressure
   const handleContextLost = useCallback((event: Event) => {
     event.preventDefault()
-    console.warn('[BoneTalk] WebGL context lost — waiting for restore...')
+    console.warn('[SAAKANTHA] WebGL context lost — waiting for restore...')
   }, [])
 
   const handleContextRestored = useCallback(() => {
-    console.info('[BoneTalk] WebGL context restored.')
+    console.info('[SAAKANTHA] WebGL context restored.')
   }, [])
 
   return (

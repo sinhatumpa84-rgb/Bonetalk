@@ -107,7 +107,7 @@ export function TeachSection() {
     <section
       id="teach"
       className="relative py-24 md:py-36 border-b border-border"
-      aria-label="Teach BoneTalk interaction and voice output"
+      aria-label="Teach SAAKANTHA interaction and voice output"
     >
       <TechnicalGrid variant="default" />
 

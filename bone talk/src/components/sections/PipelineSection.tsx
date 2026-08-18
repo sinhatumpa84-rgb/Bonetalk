@@ -199,7 +199,7 @@ export function PipelineSection() {
       ref={sectionRef}
       id="how-it-works"
       className="relative section-padding border-b border-border overflow-hidden"
-      aria-label="How BoneTalk translates your intention into voice"
+      aria-label="How SAAKANTHA translates your intention into voice"
     >
       <TechnicalGrid variant="default" />
 

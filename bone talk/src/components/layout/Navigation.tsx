@@ -56,9 +56,9 @@ export function Navigation() {
         >
           <a
             href="#"
-            className="font-display text-sm font-semibold tracking-[0.35em] text-cream md:text-base"
+            className="font-mono text-base font-bold tracking-[0.25em] text-[var(--color-text-primary)] transition-colors duration-300"
           >
-            BONETALK
+            SAAKANTHA
           </a>
 
           <ul className="hidden items-center gap-8 lg:flex">

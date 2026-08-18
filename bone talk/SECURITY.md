@@ -1,6 +1,6 @@
-# Security Policy — BoneTalk
+# Security Policy — SAAKANTHA
 
-BoneTalk is dedicated to building secure, reliable, and accessible assistive communication technology. We appreciate the efforts of security researchers and engineers who help keep our systems and users safe.
+SAAKANTHA is dedicated to building secure, reliable, and accessible assistive communication technology. We appreciate the efforts of security researchers and engineers who help keep our systems and users safe.
 
 ---
 
@@ -17,10 +17,10 @@ We actively provide security patches and updates for the following versions:
 
 ## Reporting a Vulnerability
 
-If you discover a potential security vulnerability within BoneTalk:
+If you discover a potential security vulnerability within SAAKANTHA:
 
 1. **Do not create a public issue** on GitHub or discuss the vulnerability publicly.
-2. Send an email with a clear reproduction script or proof of concept to **security@bonetalk.ai** (or contact the repository maintainers directly).
+2. Send an email with a clear reproduction script or proof of concept to **security@saakantha.ai** (or contact the repository maintainers directly).
 3. Include:
    - Type of issue (e.g., XSS, CSRF, Header Misconfiguration, Denial of Service)
    - Component / Route affected

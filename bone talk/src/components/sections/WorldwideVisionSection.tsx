@@ -19,7 +19,7 @@ export function WorldwideVisionSection() {
       ref={sectionRef}
       id="worldwide"
       className="relative section-padding border-b border-border overflow-hidden"
-      aria-label="BoneTalk Worldwide Vision"
+      aria-label="SAAKANTHA Worldwide Vision"
     >
       <TechnicalGrid variant="default" />
 

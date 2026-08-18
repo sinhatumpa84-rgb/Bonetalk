@@ -1,5 +1,5 @@
 /**
- * BoneTalk Speech Synthesis Service
+ * SAAKANTHA Speech Synthesis Service
  * Native Web Speech API abstraction with robust fallback and error handling.
  */
 

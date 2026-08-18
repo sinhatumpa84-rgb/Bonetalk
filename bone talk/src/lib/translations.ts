@@ -253,6 +253,19 @@ export interface TranslationSchema {
     copyright: string
     tagline: string
   }
+  systemStatus: {
+    title: string
+    website: string
+    online: string
+    aiEngine: string
+    ready: string
+    emgInterface: string
+    engine3D: string
+    languageEngine: string
+    languages24: string
+    globalAccess: string
+    healthEndpoint: string
+  }
 }
 
 export type DeepPartial<T> = {
@@ -523,6 +536,19 @@ export const en: TranslationSchema = {
     copyright: '© 2026 SAAKANTHA Systems Inc. All rights reserved.',
     tagline: 'Neuromuscular Assistive Interface System',
   },
+  systemStatus: {
+    title: 'SAAKANTHA SYSTEM STATUS',
+    website: 'WEBSITE',
+    online: 'ONLINE',
+    aiEngine: 'AI ENGINE',
+    ready: 'READY',
+    emgInterface: 'EMG INTERFACE',
+    engine3D: '3D ENGINE',
+    languageEngine: 'LANGUAGE ENGINE',
+    languages24: '24 LANGUAGES',
+    globalAccess: 'GLOBAL ACCESS',
+    healthEndpoint: 'HEALTH API',
+  },
 }
 
 // Helper function to build deep-merged translated schemas with fallbacks to English
@@ -563,6 +589,7 @@ function createTranslation(override: DeepPartial<TranslationSchema>): Translatio
     human: { ...en.human, ...(override.human || {}) },
     final: { ...en.final, ...(override.final || {}) },
     footer: { ...en.footer, ...(override.footer || {}) },
+    systemStatus: { ...en.systemStatus, ...(override.systemStatus || {}) },
   } as TranslationSchema
 }
 

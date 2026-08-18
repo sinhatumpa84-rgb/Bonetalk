@@ -3,6 +3,7 @@ import { ArrowRight, Activity, Cpu, Brain, Volume2, UserCheck } from 'lucide-rea
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { SystemStatus } from '../ui/SystemStatus'
 import { useLanguage } from '../../context/LanguageContext'
 
 const ECOSYSTEM_NODES = [
@@ -126,7 +127,9 @@ export function FinalRevealSection() {
           </motion.div>
         </div>
 
-        <footer className="mt-32 flex flex-col items-start justify-between gap-6 border-t border-border pt-10 md:flex-row md:items-center">
+        <SystemStatus className="mt-20" />
+
+        <footer className="mt-24 flex flex-col items-start justify-between gap-6 border-t border-border pt-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
             <span className="font-display text-base font-bold tracking-[0.35em] text-cream">
               SAAKANTHA

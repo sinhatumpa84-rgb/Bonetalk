@@ -9,7 +9,8 @@ import {
 
 export type Theme = 'light' | 'dark'
 
-const STORAGE_KEY = 'bonetalk-theme'
+const STORAGE_KEY = 'saakantha-theme'
+const LEGACY_STORAGE_KEY = 'bonetalk-theme'
 
 /** Safe localStorage reader with exception handling */
 function safeGetItem(key: string): string | null {
@@ -41,7 +42,7 @@ function safeSetItem(key: string, value: string): void {
  * before React hydrates, so there is no flash.
  */
 function getInitialTheme(): Theme {
-  const stored = safeGetItem(STORAGE_KEY)
+  const stored = safeGetItem(STORAGE_KEY) || safeGetItem(LEGACY_STORAGE_KEY)
   if (stored === 'dark') return 'dark'
   return 'light'
 }

@@ -13,7 +13,8 @@ interface LanguageContextType {
   t: TranslationSchema
 }
 
-const STORAGE_KEY = 'bonetalk-language'
+const STORAGE_KEY = 'saakantha-language'
+const LEGACY_STORAGE_KEY = 'bonetalk-language'
 
 const defaultLang = SUPPORTED_LANGUAGES.find((l) => l.code === 'en') || SUPPORTED_LANGUAGES[0]
 
@@ -50,7 +51,7 @@ const LanguageContext = createContext<LanguageContextType>({
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageConfig>(() => {
-    const savedCode = safeGetItem(STORAGE_KEY)
+    const savedCode = safeGetItem(STORAGE_KEY) || safeGetItem(LEGACY_STORAGE_KEY)
     if (savedCode && typeof savedCode === 'string') {
       const sanitizedCode = savedCode.trim().slice(0, 10)
       const found = SUPPORTED_LANGUAGES.find((l) => l.code === sanitizedCode)

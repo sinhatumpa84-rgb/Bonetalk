@@ -5,7 +5,7 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* ── Light Mode Canonical Palette Tokens ── */
+  /* ── Tailwind v4 Theme Color & Font Tokens ── */
   --color-graphite: #FAF9F6;
   --color-graphite-light: #F5F4F0;
   --color-graphite-elevated: #EDECE6;

@@ -11,21 +11,13 @@ import { WorldwideVisionSection } from './components/sections/WorldwideVisionSec
 import { HumanConnectionSection } from './components/sections/HumanConnectionSection'
 import { FinalRevealSection } from './components/sections/FinalRevealSection'
 import { SignalBridge } from './components/motion/SignalBridge'
-import { ExperiencePage } from './components/experience/ExperiencePage'
+import ExperiencePage from './components/experience/ExperiencePage'
 import { useLenis } from './hooks/useLenis'
 
 function isExperiencePath(): boolean {
   if (typeof window === 'undefined') return false
   const path = window.location.pathname
-  const hash = window.location.hash
-  return (
-    path === '/experience' ||
-    path === '/experience/' ||
-    path === '/saakantha-experience' ||
-    path === '/saakantha-experience/' ||
-    hash === '#/experience' ||
-    hash === '#experience-view'
-  )
+  return path === '/experience' || path === '/experience/'
 }
 
 function App() {
@@ -47,7 +39,7 @@ function App() {
 
   const handleNavigateHome = () => {
     window.history.pushState({}, '', '/')
-    setInExperience(false)
+    window.dispatchEvent(new PopStateEvent('popstate'))
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
 

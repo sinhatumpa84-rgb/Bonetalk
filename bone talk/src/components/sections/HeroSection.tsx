@@ -210,8 +210,8 @@ export function HeroSection() {
             transition={{ duration: 0.7, delay: 0.8 }}
             className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
-            <MagneticButton href="/experience" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
-              {t.nav.experience} <ArrowRight size={14} />
+            <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
+              {t.nav.technology} <ArrowRight size={14} />
             </MagneticButton>
             <MagneticButton href="#how-it-works" variant="secondary" className="hidden md:inline-flex w-full sm:w-auto min-h-[44px] justify-center">
               {t.hero.seeHowItWorks} <ArrowDown size={14} />

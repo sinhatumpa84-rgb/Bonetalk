@@ -531,7 +531,7 @@ export const en: TranslationSchema = {
     readyToExperience: 'READY TO EXPERIENCE SAAKANTHA?',
     ctaTitle: 'RESTORE EXPRESSION. RECLAIM DIGNITY.',
     ctaDesc: 'Built with clinical precision for individuals with speech and motor impairments.',
-    experienceBtn: 'EXPERIENCE SYSTEM DEMO',
+    experienceBtn: 'EXPERIENCE SAAKANTHA',
     documentationBtn: 'READ ENGINEERING DATASHEET',
     copyright: '© 2026 SAAKANTHA Systems Inc. All rights reserved.',
     tagline: 'Neuromuscular Assistive Interface System',

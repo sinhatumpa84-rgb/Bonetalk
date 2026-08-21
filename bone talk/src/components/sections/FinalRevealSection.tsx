@@ -4,6 +4,7 @@ import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SystemStatus } from '../ui/SystemStatus'
+import { SaakanthaLogo } from '../ui/SaakanthaLogo'
 import { useLanguage } from '../../context/LanguageContext'
 
 const ECOSYSTEM_NODES = [
@@ -130,10 +131,8 @@ export function FinalRevealSection() {
         <SystemStatus className="mt-20" />
 
         <footer className="mt-24 flex flex-col items-start justify-between gap-6 border-t border-border pt-10 md:flex-row md:items-center">
-          <div className="flex items-center gap-3">
-            <span className="font-display text-base font-bold tracking-[0.35em] text-cream">
-              SAAKANTHA
-            </span>
+          <div className="flex items-center gap-3.5">
+            <SaakanthaLogo iconSize={28} />
             <span className="rounded-full border border-medical/40 bg-medical/10 px-2 py-0.5 font-mono text-[9px] text-medical">
               v2.4 ONLINE
             </span>

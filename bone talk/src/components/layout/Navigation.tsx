@@ -7,6 +7,7 @@ import { MagneticButton } from '../ui/MagneticButton'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { LanguageSelector } from '../ui/LanguageSelector'
 import { useLanguage } from '../../context/LanguageContext'
+import { SaakanthaLogo } from '../ui/SaakanthaLogo'
 
 export function Navigation() {
   const scrollY = useScrollY()
@@ -56,9 +57,10 @@ export function Navigation() {
         >
           <a
             href="#"
-            className="font-mono text-base font-bold tracking-[0.25em] text-[var(--color-text-primary)] transition-colors duration-300"
+            className="group flex items-center transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-sm"
+            aria-label="SAAKANTHA Homepage"
           >
-            SAAKANTHA
+            <SaakanthaLogo iconSize={32} />
           </a>
 
           <ul className="hidden items-center gap-8 lg:flex">

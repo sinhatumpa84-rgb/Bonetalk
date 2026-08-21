@@ -85,8 +85,8 @@ export function FinalRevealSection() {
               transition={{ delay: 0.8 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 md:mt-12"
             >
-              <MagneticButton href="#technology" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
-                {t.footer.experienceBtn} <ArrowRight size={14} />
+              <MagneticButton href="/experience" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
+                {t.nav.experience} <ArrowRight size={14} />
               </MagneticButton>
               <MagneticButton href="#hardware" variant="secondary" className="w-full sm:w-auto min-h-[44px] justify-center">
                 {t.footer.documentationBtn}

@@ -36,11 +36,20 @@ export function MagneticButton({
   )
 
   if (href) {
+    const isInternalRoute = href.startsWith('/') && !href.startsWith('//')
     return (
       <a
         href={href}
         className={baseStyles}
         aria-label={ariaLabel}
+        onClick={(e) => {
+          if (isInternalRoute) {
+            e.preventDefault()
+            window.history.pushState({}, '', href)
+            window.dispatchEvent(new PopStateEvent('popstate'))
+          }
+          onClick?.()
+        }}
       >
         {content}
       </a>

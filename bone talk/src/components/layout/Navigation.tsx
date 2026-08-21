@@ -79,7 +79,7 @@ export function Navigation() {
           <div className="hidden items-center gap-3 lg:flex">
             <LanguageSelector />
             <ThemeToggle />
-            <MagneticButton href="#experience" variant="ghost">
+            <MagneticButton href="/experience" variant="ghost">
               {t.nav.experience}
             </MagneticButton>
           </div>
@@ -129,7 +129,7 @@ export function Navigation() {
             </ul>
             <div className="mt-8 pb-12">
               <MagneticButton
-                href="#experience"
+                href="/experience"
                 variant="primary"
                 className="w-full min-h-[48px] justify-center"
                 onClick={() => setMobileOpen(false)}

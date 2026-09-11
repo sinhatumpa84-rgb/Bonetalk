@@ -1,5 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import { generateWaveformPoint, type SignalCommand, SIGNAL_PATTERNS } from '../../lib/constants'
+import { useTheme } from '../../context/ThemeContext'
 
 interface EMGWaveformProps {
   width?: number
@@ -15,20 +16,33 @@ interface EMGWaveformProps {
   showGrid?: boolean
 }
 
+function readThemeColors(_currentTheme?: string) {
+  const styles = getComputedStyle(document.documentElement)
+  return {
+    grid: styles.getPropertyValue('--emg-grid').trim() || 'rgba(0, 0, 0, 0.06)',
+    baseline: styles.getPropertyValue('--emg-baseline').trim() || 'rgba(5, 150, 105, 0.2)',
+    signal: styles.getPropertyValue('--color-cyan-signal').trim() || '#059669',
+    medical: styles.getPropertyValue('--color-medical').trim() || '#16A34A',
+  }
+}
+
 export function EMGWaveform({
-  width = 800,
+  width: defaultWidth = 800,
   height = 120,
   amplitude = 0.7,
   frequency = 2.5,
   burst = 0.5,
   intensity = 1,
-  color = '#059669',
+  color,
   className = '',
   animate = true,
   command = null,
   showGrid = true,
 }: EMGWaveformProps) {
+  const { theme } = useTheme()
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [measuredWidth, setMeasuredWidth] = useState<number>(defaultWidth)
   const timeRef = useRef(0)
   const rafRef = useRef<number>(0)
 
@@ -37,7 +51,34 @@ export function EMGWaveform({
   const freq = pattern?.frequency ?? frequency
   const brst = pattern?.burst ?? burst
 
-  // Initialize canvas size & DPR scaling only when width/height change
+  // Responsive width measurement using ResizeObserver
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const updateSize = () => {
+      const w = container.clientWidth
+      if (w > 0) {
+        setMeasuredWidth(w)
+      }
+    }
+
+    updateSize()
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const w = entry.contentRect.width
+        if (w > 0) {
+          setMeasuredWidth(w)
+        }
+      }
+    })
+
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
+
+  // Initialize canvas size & DPR scaling
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -45,10 +86,10 @@ export function EMGWaveform({
     if (!ctx) return
 
     const dpr = window.devicePixelRatio || 1
-    canvas.width = width * dpr
+    canvas.width = measuredWidth * dpr
     canvas.height = height * dpr
     ctx.scale(dpr, dpr)
-  }, [width, height])
+  }, [measuredWidth, height])
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current
@@ -56,39 +97,43 @@ export function EMGWaveform({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    ctx.clearRect(0, 0, width, height)
+    const colors = readThemeColors(theme)
+    const strokeColor = color ?? colors.signal
+    const currentWidth = measuredWidth
+
+    ctx.clearRect(0, 0, currentWidth, height)
 
     // Optional Oscilloscope Grid Background
     if (showGrid) {
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)'
+      ctx.strokeStyle = colors.grid
       ctx.lineWidth = 1
-      const gridSpacing = 20
+      const gridSpacing = currentWidth < 480 ? 16 : 20
       ctx.beginPath()
-      for (let x = 0; x < width; x += gridSpacing) {
+      for (let x = 0; x < currentWidth; x += gridSpacing) {
         ctx.moveTo(x, 0)
         ctx.lineTo(x, height)
       }
       for (let y = 0; y < height; y += gridSpacing) {
         ctx.moveTo(0, y)
-        ctx.lineTo(width, y)
+        ctx.lineTo(currentWidth, y)
       }
       ctx.stroke()
 
       // Center baseline
-      ctx.strokeStyle = 'rgba(5, 150, 105, 0.2)'
+      ctx.strokeStyle = colors.baseline
       ctx.beginPath()
       ctx.moveTo(0, height / 2)
-      ctx.lineTo(width, height / 2)
+      ctx.lineTo(currentWidth, height / 2)
       ctx.stroke()
     }
 
     const midY = height / 2
-    const points = 240
+    const points = currentWidth < 480 ? 120 : 240
 
     // 1. Primary Raw EMG Waveform
     ctx.beginPath()
     for (let i = 0; i <= points; i++) {
-      const x = (i / points) * width
+      const x = (i / points) * currentWidth
       const normalizedX = (i / points) * Math.PI * 8
       const y =
         midY -
@@ -99,18 +144,18 @@ export function EMGWaveform({
       else ctx.lineTo(x, y)
     }
 
-    ctx.strokeStyle = color
-    ctx.lineWidth = 1.75
+    ctx.strokeStyle = strokeColor
+    ctx.lineWidth = currentWidth < 480 ? 1.5 : 1.75
     ctx.globalAlpha = 0.95
-    ctx.shadowColor = color
-    ctx.shadowBlur = 8
+    ctx.shadowColor = strokeColor
+    ctx.shadowBlur = currentWidth < 480 ? 4 : 8
     ctx.stroke()
     ctx.shadowBlur = 0
 
-    // 2. Smooth Integrated Muscle Envelope Trace (Subtle secondary overlay)
+    // 2. Smooth Integrated Muscle Envelope Trace
     ctx.beginPath()
     for (let i = 0; i <= points; i++) {
-      const x = (i / points) * width
+      const x = (i / points) * currentWidth
       const normalizedX = (i / points) * Math.PI * 8
       const envY =
         midY -
@@ -122,7 +167,7 @@ export function EMGWaveform({
       if (i === 0) ctx.moveTo(x, envY)
       else ctx.lineTo(x, envY)
     }
-    ctx.strokeStyle = '#16A34A'
+    ctx.strokeStyle = colors.medical
     ctx.lineWidth = 1.2
     ctx.globalAlpha = 0.4
     ctx.setLineDash([4, 4])
@@ -132,7 +177,7 @@ export function EMGWaveform({
     // 3. Shaded Area Under Waveform
     ctx.beginPath()
     for (let i = 0; i <= points; i++) {
-      const x = (i / points) * width
+      const x = (i / points) * currentWidth
       const normalizedX = (i / points) * Math.PI * 8
       const y =
         midY -
@@ -141,15 +186,15 @@ export function EMGWaveform({
       if (i === 0) ctx.moveTo(x, y)
       else ctx.lineTo(x, y)
     }
-    ctx.lineTo(width, height)
+    ctx.lineTo(currentWidth, height)
     ctx.lineTo(0, height)
     ctx.closePath()
-    ctx.fillStyle = color
+    ctx.fillStyle = strokeColor
     ctx.globalAlpha = 0.08 * intensity
     ctx.fill()
 
     ctx.globalAlpha = 1
-  }, [width, height, amp, freq, brst, intensity, color, showGrid])
+  }, [measuredWidth, height, amp, freq, brst, intensity, color, showGrid, theme])
 
   useEffect(() => {
     if (!animate) {
@@ -172,13 +217,13 @@ export function EMGWaveform({
   }, [animate, draw])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={className}
-      style={{ width, height }}
-      aria-hidden="true"
-    />
+    <div ref={containerRef} className={`w-full overflow-hidden ${className}`}>
+      <canvas
+        ref={canvasRef}
+        className="block w-full"
+        style={{ width: '100%', height }}
+        aria-hidden="true"
+      />
+    </div>
   )
 }
-
-

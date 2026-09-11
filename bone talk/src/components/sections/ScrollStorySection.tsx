@@ -3,9 +3,11 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { SplitLines } from '../ui/SplitText'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { EMGWaveform } from '../ui/EMGWaveform'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function ScrollStorySection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const { t } = useLanguage()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
@@ -19,7 +21,7 @@ export function ScrollStorySection() {
   return (
     <section
       ref={sectionRef}
-      id="how-it-works"
+      id="story"
       className="relative min-h-[200vh]"
       aria-label="Communication story"
     >
@@ -34,7 +36,6 @@ export function ScrollStorySection() {
               className="relative w-full max-w-sm"
             >
               <div className="relative aspect-[3/4] overflow-hidden rounded-sm border border-border bg-graphite-elevated">
-                {/* Abstract human portrait - silhouette with emotion */}
                 <div className="absolute inset-0 bg-gradient-to-t from-graphite via-graphite-light to-graphite-elevated" />
                 <div className="absolute inset-x-0 bottom-0 h-3/4">
                   <svg
@@ -44,34 +45,31 @@ export function ScrollStorySection() {
                   >
                     <defs>
                       <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#C4C0BA" />
-                        <stop offset="100%" stopColor="#D4D2CC" />
+                        <stop offset="0%" stopColor="var(--skin-tone-base)" />
+                        <stop offset="100%" stopColor="var(--skin-tone-start)" />
                       </linearGradient>
                     </defs>
-                    {/* Shoulders and head silhouette */}
                     <ellipse cx="150" cy="120" rx="55" ry="65" fill="url(#skinGrad)" />
                     <path
                       d="M80 200 Q150 170 220 200 L240 400 L60 400 Z"
                       fill="url(#skinGrad)"
                     />
-                    {/* Subtle facial features - contemplative */}
-                    <ellipse cx="130" cy="115" rx="8" ry="3" fill="#9CA3AF" opacity="0.5" />
-                    <ellipse cx="170" cy="115" rx="8" ry="3" fill="#9CA3AF" opacity="0.5" />
+                    <ellipse cx="130" cy="115" rx="8" ry="3" fill="var(--skin-feature)" opacity="0.5" />
+                    <ellipse cx="170" cy="115" rx="8" ry="3" fill="var(--skin-feature)" opacity="0.5" />
                     <path
                       d="M140 145 Q150 138 160 145"
-                      stroke="#9CA3AF"
+                      stroke="var(--skin-feature)"
                       strokeWidth="2"
                       fill="none"
                       opacity="0.4"
                     />
-                    {/* Forearm */}
                     <rect
                       x="200"
                       y="220"
                       width="40"
                       height="120"
                       rx="20"
-                      fill="#C4C0BA"
+                      fill="var(--skin-tone-base)"
                       transform="rotate(-15 220 280)"
                     />
                   </svg>
@@ -82,14 +80,14 @@ export function ScrollStorySection() {
 
             <motion.div style={{ opacity: text1Opacity }} className="mt-8 text-center md:mt-0 md:absolute md:bottom-20 md:left-0 md:text-left">
               <SplitLines
-                lines={['WHEN WORDS', 'CANNOT ESCAPE.']}
+                lines={[t.story.title1Line1, t.story.title1Line2]}
                 lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
               />
               <motion.p
                 style={{ opacity: text1Opacity }}
                 className="mt-6 max-w-sm text-sm text-cream-muted md:text-base"
               >
-                Communication should not depend on a voice.
+                {t.story.sub1}
               </motion.p>
             </motion.div>
           </div>
@@ -102,8 +100,8 @@ export function ScrollStorySection() {
             >
               <div className="mb-8 flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-signal/40 to-cyan-signal" />
-                <span className="font-mono text-[10px] tracking-[0.3em] text-cyan-signal uppercase">
-                  EMG Signal
+                <span className="font-mono text-[10px] tracking-[0.3em] text-cyan-signal uppercase font-semibold">
+                  {t.story.emgLabel}
                 </span>
               </div>
 
@@ -117,8 +115,8 @@ export function ScrollStorySection() {
               <div className="mt-12 rounded-sm border border-border bg-glass p-6 backdrop-blur-sm">
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 animate-pulse rounded-full bg-medical" />
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-medical uppercase">
-                    Signal Active
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-medical uppercase font-bold">
+                    {t.story.signalActive}
                   </span>
                 </div>
               </div>
@@ -129,7 +127,7 @@ export function ScrollStorySection() {
               className="mt-12 md:mt-16"
             >
               <SplitLines
-                lines={['BUT MUSCLES', 'STILL SPEAK.']}
+                lines={[t.story.title2Line1, t.story.title2Line2]}
                 lineClassName="font-display text-[clamp(2rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.02em] text-cream"
                 delay={0.2}
               />

@@ -3,6 +3,9 @@ import { ArrowRight, Activity, Cpu, Brain, Volume2, UserCheck } from 'lucide-rea
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { SystemStatus } from '../ui/SystemStatus'
+import { SaakanthaLogo } from '../ui/SaakanthaLogo'
+import { useLanguage } from '../../context/LanguageContext'
 
 const ECOSYSTEM_NODES = [
   { name: 'USER', icon: UserCheck, detail: 'Muscle Movement' },
@@ -13,11 +16,13 @@ const ECOSYSTEM_NODES = [
 ]
 
 export function FinalRevealSection() {
+  const { currentLanguage, t } = useLanguage()
+
   return (
     <section
       id="experience"
       className="relative flex min-h-screen flex-col justify-center py-24 md:py-32"
-      aria-label="BoneTalk product reveal"
+      aria-label="SAAKANTHA product reveal"
     >
       <TechnicalGrid variant="hardware" />
 
@@ -48,11 +53,11 @@ export function FinalRevealSection() {
             </motion.div>
 
             <SplitLines
-              lines={['WHEN THE VOICE', 'IS SILENT,']}
+              lines={[t.final.r1Line1, t.final.r1Line2]}
               lineClassName="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
             />
             <SplitLines
-              lines={['COMMUNICATION', "DOESN'T HAVE TO BE."]}
+              lines={[t.final.r2Line1, t.final.r2Line2]}
               className="mt-3"
               lineClassName="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cyan-signal/90"
               delay={0.25}
@@ -66,10 +71,10 @@ export function FinalRevealSection() {
               className="mt-16 border-l-2 border-cyan-signal pl-6"
             >
               <h3 className="font-display text-4xl font-extrabold tracking-[0.25em] text-cream md:text-6xl">
-                BONETALK
+                SAAKANTHA
               </h3>
               <p className="mt-3 font-mono text-xs tracking-[0.35em] text-cyan-signal uppercase font-medium">
-                AI-Powered Assistive Communication System
+                {t.final.subtitle} ({currentLanguage.nativeName})
               </p>
             </motion.div>
 
@@ -78,13 +83,13 @@ export function FinalRevealSection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
-              className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 md:mt-12"
             >
-              <MagneticButton href="#technology" variant="primary" dataCursor="OPEN">
-                EXPERIENCE BONETALK <ArrowRight size={14} />
+              <MagneticButton href="/experience" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
+                {t.nav.experience} <ArrowRight size={14} />
               </MagneticButton>
-              <MagneticButton href="#hardware" variant="secondary">
-                INSPECT HARDWARE
+              <MagneticButton href="#hardware" variant="secondary" className="w-full sm:w-auto min-h-[44px] justify-center">
+                {t.footer.documentationBtn}
               </MagneticButton>
             </motion.div>
           </div>
@@ -106,10 +111,10 @@ export function FinalRevealSection() {
                   <Activity size={24} className="animate-pulse" />
                 </div>
                 <span className="font-mono text-[10px] tracking-[0.3em] text-cream font-semibold uppercase block">
-                  BoneTalk Core Active
+                  {t.final.coreActive}
                 </span>
                 <span className="font-mono text-[9px] text-medical uppercase block mt-1">
-                  100% Signal Fidelity
+                  {t.final.signalFidelity}
                 </span>
               </div>
             </div>
@@ -118,31 +123,30 @@ export function FinalRevealSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
             >
-              <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_10px_#059669]" />
+              <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-signal shadow-[0_0_10px_var(--color-cyan-signal)]" />
             </motion.div>
           </motion.div>
         </div>
 
-        <footer className="mt-32 flex flex-col items-start justify-between gap-6 border-t border-border pt-10 md:flex-row md:items-center">
-          <div className="flex items-center gap-3">
-            <span className="font-display text-base font-bold tracking-[0.35em] text-cream">
-              BONETALK
-            </span>
+        <SystemStatus className="mt-20" />
+
+        <footer className="mt-24 flex flex-col items-start justify-between gap-6 border-t border-border pt-10 md:flex-row md:items-center">
+          <div className="flex items-center gap-3.5">
+            <SaakanthaLogo iconSize={28} />
             <span className="rounded-full border border-medical/40 bg-medical/10 px-2 py-0.5 font-mono text-[9px] text-medical">
               v2.4 ONLINE
             </span>
           </div>
 
           <p className="text-xs text-cream-muted/70 max-w-md">
-            EMG Sensing + ESP32-S3 + TinyML Neural Inference. Assistive neurotechnology restoring expression.
+            {t.footer.ctaDesc}
           </p>
 
           <span className="font-mono text-[10px] text-cream-muted/50">
-            © 2026 BoneTalk Systems Inc.
+            {t.footer.copyright}
           </span>
         </footer>
       </div>
     </section>
   )
 }
-

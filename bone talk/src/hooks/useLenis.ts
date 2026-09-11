@@ -8,6 +8,9 @@ export function useLenis() {
 
   useEffect(() => {
     if (reduced) return
+    // On mobile touch devices, preserve 100% native momentum scrolling
+    const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+    if (isTouch) return
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -37,7 +40,9 @@ export function useLenis() {
 
 export function scrollToSection(id: string) {
   const el = document.getElementById(id)
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+  if (!el) return
+
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  el.setAttribute('data-section-enter', 'true')
+  window.setTimeout(() => el.removeAttribute('data-section-enter'), 700)
 }

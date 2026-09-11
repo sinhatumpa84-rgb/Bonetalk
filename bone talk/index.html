@@ -1,23 +1,54 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="BoneTalk — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <title>BoneTalk — The Body Has a Voice</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('saakantha-theme') || localStorage.getItem('bonetalk-theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+          return;
+        }
+      } catch (e) { }
+      // Default to LIGHT mode — SAAKANTHA's canonical appearance.
+      document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="description"
+    content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+  
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SAAKANTHA" />
+  <meta property="og:title" content="SAAKANTHA — AI-Powered Assistive Communication" />
+  <meta property="og:description" content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SAAKANTHA — AI-Powered Assistive Communication" />
+  <meta name="twitter:description" content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <title>SAAKANTHA — AI-Powered Assistive Communication</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -1,0 +1,38 @@
+{
+  "task": "isolated",
+  "mode": "utterance",
+  "best_model": "SVM (RBF)",
+  "validation_accuracy": 0.8333333333333334,
+  "test_accuracy": 0.8461538461538461,
+  "macro_f1": 0.8642857142857143,
+  "classes": [
+    "NO",
+    "REST",
+    "THANK YOU",
+    "YES"
+  ],
+  "train_samples": 48,
+  "test_samples": 13,
+  "benchmark_comparison": {
+    "Random Forest": {
+      "val_accuracy": 0.7708333333333333,
+      "val_f1": 0.705654761904762
+    },
+    "SVM (RBF)": {
+      "val_accuracy": 0.8333333333333334,
+      "val_f1": 0.7907242063492063
+    },
+    "Linear SVM": {
+      "val_accuracy": 0.8333333333333334,
+      "val_f1": 0.7878968253968254
+    },
+    "LDA": {
+      "val_accuracy": 0.7916666666666666,
+      "val_f1": 0.7146013708513708
+    },
+    "HistGradientBoosting": {
+      "val_accuracy": 0.3333333333333333,
+      "val_f1": 0.125
+    }
+  }
+}

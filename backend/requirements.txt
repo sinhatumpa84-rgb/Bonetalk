@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+websockets
+numpy
+scipy
+scikit-learn
+joblib
+python-multipart
+pydantic

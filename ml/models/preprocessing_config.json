@@ -1,0 +1,10 @@
+{
+  "original_sampling_rate": 1000,
+  "target_sampling_rate": 800,
+  "window_size_ms": 200,
+  "window_overlap_ms": 100,
+  "notch_freq": 60.0,
+  "notch_harmonics": 3,
+  "highpass_cutoff": 2.0,
+  "task": "closed_vocab"
+}

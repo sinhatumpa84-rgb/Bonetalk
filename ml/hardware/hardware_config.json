@@ -1,0 +1,26 @@
+{
+  "connection_type": "serial",
+  "serial": {
+    "port": "COM3",
+    "baud_rate": 115200,
+    "timeout": 1.0
+  },
+  "websocket": {
+    "url": "ws://192.168.1.100:8080/emg"
+  },
+  "mqtt": {
+    "broker": "192.168.1.100",
+    "port": 1883,
+    "topic": "bonetalk/emg"
+  },
+  "device": {
+    "sampling_rate": 1000,
+    "num_channels": 1,
+    "bits_per_sample": 10,
+    "voltage_range_mv": 3300
+  },
+  "recording": {
+    "default_duration_seconds": 3,
+    "buffer_size": 1024
+  }
+}

@@ -1,112 +1,134 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
-import { NAV_LINKS } from '../../lib/constants'
-import { useScrollY } from '../../hooks/useScrollProgress'
-import { MagneticButton } from '../ui/MagneticButton'
+import { Menu, X, ArrowRight } from 'lucide-react'
 
 export function Navigation() {
-  const scrollY = useScrollY()
-  const scrolled = scrollY > 40
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <>
-      <motion.header
-        className="fixed top-0 right-0 left-0 z-50 px-6 md:px-10"
-        animate={{
-          paddingTop: scrolled ? 12 : 20,
-          paddingBottom: scrolled ? 12 : 20,
-        }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+    <header className="fixed top-0 right-0 left-0 z-50 bg-white/80 border-b border-zinc-200/80 backdrop-blur-md transition-all">
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10"
+        aria-label="Main navigation"
       >
-        <motion.nav
-          className="mx-auto flex max-w-[1400px] items-center justify-between rounded-sm border border-transparent px-4 py-3 md:px-6"
-          animate={{
-            backgroundColor: scrolled ? 'rgba(250, 250, 248, 0.85)' : 'rgba(250, 250, 248, 0)',
-            borderColor: scrolled ? 'rgba(0, 0, 0, 0.06)' : 'rgba(0, 0, 0, 0)',
-            backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
-          }}
-          transition={{ duration: 0.4 }}
-          aria-label="Main navigation"
+        <a
+          href="#"
+          className="font-display text-xl font-bold tracking-tight text-zinc-900 flex items-center gap-2"
         >
+          <span className="h-3 w-3 rounded-full bg-emerald-600 inline-block" />
+          BoneTalk
+        </a>
+
+        <ul className="hidden items-center gap-8 md:flex">
+          <li>
+            <a
+              href="#how-it-works"
+              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              How It Works
+            </a>
+          </li>
+          <li>
+            <a
+              href="#technology"
+              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              Technology
+            </a>
+          </li>
+          <li>
+            <a
+              href="#personalize"
+              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              Personalization
+            </a>
+          </li>
+          <li>
+            <a
+              href="#vision"
+              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              Vision
+            </a>
+          </li>
+        </ul>
+
+        <div className="hidden md:block">
           <a
-            href="#"
-            className="font-display text-sm font-semibold tracking-[0.35em] text-cream md:text-base"
+            href="#technology"
+            className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 transition-all active:scale-[0.98]"
           >
-            BONETALK
+            Get Started <ArrowRight size={16} />
           </a>
+        </div>
 
-          <ul className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="font-body text-xs tracking-wide text-cream-muted transition-colors duration-200 hover:text-cream"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className="hidden lg:block">
-            <MagneticButton href="#experience" variant="ghost" dataCursor="OPEN">
-              EXPERIENCE BONETALK
-            </MagneticButton>
-          </div>
-
-          <button
-            type="button"
-            className="flex items-center justify-center p-2 text-cream lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </motion.nav>
-      </motion.header>
+        <button
+          type="button"
+          className="flex items-center justify-center p-2 text-zinc-700 md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
 
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col bg-graphite/95 pt-24 backdrop-blur-md lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="border-t border-zinc-200 bg-white px-6 py-6 md:hidden"
           >
-            <ul className="flex flex-col gap-6 px-8">
-              {NAV_LINKS.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+            <ul className="flex flex-col gap-4 mb-6">
+              <li>
+                <a
+                  href="#how-it-works"
+                  className="block text-lg font-medium text-zinc-800"
+                  onClick={() => setMobileOpen(false)}
                 >
-                  <a
-                    href={link.href}
-                    className="font-display text-2xl text-cream"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                </motion.li>
-              ))}
+                  How It Works
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#technology"
+                  className="block text-lg font-medium text-zinc-800"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Technology
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#personalize"
+                  className="block text-lg font-medium text-zinc-800"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Personalization
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#vision"
+                  className="block text-lg font-medium text-zinc-800"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Vision
+                </a>
+              </li>
             </ul>
-            <div className="mt-10 px-8">
-              <MagneticButton
-                href="#experience"
-                variant="primary"
-                onClick={() => setMobileOpen(false)}
-              >
-                EXPERIENCE BONETALK →
-              </MagneticButton>
-            </div>
+            <a
+              href="#technology"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 py-3 text-base font-semibold text-white shadow-sm"
+              onClick={() => setMobileOpen(false)}
+            >
+              Get Started <ArrowRight size={18} />
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   )
 }

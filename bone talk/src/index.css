@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-graphite: #FAFAF8;
-  --color-graphite-light: #F2F0EC;
-  --color-graphite-elevated: #E8E6E1;
+  --color-graphite: #FFFFFF;
+  --color-graphite-light: #F8F8F6;
+  --color-graphite-elevated: #F0EFEB;
   --color-cream: #1A1A1A;
-  --color-cream-muted: #6B7280;
-  --color-cyan-signal: #059669;
-  --color-cyan-dim: #047857;
-  --color-medical: #16A34A;
-  --color-medical-dim: #15803D;
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-cream-muted: #71717A;
+  --color-cyan-signal: #16A34A;
+  --color-cyan-dim: #15803D;
+  --color-medical: #059669;
+  --color-medical-dim: #047857;
+  --color-border: rgba(0, 0, 0, 0.06);
+  --color-border-strong: rgba(0, 0, 0, 0.12);
   --color-glass: rgba(0, 0, 0, 0.02);
   --font-display: "Syne", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
@@ -56,7 +56,7 @@ body {
 }
 
 ::selection {
-  background: rgba(5, 150, 105, 0.25);
+  background: rgba(22, 163, 74, 0.15);
   color: var(--color-cream);
 }
 

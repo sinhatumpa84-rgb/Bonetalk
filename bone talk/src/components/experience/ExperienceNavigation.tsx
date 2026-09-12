@@ -30,7 +30,7 @@ export function ExperienceNavigation({ onNavigateHome }: ExperienceNavigationPro
           className="label-technical hover:opacity-70 transition-opacity"
           style={{ color: 'var(--color-cyan-signal)' }}
         >
-          ← SAAKANTHA
+          ← BoneTalk
         </button>
         <div className="label-technical" style={{ color: 'var(--color-cyan-signal)' }}>
           EXHIBITION

@@ -58,7 +58,7 @@ export function Navigation() {
           <a
             href="#"
             className="group flex items-center transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-sm"
-            aria-label="SAAKANTHA Homepage"
+            aria-label="BoneTalk Homepage"
           >
             <SaakanthaLogo iconSize={32} />
           </a>

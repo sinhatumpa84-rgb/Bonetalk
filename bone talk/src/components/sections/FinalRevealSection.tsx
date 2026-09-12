@@ -22,7 +22,7 @@ export function FinalRevealSection() {
     <section
       id="experience"
       className="relative flex min-h-screen flex-col justify-center py-24 md:py-32"
-      aria-label="SAAKANTHA product reveal"
+      aria-label="BoneTalk product reveal"
     >
       <TechnicalGrid variant="hardware" />
 
@@ -71,7 +71,7 @@ export function FinalRevealSection() {
               className="mt-16 border-l-2 border-cyan-signal pl-6"
             >
               <h3 className="font-display text-4xl font-extrabold tracking-[0.25em] text-cream md:text-6xl">
-                SAAKANTHA
+                BoneTalk
               </h3>
               <p className="mt-3 font-mono text-xs tracking-[0.35em] text-cyan-signal uppercase font-medium">
                 {t.final.subtitle} ({currentLanguage.nativeName})

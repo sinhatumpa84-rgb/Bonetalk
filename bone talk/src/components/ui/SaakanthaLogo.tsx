@@ -173,7 +173,7 @@ export function SaakanthaLogo({
       </svg>
 
       <span className="font-display text-base font-bold tracking-[0.22em] text-[var(--color-text-primary)] transition-colors duration-300 sm:text-lg">
-        SAAKANTHA
+        BoneTalk
       </span>
     </div>
   )

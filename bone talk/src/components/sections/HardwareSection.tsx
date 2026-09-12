@@ -126,7 +126,7 @@ export function HardwareSection() {
             <svg
               viewBox="0 0 600 400"
               className="h-full w-full"
-              aria-label="SAAKANTHA hardware exploded view diagram"
+              aria-label="BoneTalk hardware exploded view diagram"
             >
               {componentPositions.slice(0, -1).map((pos, i) => {
                 const next = componentPositions[i + 1]

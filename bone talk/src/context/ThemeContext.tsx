@@ -9,8 +9,8 @@ import {
 
 export type Theme = 'light' | 'dark'
 
-const STORAGE_KEY = 'saakantha-theme'
-const LEGACY_STORAGE_KEY = 'bonetalk-theme'
+const STORAGE_KEY = 'bonetalk-theme'
+const LEGACY_STORAGE_KEY = 'saakantha-theme'
 
 /** Safe localStorage reader with exception handling */
 function safeGetItem(key: string): string | null {

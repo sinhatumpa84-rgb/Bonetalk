@@ -21,7 +21,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log structured error to console (in production, would route to secure log aggregator)
     if (import.meta.env.DEV) {
-      console.error('[SAAKANTHA Global Error Boundary Caught]:', error, errorInfo)
+      console.error('[BoneTalk Global Error Boundary Caught]:', error, errorInfo)
     }
   }
 

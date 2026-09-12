@@ -13,8 +13,8 @@ interface LanguageContextType {
   t: TranslationSchema
 }
 
-const STORAGE_KEY = 'saakantha-language'
-const LEGACY_STORAGE_KEY = 'bonetalk-language'
+const STORAGE_KEY = 'bonetalk-language'
+const LEGACY_STORAGE_KEY = 'saakantha-language'
 
 const defaultLang = SUPPORTED_LANGUAGES.find((l) => l.code === 'en') || SUPPORTED_LANGUAGES[0]
 

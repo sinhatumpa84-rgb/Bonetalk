@@ -6,13 +6,13 @@
   <script>
     (function () {
       try {
-        var stored = localStorage.getItem('saakantha-theme') || localStorage.getItem('bonetalk-theme');
+        var stored = localStorage.getItem('bonetalk-theme') || localStorage.getItem('saakantha-theme');
         if (stored === 'light' || stored === 'dark') {
           document.documentElement.setAttribute('data-theme', stored);
           return;
         }
       } catch (e) { }
-      // Default to LIGHT mode — SAAKANTHA's canonical appearance.
+      // Default to LIGHT mode — BoneTalk's canonical appearance.
       document.documentElement.setAttribute('data-theme', 'light');
     })();
   </script>
@@ -27,23 +27,23 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="description"
-    content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+    content="BoneTalk — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
   
   <!-- Open Graph / Social SEO -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="SAAKANTHA" />
-  <meta property="og:title" content="SAAKANTHA — AI-Powered Assistive Communication" />
-  <meta property="og:description" content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+  <meta property="og:site_name" content="BoneTalk" />
+  <meta property="og:title" content="BoneTalk — AI-Powered Assistive Communication" />
+  <meta property="og:description" content="BoneTalk — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SAAKANTHA — AI-Powered Assistive Communication" />
-  <meta name="twitter:description" content="SAAKANTHA — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
+  <meta name="twitter:title" content="BoneTalk — AI-Powered Assistive Communication" />
+  <meta name="twitter:description" content="BoneTalk — AI-powered assistive communication using EMG muscle signals, ESP32-S3, and pattern recognition." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
-  <title>SAAKANTHA — AI-Powered Assistive Communication</title>
+  <title>BoneTalk — AI-Powered Assistive Communication</title>
 </head>
 
 <body>

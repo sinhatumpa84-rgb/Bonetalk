@@ -67,7 +67,7 @@
     />
   </g>
 
-  <!-- Wordmark "SAAKANTHA" -->
+  <!-- Wordmark "BoneTalk" -->
   <text
     x="128"
     y="65"
@@ -76,5 +76,5 @@
     font-weight="800"
     letter-spacing="0.16em"
     fill="#222b35"
-  >SAAKANTHA</text>
+  >BoneTalk</text>
 </svg>

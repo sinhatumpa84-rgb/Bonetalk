@@ -23,7 +23,7 @@ function HeroFallback() {
       <div className="relative aspect-square w-full max-w-[420px] p-4">
         <div className="absolute inset-0 rounded-full bg-cyan-signal/10 blur-3xl" />
 
-        <svg viewBox="0 0 400 400" className="h-full w-full" aria-label="SAAKANTHA Neck Wearable Diagram">
+        <svg viewBox="0 0 400 400" className="h-full w-full" aria-label="BoneTalk Neck Wearable Diagram">
           <defs>
             <radialGradient id="neckGlow" cx="50%" cy="40%" r="50%">
               <stop offset="0%" stopColor="var(--color-cyan-signal)" stopOpacity="0.25" />
@@ -298,7 +298,7 @@ export function HeroSection() {
 
             {initSequence < 3 && (
               <div className="absolute top-2 left-2 z-30 hidden md:block font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
-                <div>SAAKANTHA SIGNAL ENGINE INITIALIZING...</div>
+                <div>BoneTalk SIGNAL ENGINE INITIALIZING...</div>
                 <div className="text-cream-muted text-[8px] mt-1 truncate">
                   EMG SENSOR ARRAY ...... {initSequence >= 1 ? 'READY ✓' : 'CALIBRATING'}
                 </div>

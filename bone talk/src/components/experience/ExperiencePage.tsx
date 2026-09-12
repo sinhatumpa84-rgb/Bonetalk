@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { EXHIBITION_PRODUCTS } from './data/exhibitionProducts'
 import type { ExhibitionProduct } from './data/exhibitionProducts'
+import { BoneTalkAssist } from './BoneTalkAssist'
 
 interface ExperiencePageProps {
   onNavigateHome?: () => void
@@ -83,7 +84,7 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
           className="group flex items-center gap-3 text-xs font-mono tracking-widest text-neutral-400 hover:text-white transition-colors duration-200"
         >
           <span className="text-emerald-400 group-hover:-translate-x-1 transition-transform duration-200">←</span>
-          <span>SAAKANTHA</span>
+          <span>BoneTalk</span>
         </button>
 
         <div className="flex items-center gap-4 text-xs font-mono">
@@ -102,7 +103,7 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
         </div>
         
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white uppercase mb-6 leading-tight">
-          THE SAAKANTHA <br />
+          THE BoneTalk <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-400">
             COLLECTION
           </span>
@@ -143,7 +144,7 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
       {/* ── Footer ── */}
       <footer className="relative z-10 border-t border-white/[0.08] bg-[#040608] py-12 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-neutral-500">
         <div>
-          <span>© {new Date().getFullYear()} SAAKANTHA BIOTECH. ALL HARDWARE PHOTOGRAPHS RECORDED IN LAB.</span>
+          <span>© {new Date().getFullYear()} BoneTalk BIOTECH. ALL HARDWARE PHOTOGRAPHS RECORDED IN LAB.</span>
         </div>
         <button
           onClick={handleNavigateHome}
@@ -153,6 +154,9 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
           <span>↗</span>
         </button>
       </footer>
+
+      {/* ── BoneTalk Assist Entry Point ── */}
+      <BoneTalkAssist />
     </div>
   )
 }
@@ -440,7 +444,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ product, onClose }) => {
         </div>
 
         <a
-          href={`mailto:saakantha@bonetalk.in?subject=Enquiry%20regarding%20SAAKANTHA%20${encodeURIComponent(product.name)}`}
+          href={`mailto:concierge@bonetalk.in?subject=Enquiry%20regarding%20BoneTalk%20${encodeURIComponent(product.name)}`}
           className="text-xs font-mono uppercase tracking-widest text-neutral-300 hover:text-emerald-300 underline underline-offset-4 transition-colors"
         >
           CONTACT CONCIERGE ↗

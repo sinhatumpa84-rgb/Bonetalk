@@ -9,6 +9,7 @@ export type MqttConnectionStatus =
   | 'CONNECTING'
   | 'DISCONNECTED'
   | 'RECONNECTING'
+  | 'ERROR'
 
 /**
  * Unified Device Telemetry & Sensor Message Schema
@@ -241,6 +242,7 @@ export class MqttService {
         const msg = err?.message || 'MQTT Connection Error'
         console.warn('[MQTT Client Error]:', msg)
         this.errorMessage = msg
+        this.setStatus('ERROR')
         this.handleReconnect()
       })
 

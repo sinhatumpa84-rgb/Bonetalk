@@ -24,7 +24,7 @@ interface RealtimeConnectionIndicatorProps {
 
 export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorProps> = ({
   className = '',
-  compact = false,
+  compact: _compact = false,
   showDetailsPopover = true,
 }) => {
   const [mqttDetails, setMqttDetails] = useState<ConnectionDetails>(() => mqttService.getDetails())
@@ -88,6 +88,13 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
           border: 'border-amber-500/30',
           bg: 'bg-amber-500/10',
         }
+      case 'ERROR':
+        return {
+          dot: 'bg-rose-500',
+          text: 'text-rose-700 dark:text-rose-400',
+          border: 'border-rose-500/30',
+          bg: 'bg-rose-500/10',
+        }
       case 'DISCONNECTED':
       default:
         return {
@@ -141,7 +148,7 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
       >
         <span className={`h-2 w-2 rounded-full ${colors.dot}`} aria-hidden="true" />
         <span className="font-semibold tracking-wider uppercase text-[11px]">
-          {compact ? status : `MQTT: ${status}`}
+          MQTT: {status}
         </span>
         {showDetailsPopover && (
           <ChevronDown

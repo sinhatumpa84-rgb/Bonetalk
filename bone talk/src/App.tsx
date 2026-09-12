@@ -12,24 +12,28 @@ import { HumanConnectionSection } from './components/sections/HumanConnectionSec
 import { FinalRevealSection } from './components/sections/FinalRevealSection'
 import { SignalBridge } from './components/motion/SignalBridge'
 import ExperiencePage from './components/experience/ExperiencePage'
+import { CheckoutPage } from './components/checkout/CheckoutPage'
 import { useLenis } from './hooks/useLenis'
 
 import { OrderProvider } from './context/OrderContext'
-import { OrderModal } from './components/order/OrderModal'
 
-function isExperiencePath(): boolean {
-  if (typeof window === 'undefined') return false
+type AppRoute = 'home' | 'experience' | 'checkout'
+
+function getRoute(): AppRoute {
+  if (typeof window === 'undefined') return 'home'
   const path = window.location.pathname
-  return path === '/experience' || path === '/experience/'
+  if (path === '/experience' || path === '/experience/') return 'experience'
+  if (path === '/checkout' || path === '/checkout/') return 'checkout'
+  return 'home'
 }
 
 function App() {
   useLenis()
-  const [inExperience, setInExperience] = useState(() => isExperiencePath())
+  const [route, setRoute] = useState<AppRoute>(() => getRoute())
 
   useEffect(() => {
     const handleLocationChange = () => {
-      setInExperience(isExperiencePath())
+      setRoute(getRoute())
     }
 
     window.addEventListener('popstate', handleLocationChange)
@@ -46,9 +50,24 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
+  const handleNavigateBack = () => {
+    const currentPath = window.location.pathname
+    window.history.back()
+    // Fallback if there is no previous internal history entry
+    setTimeout(() => {
+      if (window.location.pathname === currentPath) {
+        window.history.pushState({}, '', '/experience')
+        window.dispatchEvent(new PopStateEvent('popstate'))
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      }
+    }, 150)
+  }
+
   return (
     <OrderProvider>
-      {inExperience ? (
+      {route === 'checkout' ? (
+        <CheckoutPage onNavigateBack={handleNavigateBack} />
+      ) : route === 'experience' ? (
         <ExperiencePage onNavigateHome={handleNavigateHome} />
       ) : (
         <>
@@ -85,7 +104,6 @@ function App() {
           </main>
         </>
       )}
-      <OrderModal />
     </OrderProvider>
   )
 }

@@ -75,10 +75,41 @@ export function loadRazorpayScript(): Promise<boolean> {
   }
 
   scriptLoadingPromise = new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true)
+      return
+    }
+
     const existingScript = document.querySelector(`script[src="${RAZORPAY_SCRIPT_SRC}"]`)
     if (existingScript) {
-      existingScript.addEventListener('load', () => resolve(true))
-      existingScript.addEventListener('error', () => resolve(false))
+      let attempts = 0
+      const checkInterval = setInterval(() => {
+        attempts++
+        if (window.Razorpay) {
+          clearInterval(checkInterval)
+          resolve(true)
+        } else if (attempts > 30) {
+          clearInterval(checkInterval)
+          resolve(false)
+        }
+      }, 100)
+
+      existingScript.addEventListener(
+        'load',
+        () => {
+          clearInterval(checkInterval)
+          resolve(true)
+        },
+        { once: true }
+      )
+      existingScript.addEventListener(
+        'error',
+        () => {
+          clearInterval(checkInterval)
+          resolve(false)
+        },
+        { once: true }
+      )
       return
     }
 

@@ -5,6 +5,10 @@ import { modelService } from '../services/modelService'
 import type { ModelStatusResponse, ModelSystemStatus } from '../services/modelService'
 import { speechService } from '../../lib/speechService'
 
+import { webSerialService } from '../../services/webSerialService'
+import type { WebSerialDetails } from '../../services/webSerialService'
+import type { DevicePresenceStatus, DeviceMetadata } from '../services/mqttService'
+
 export interface PredictionHistoryEntry {
   id: string
   time: string
@@ -86,6 +90,21 @@ interface ModelControlContextValue {
   disconnectHardware: () => void
   sendCommand: (cmd: string, args?: Record<string, unknown>) => boolean
 
+  // Real Device Presence, Handshake & ACK
+  devicePresence: DevicePresenceStatus
+  handshakeStatus: 'SUCCESS' | 'PENDING' | 'FAILED' | 'IDLE'
+  lastHandshakeLatency: number | null
+  lastHeartbeatAge: number | null
+  deviceMetadata: DeviceMetadata
+  systemReadiness: 'READY' | 'SYSTEM NOT READY'
+  executeHandshake: () => Promise<{ success: boolean; latencyMs: number; error?: string }>
+  sendCommandWithAck: (cmd: string, args?: Record<string, unknown>, timeoutMs?: number) => Promise<{ success: boolean; ack?: Record<string, unknown>; error?: string }>
+
+  // Real Web Serial
+  serialDetails: WebSerialDetails
+  connectSerial: (baudRate?: number) => Promise<boolean>
+  disconnectSerial: () => Promise<void>
+
   // Live telemetry (strictly real, null when disconnected)
   hasSensorData: boolean
   rawEmgSamples: number[]
@@ -110,10 +129,10 @@ interface ModelControlContextValue {
 
   // Pipeline Statuses
   pipeline: {
-    hardware: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING'
-    sensors: 'RECEIVING' | 'WAITING' | 'DISCONNECTED'
-    processing: 'ACTIVE' | 'WAITING' | 'DISCONNECTED'
-    mqtt: 'CONNECTED' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR'
+    hardware: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE'
+    sensors: 'RECEIVING' | 'WAITING' | 'DISCONNECTED' | 'IDLE'
+    processing: 'ACTIVE' | 'WAITING' | 'DISCONNECTED' | 'STANDBY' | 'OFFLINE'
+    mqtt: 'CONNECTED' | 'BROKER READY — NO DEVICE' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR'
     model: 'READY' | 'LOADING' | 'UNAVAILABLE' | 'ERROR'
     prediction: 'ACTIVE' | 'WAITING' | 'IDLE'
     output: 'READY' | 'SPEAKING' | 'IDLE'
@@ -186,11 +205,67 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [connectionStatus, setConnectionStatus] = useState<MqttConnectionStatus>('Disconnected')
   const [connectionError, setConnectionError] = useState<string | null>(null)
 
+  // ── Real Hardware Presence, Handshake & ACK State ──
+  const [devicePresence, setDevicePresence] = useState<DevicePresenceStatus>('OFFLINE')
+  const [handshakeStatus, setHandshakeStatus] = useState<'SUCCESS' | 'PENDING' | 'FAILED' | 'IDLE'>('IDLE')
+  const [lastHandshakeLatency, setLastHandshakeLatency] = useState<number | null>(null)
+  const [deviceMetadata, setDeviceMetadata] = useState<DeviceMetadata>({
+    firmware: undefined,
+    modelVersion: undefined,
+    lastHeartbeatTimestamp: null,
+    deviceId: settings.deviceId,
+  })
+  const [lastHeartbeatAge, setLastHeartbeatAge] = useState<number | null>(null)
+
+  // ── Real Web Serial State ──
+  const [serialDetails, setSerialDetails] = useState<WebSerialDetails>(() => webSerialService.getDetails())
+
   useEffect(() => {
-    const unsub = mqttService.onStatusChange((status, error) => {
+    const unsubSerial = webSerialService.onStatusChange(setSerialDetails)
+    return unsubSerial
+  }, [])
+
+  const connectSerial = useCallback(async (baudRate = 115200) => {
+    return webSerialService.connect(baudRate)
+  }, [])
+
+  const disconnectSerial = useCallback(async () => {
+    return webSerialService.disconnect()
+  }, [])
+
+  // Sync configured device ID
+  useEffect(() => {
+    mqttService.setConfiguredDeviceId(settings.deviceId)
+  }, [settings.deviceId])
+
+  // Recalculate lastHeartbeatAge live every 1 second
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      if (deviceMetadata.lastHeartbeatTimestamp) {
+        const ageSec = Math.max(0, Math.round((Date.now() - deviceMetadata.lastHeartbeatTimestamp) / 1000))
+        setLastHeartbeatAge(ageSec)
+      } else {
+        setLastHeartbeatAge(null)
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [deviceMetadata.lastHeartbeatTimestamp])
+
+  useEffect(() => {
+    const unsub = mqttService.onStatusChange((status, error, details) => {
       setConnectionStatus(status)
       if (error) setConnectionError(error)
       else if (status === 'Connected') setConnectionError(null)
+
+      if (details) {
+        setDevicePresence(details.devicePresence)
+        setDeviceMetadata(details.deviceMetadata)
+        if (details.handshakeVerified) {
+          setHandshakeStatus('SUCCESS')
+        } else if (details.devicePresence === 'OFFLINE') {
+          setHandshakeStatus('IDLE')
+        }
+      }
     })
     return unsub
   }, [])
@@ -209,6 +284,10 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const disconnectHardware = useCallback(() => {
     mqttService.disconnect()
+    setDevicePresence('OFFLINE')
+    setHandshakeStatus('IDLE')
+    setLastHandshakeLatency(null)
+    setLastHeartbeatAge(null)
     setHasSensorData(false)
     setLatestEmgValue(null)
     setDeviceHealth({
@@ -230,6 +309,31 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const sendCommand = useCallback((cmd: string, args: Record<string, unknown> = {}) => {
     return mqttService.sendCommand(cmd, args)
   }, [])
+
+  const executeHandshake = useCallback(async () => {
+    setHandshakeStatus('PENDING')
+    try {
+      const res = await mqttService.handshake(settings.deviceId, 5000)
+      if (res.success) {
+        setHandshakeStatus('SUCCESS')
+        setLastHandshakeLatency(res.latencyMs)
+      } else {
+        setHandshakeStatus('FAILED')
+      }
+      return res
+    } catch (err: unknown) {
+      setHandshakeStatus('FAILED')
+      const msg = err instanceof Error ? err.message : 'Handshake failed'
+      return { success: false, latencyMs: 0, error: msg }
+    }
+  }, [settings.deviceId])
+
+  const sendCommandWithAck = useCallback(
+    async (cmd: string, args: Record<string, unknown> = {}, timeoutMs = 5000) => {
+      return mqttService.sendCommandWithAck(cmd, { device_id: settings.deviceId, ...args }, timeoutMs)
+    },
+    [settings.deviceId]
+  )
 
   // ── Real Live Telemetry ──
   const [hasSensorData, setHasSensorData] = useState<boolean>(false)
@@ -533,33 +637,45 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
     [addPredictionHistory, settings.autoSpeak, settings.voiceOutputEnabled, settings.speechRate]
   )
 
+  // ── Combined System Readiness: Requires MQTT Connected + Device Online + Handshake Success + Model Ready ──
+  const isSystemReady =
+    connectionStatus === 'Connected' &&
+    devicePresence === 'ONLINE' &&
+    handshakeStatus === 'SUCCESS' &&
+    modelStatus === 'Ready'
+  const systemReadiness: 'READY' | 'SYSTEM NOT READY' = isSystemReady ? 'READY' : 'SYSTEM NOT READY'
+
   // ── Compute Real 7-Stage Pipeline Status ──
   const pipeline = {
-    hardware: (connectionStatus === 'Connected'
+    // Hardware stage is strictly CONNECTED ONLY if ESP32 device presence is ONLINE (verified heartbeat)
+    hardware: (devicePresence === 'ONLINE'
       ? 'CONNECTED'
       : connectionStatus === 'Connecting...' || connectionStatus === 'Reconnecting'
       ? 'CONNECTING'
-      : 'DISCONNECTED') as 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING',
+      : 'OFFLINE') as 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE',
 
     sensors: (hasSensorData
       ? 'RECEIVING'
-      : connectionStatus === 'Connected'
+      : devicePresence === 'ONLINE'
       ? 'WAITING'
-      : 'DISCONNECTED') as 'RECEIVING' | 'WAITING' | 'DISCONNECTED',
+      : 'IDLE') as 'RECEIVING' | 'WAITING' | 'DISCONNECTED' | 'IDLE',
 
     processing: (hasSensorData
       ? 'ACTIVE'
-      : connectionStatus === 'Connected'
-      ? 'WAITING'
-      : 'DISCONNECTED') as 'ACTIVE' | 'WAITING' | 'DISCONNECTED',
+      : devicePresence === 'ONLINE'
+      ? 'STANDBY'
+      : 'OFFLINE') as 'ACTIVE' | 'WAITING' | 'DISCONNECTED' | 'STANDBY' | 'OFFLINE',
 
+    // Pipeline MQTT step: ONLY 'CONNECTED' (green) if broker is connected AND physical device is online & verified
     mqtt: (connectionStatus === 'Connected'
-      ? 'CONNECTED'
+      ? devicePresence === 'ONLINE' && handshakeStatus === 'SUCCESS'
+        ? 'CONNECTED'
+        : 'BROKER READY — NO DEVICE'
       : connectionStatus === 'Connecting...' || connectionStatus === 'Reconnecting'
       ? 'CONNECTING'
       : connectionStatus === 'Connection Error'
       ? 'ERROR'
-      : 'DISCONNECTED') as 'CONNECTED' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR',
+      : 'DISCONNECTED') as 'CONNECTED' | 'BROKER READY — NO DEVICE' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR',
 
     model: (modelStatus === 'Ready'
       ? 'READY'
@@ -599,6 +715,19 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
         connectHardware,
         disconnectHardware,
         sendCommand,
+
+        devicePresence,
+        handshakeStatus,
+        lastHandshakeLatency,
+        lastHeartbeatAge,
+        deviceMetadata,
+        systemReadiness,
+        executeHandshake,
+        sendCommandWithAck,
+
+        serialDetails,
+        connectSerial,
+        disconnectSerial,
 
         hasSensorData,
         rawEmgSamples,

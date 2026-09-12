@@ -63,16 +63,25 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
   }, [isOpen])
 
   const status: MqttConnectionStatus = mqttDetails.status
+  const isDeviceVerified = mqttDetails.devicePresence === 'ONLINE' && mqttDetails.handshakeVerified
 
-  // Color mapping based on exact 4 states
+  // Color mapping based on exact states - Green ONLY when real device is verified
   const getStatusColor = (s: MqttConnectionStatus) => {
     switch (s) {
       case 'CONNECTED':
+        if (isDeviceVerified) {
+          return {
+            dot: 'bg-emerald-500',
+            text: 'text-emerald-700 dark:text-emerald-400',
+            border: 'border-emerald-500/30',
+            bg: 'bg-emerald-500/10',
+          }
+        }
         return {
-          dot: 'bg-emerald-500',
-          text: 'text-emerald-700 dark:text-emerald-400',
-          border: 'border-emerald-500/30',
-          bg: 'bg-emerald-500/10',
+          dot: 'bg-amber-500',
+          text: 'text-amber-700 dark:text-amber-400',
+          border: 'border-amber-500/30',
+          bg: 'bg-amber-500/10',
         }
       case 'CONNECTING':
         return {
@@ -148,7 +157,11 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
       >
         <span className={`h-2 w-2 rounded-full ${colors.dot}`} aria-hidden="true" />
         <span className="font-semibold tracking-wider uppercase text-[11px]">
-          MQTT: {status}
+          {status === 'CONNECTED'
+            ? isDeviceVerified
+              ? 'DEVICE: ONLINE'
+              : 'BROKER READY — NO DEVICE'
+            : `MQTT: ${status}`}
         </span>
         {showDetailsPopover && (
           <ChevronDown
@@ -242,53 +255,65 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
             <div className="flex items-center justify-between">
               <span className="text-cream-muted text-[10px] uppercase tracking-wider flex items-center gap-1.5">
                 <Activity size={12} />
-                Physical Device
+                Physical Device Presence
               </span>
               <span
                 className={`font-bold text-[10px] uppercase px-1.5 py-0.5 rounded ${
-                  mqttDetails.deviceStatus === 'DEVICE ACTIVE'
+                  mqttDetails.devicePresence === 'ONLINE'
                     ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
                     : 'bg-stone-500/15 text-stone-400 border border-stone-500/20'
                 }`}
               >
-                {mqttDetails.deviceStatus}
+                {mqttDetails.devicePresence || 'OFFLINE'}
               </span>
             </div>
 
-            {mqttDetails.lastMessage ? (
-              <div className="space-y-1 pt-1 border-t border-border/50 text-[10px] text-cream">
+            <div className="space-y-1 pt-1 border-t border-border/50 text-[10px] text-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-cream-muted">Device ID:</span>
+                <span className="font-semibold text-cyan-signal">
+                  {mqttDetails.deviceMetadata?.deviceId || mqttDetails.lastMessage?.device_id || 'BONE-01'}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-cream-muted">Handshake:</span>
+                <span className={mqttDetails.handshakeVerified ? 'text-emerald-500 font-semibold' : 'text-stone-400'}>
+                  {mqttDetails.handshakeVerified ? 'VERIFIED' : 'UNVERIFIED'}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-cream-muted">Last Heartbeat:</span>
+                <span>{mqttDetails.lastHeartbeatTime || 'None'}</span>
+              </div>
+              {mqttDetails.deviceMetadata?.firmware && (
                 <div className="flex items-center justify-between">
-                  <span className="text-cream-muted">Device ID:</span>
-                  <span className="font-semibold text-cyan-signal">{mqttDetails.lastMessage.device_id}</span>
+                  <span className="text-cream-muted">Firmware:</span>
+                  <span>{mqttDetails.deviceMetadata.firmware}</span>
                 </div>
-                {mqttDetails.lastMessage.noise_level !== null && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-cream-muted">Noise Level:</span>
-                    <span>{mqttDetails.lastMessage.noise_level} dB</span>
-                  </div>
-                )}
-                {mqttDetails.lastMessage.speech_detected !== null && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-cream-muted">Speech Detected:</span>
-                    <span>{mqttDetails.lastMessage.speech_detected ? 'YES' : 'NO'}</span>
-                  </div>
-                )}
-                {mqttDetails.lastMessage.vibration !== null && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-cream-muted">Vibration:</span>
-                    <span>{mqttDetails.lastMessage.vibration ? 'ACTIVE' : 'IDLE'}</span>
-                  </div>
-                )}
-                <div className="flex items-center justify-between text-[9px] text-cream-muted pt-1">
-                  <span>Last Message:</span>
-                  <span>{mqttDetails.lastMessageTime || 'None'}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="text-[10px] text-cream-muted/70 italic py-0.5">
-                No real telemetry packets received yet.
-              </div>
-            )}
+              )}
+              {mqttDetails.lastMessage && (
+                <>
+                  {mqttDetails.lastMessage.noise_level !== null && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-cream-muted">Noise Level:</span>
+                      <span>{mqttDetails.lastMessage.noise_level} dB</span>
+                    </div>
+                  )}
+                  {mqttDetails.lastMessage.speech_detected !== null && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-cream-muted">Speech Detected:</span>
+                      <span>{mqttDetails.lastMessage.speech_detected ? 'YES' : 'NO'}</span>
+                    </div>
+                  )}
+                  {mqttDetails.lastMessage.vibration !== null && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-cream-muted">Vibration:</span>
+                      <span>{mqttDetails.lastMessage.vibration ? 'ACTIVE' : 'IDLE'}</span>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
 
             <div className="flex items-center justify-between text-[9px] text-cream-muted pt-1 border-t border-border/40">
               <span>Last Connected:</span>
@@ -300,14 +325,20 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
           {testResult && (
             <div
               className={`rounded-sm p-2 text-[10px] border ${
-                testResult.success
+                testResult.step === 'TELEMETRY_RECEIVED'
                   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
-                  : 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
+                  : testResult.step === 'BROKER_REACHABLE_NO_DEVICE_DETECTED'
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
+                  : 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400'
               }`}
             >
               <div className="font-bold flex items-center gap-1">
-                {testResult.success ? <CheckCircle2 size={11} /> : <AlertCircle size={11} />}
-                <span>DIAGNOSTIC: {testResult.step}</span>
+                {testResult.step === 'TELEMETRY_RECEIVED' ? (
+                  <CheckCircle2 size={11} />
+                ) : (
+                  <AlertCircle size={11} />
+                )}
+                <span>DIAGNOSTIC: {testResult.step.replace(/_/g, ' ')}</span>
               </div>
               <p className="mt-0.5 leading-relaxed font-sans">{testResult.details}</p>
             </div>

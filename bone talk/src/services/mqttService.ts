@@ -107,15 +107,28 @@ function sanitizeObject<T>(obj: unknown): T | null {
   return clean as T
 }
 
+export type DevicePresenceStatus = 'ONLINE' | 'OFFLINE'
+
+export interface DeviceMetadata {
+  firmware?: string
+  modelVersion?: string
+  lastHeartbeatTimestamp: number | null
+  deviceId: string
+}
+
 export interface ConnectionDetails {
   status: MqttConnectionStatus
   brokerUrl: string
   subscribedTopics: string[]
   deviceStatus: 'DEVICE ACTIVE' | 'DEVICE OFFLINE'
+  devicePresence: DevicePresenceStatus
+  lastHeartbeatTime: string | null
   lastConnectionTime: string | null
   lastMessageTime: string | null
   lastMessage: ValidatedDeviceMessage | null
   errorMessage: string | null
+  handshakeVerified: boolean
+  deviceMetadata: DeviceMetadata
 }
 
 export class MqttService {
@@ -132,6 +145,41 @@ export class MqttService {
   private reconnectAttempt = 0
   private reconnectTimer: number | null = null
 
+  // Real Device Presence & Heartbeat Tracking
+  private devicePresence: DevicePresenceStatus = 'OFFLINE'
+  private lastHeartbeatTime: string | null = null
+  private lastHeartbeatTimestamp: number | null = null
+  private heartbeatTimeoutTimer: number | null = null
+  private initialDeviceWaitTimer: number | null = null
+  private handshakeVerified = false
+  private configuredDeviceId: string = import.meta.env.VITE_DEVICE_ID || 'BONE-01'
+  private deviceMetadata: DeviceMetadata = {
+    firmware: undefined,
+    modelVersion: undefined,
+    lastHeartbeatTimestamp: null,
+    deviceId: import.meta.env.VITE_DEVICE_ID || 'BONE-01',
+  }
+
+  // Real Handshake & ACK tracking maps keyed by unique request_id
+  private pendingHandshakes = new Map<
+    string,
+    {
+      resolve: (res: { success: boolean; latencyMs: number; error?: string }) => void
+      reject: (err: Error) => void
+      timeoutTimer: number
+      startTime: number
+    }
+  >()
+
+  private pendingAcks = new Map<
+    string,
+    {
+      resolve: (ack: Record<string, unknown>) => void
+      reject: (err: Error) => void
+      timeoutTimer: number
+    }
+  >()
+
   // Listeners
   private statusListeners = new Set<(details: ConnectionDetails) => void>()
   private messageListeners = new Set<(message: ValidatedDeviceMessage) => void>()
@@ -146,21 +194,38 @@ export class MqttService {
     return this.status
   }
 
+  public getDevicePresence(): DevicePresenceStatus {
+    return this.devicePresence
+  }
+
+  public isHandshakeVerified(): boolean {
+    return this.handshakeVerified
+  }
+
+  public setConfiguredDeviceId(id: string): void {
+    if (id && id.trim()) {
+      this.configuredDeviceId = id.trim()
+      this.deviceMetadata.deviceId = this.configuredDeviceId
+      this.notifyStatusListeners()
+    }
+  }
+
   public getDetails(): ConnectionDetails {
-    const isDeviceActive =
-      this.status === 'CONNECTED' &&
-      this.lastMessage !== null &&
-      Date.now() - (this.lastMessage.timestamp > 1e12 ? this.lastMessage.timestamp : this.lastMessage.timestamp * 1000) < 15000
+    const isDeviceActive = this.devicePresence === 'ONLINE'
 
     return {
       status: this.status,
       brokerUrl: this.activeConfig?.brokerUrl || '',
       subscribedTopics: Array.from(this.subscribedTopics),
       deviceStatus: isDeviceActive ? 'DEVICE ACTIVE' : 'DEVICE OFFLINE',
+      devicePresence: this.devicePresence,
+      lastHeartbeatTime: this.lastHeartbeatTime,
       lastConnectionTime: this.lastConnectionTime,
       lastMessageTime: this.lastMessageTime,
       lastMessage: this.lastMessage,
       errorMessage: this.errorMessage,
+      handshakeVerified: this.handshakeVerified,
+      deviceMetadata: { ...this.deviceMetadata },
     }
   }
 
@@ -230,6 +295,19 @@ export class MqttService {
         topics.forEach((t) => {
           this.subscribe(t, config.qos || 0)
         })
+
+        // Heartbeat timeout check: If no real ESP32 packet is received within 8 seconds
+        // of broker connection, auto-revert / lock devicePresence to OFFLINE
+        if (this.initialDeviceWaitTimer) {
+          clearTimeout(this.initialDeviceWaitTimer)
+        }
+        this.initialDeviceWaitTimer = window.setTimeout(() => {
+          if (this.devicePresence !== 'ONLINE') {
+            this.devicePresence = 'OFFLINE'
+            this.handshakeVerified = false
+            this.notifyStatusListeners()
+          }
+        }, 8000)
       })
 
       // ── Event: Reconnect ────────────────────────────────────────────────────
@@ -271,6 +349,32 @@ export class MqttService {
       this.reconnectTimer = null
     }
 
+    if (this.heartbeatTimeoutTimer) {
+      clearTimeout(this.heartbeatTimeoutTimer)
+      this.heartbeatTimeoutTimer = null
+    }
+
+    if (this.initialDeviceWaitTimer) {
+      clearTimeout(this.initialDeviceWaitTimer)
+      this.initialDeviceWaitTimer = null
+    }
+
+    this.devicePresence = 'OFFLINE'
+    this.handshakeVerified = false
+
+    // Reject all pending handshakes and ACKs
+    this.pendingHandshakes.forEach((h) => {
+      clearTimeout(h.timeoutTimer)
+      h.reject(new Error('MQTT disconnected'))
+    })
+    this.pendingHandshakes.clear()
+
+    this.pendingAcks.forEach((a) => {
+      clearTimeout(a.timeoutTimer)
+      a.reject(new Error('MQTT disconnected'))
+    })
+    this.pendingAcks.clear()
+
     if (this.client) {
       try {
         this.client.removeAllListeners()
@@ -283,6 +387,166 @@ export class MqttService {
 
     this.subscribedTopics.clear()
     this.setStatus('DISCONNECTED')
+  }
+
+  // ── Real Device Heartbeat & Presence Ingestion ───────────────────────────────
+
+  private markDeviceHeartbeatReceived(
+    deviceId: string,
+    extra?: { firmware?: string; modelVersion?: string; status?: string }
+  ): void {
+    const wasOffline = this.devicePresence !== 'ONLINE'
+    this.devicePresence = 'ONLINE'
+    this.lastHeartbeatTime = new Date().toLocaleTimeString()
+    this.lastHeartbeatTimestamp = Date.now()
+
+    if (deviceId && deviceId !== 'UNKNOWN-DEVICE') {
+      this.deviceMetadata.deviceId = deviceId
+    }
+    this.deviceMetadata.lastHeartbeatTimestamp = this.lastHeartbeatTimestamp
+    if (extra?.firmware) this.deviceMetadata.firmware = extra.firmware
+    if (extra?.modelVersion) this.deviceMetadata.modelVersion = extra.modelVersion
+
+    if (this.heartbeatTimeoutTimer) {
+      clearTimeout(this.heartbeatTimeoutTimer)
+    }
+
+    if (this.initialDeviceWaitTimer) {
+      clearTimeout(this.initialDeviceWaitTimer)
+      this.initialDeviceWaitTimer = null
+    }
+
+    // 12-second sliding window for genuine physical presence
+    this.heartbeatTimeoutTimer = window.setTimeout(() => {
+      this.devicePresence = 'OFFLINE'
+      this.handshakeVerified = false
+      this.notifyStatusListeners()
+    }, 12000)
+
+    if (wasOffline) {
+      this.notifyStatusListeners()
+    }
+  }
+
+  // ── Real Device Handshake Protocol (Ping-Pong) ───────────────────────────────
+
+  public async handshake(
+    deviceId?: string,
+    timeoutMs = 5000
+  ): Promise<{ success: boolean; latencyMs: number; error?: string }> {
+    if (!this.client || this.status !== 'CONNECTED') {
+      return { success: false, latencyMs: 0, error: 'MQTT Broker not connected' }
+    }
+
+    const targetId = deviceId || this.configuredDeviceId
+    const requestId = `ping_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
+    const startTime = Date.now()
+
+    return new Promise((resolve) => {
+      const timer = window.setTimeout(() => {
+        this.pendingHandshakes.delete(requestId)
+        resolve({
+          success: false,
+          latencyMs: Date.now() - startTime,
+          error: `Handshake timed out after ${timeoutMs}ms. Device "${targetId}" did not respond with device_pong.`,
+        })
+      }, timeoutMs)
+
+      this.pendingHandshakes.set(requestId, {
+        resolve: (res) => {
+          clearTimeout(timer)
+          this.pendingHandshakes.delete(requestId)
+          this.handshakeVerified = true
+          this.markDeviceHeartbeatReceived(targetId)
+          this.notifyStatusListeners()
+          resolve(res)
+        },
+        reject: (err) => {
+          clearTimeout(timer)
+          this.pendingHandshakes.delete(requestId)
+          resolve({
+            success: false,
+            latencyMs: Date.now() - startTime,
+            error: err.message,
+          })
+        },
+        timeoutTimer: timer,
+        startTime,
+      })
+
+      const topic = this.activeConfig?.publishTopic || 'bonetalk/device/commands'
+      const published = this.publish(topic, {
+        command: 'device_ping',
+        device_id: targetId,
+        request_id: requestId,
+        timestamp: Date.now(),
+      })
+
+      if (!published) {
+        clearTimeout(timer)
+        this.pendingHandshakes.delete(requestId)
+        resolve({
+          success: false,
+          latencyMs: 0,
+          error: 'Failed to publish device_ping command to broker',
+        })
+      }
+    })
+  }
+
+  // ── Real Command Transmission with Acknowledgement (ACK) ───────────────────
+
+  public async sendCommandWithAck(
+    commandName: string,
+    extra: Record<string, unknown> = {},
+    timeoutMs = 5000
+  ): Promise<{ success: boolean; ack?: Record<string, unknown>; error?: string }> {
+    if (!this.client || this.status !== 'CONNECTED') {
+      return { success: false, error: 'MQTT Broker not connected' }
+    }
+
+    const requestId = `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
+    const targetId = (extra.device_id as string) || this.configuredDeviceId
+
+    return new Promise((resolve) => {
+      const timer = window.setTimeout(() => {
+        this.pendingAcks.delete(requestId)
+        resolve({
+          success: false,
+          error: `Command "${commandName}" timed out after ${timeoutMs}ms without ACK response from hardware.`,
+        })
+      }, timeoutMs)
+
+      this.pendingAcks.set(requestId, {
+        resolve: (ack) => {
+          clearTimeout(timer)
+          this.pendingAcks.delete(requestId)
+          this.markDeviceHeartbeatReceived(targetId)
+          resolve({ success: true, ack })
+        },
+        reject: (err) => {
+          clearTimeout(timer)
+          this.pendingAcks.delete(requestId)
+          resolve({ success: false, error: err.message })
+        },
+        timeoutTimer: timer,
+      })
+
+      const topic = this.activeConfig?.publishTopic || 'bonetalk/device/commands'
+      const published = this.publish(topic, {
+        command: commandName,
+        device_id: targetId,
+        request_id: requestId,
+        timestamp: Date.now(),
+        ...extra,
+      })
+
+      if (!published) {
+        clearTimeout(timer)
+        this.pendingAcks.delete(requestId)
+        resolve({ success: false, error: 'Failed to publish command to MQTT broker' })
+      }
+    })
   }
 
   // ── Reconnection with Exponential Backoff ───────────────────────────────────
@@ -376,11 +640,58 @@ export class MqttService {
       const cleanObj = sanitizeObject<Record<string, unknown>>(parsed)
       if (!cleanObj) return
 
+      // 1. Check for real device handshake pong
+      if (
+        cleanObj.type === 'device_pong' ||
+        cleanObj.command === 'device_pong' ||
+        cleanObj.response === 'device_pong'
+      ) {
+        const reqId = String(cleanObj.request_id || cleanObj.requestId || '')
+        if (reqId && this.pendingHandshakes.has(reqId)) {
+          const pending = this.pendingHandshakes.get(reqId)!
+          const latency = Date.now() - pending.startTime
+          pending.resolve({ success: true, latencyMs: latency })
+        }
+        this.markDeviceHeartbeatReceived(
+          (cleanObj.device_id as string) || this.configuredDeviceId,
+          {
+            firmware: cleanObj.firmware as string | undefined,
+            modelVersion: (cleanObj.model_version || cleanObj.modelVersion) as string | undefined,
+            status: cleanObj.status as string | undefined,
+          }
+        )
+      }
+
+      // 2. Check for real command ACK
+      if (cleanObj.type === 'ack' || cleanObj.ack === true) {
+        const reqId = String(cleanObj.request_id || cleanObj.requestId || '')
+        if (reqId && this.pendingAcks.has(reqId)) {
+          const pending = this.pendingAcks.get(reqId)!
+          pending.resolve(cleanObj)
+        }
+        this.markDeviceHeartbeatReceived((cleanObj.device_id as string) || this.configuredDeviceId)
+      }
+
+      // 3. Check for real device heartbeat packet
+      if (cleanObj.type === 'heartbeat' || cleanObj.status === 'heartbeat') {
+        this.markDeviceHeartbeatReceived(
+          (cleanObj.device_id as string) || this.configuredDeviceId,
+          {
+            firmware: cleanObj.firmware as string | undefined,
+            modelVersion: (cleanObj.model_version || cleanObj.modelVersion) as string | undefined,
+            status: cleanObj.status as string | undefined,
+          }
+        )
+      }
+
       // Validate required and optional fields strictly
       const validated = this.validatePayload(topic, cleanObj)
       if (validated) {
         this.lastMessage = validated
         this.lastMessageTime = new Date().toLocaleTimeString()
+
+        // Valid telemetry also confirms active device presence
+        this.markDeviceHeartbeatReceived(validated.device_id)
 
         // Dispatch to all message subscribers
         this.messageListeners.forEach((listener) => {
@@ -507,9 +818,9 @@ export class MqttService {
         const currentDetails = this.getDetails()
         if (this.status === 'CONNECTED') {
           resolve({
-            success: true,
-            step: 'BROKER_CONNECTED_WAITING_FOR_DEVICE',
-            details: `Connected to broker (${this.activeConfig?.brokerUrl}) in ${Date.now() - startTime}ms. Awaiting real device packet.`,
+            success: false,
+            step: 'BROKER_REACHABLE_NO_DEVICE_DETECTED',
+            details: `Connected to MQTT broker service (${this.activeConfig?.brokerUrl}) in ${Date.now() - startTime}ms. However, NO physical ESP32-S3 hardware was detected on topics. Awaiting real device transmission.`,
             deviceStatus: currentDetails.deviceStatus,
           })
         } else {

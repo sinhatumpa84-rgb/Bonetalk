@@ -11,7 +11,7 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
   height = 180,
   showDetailedMetrics = true,
 }) => {
-  const { hasSensorData, rawEmgSamples, latestEmgValue, emgMetrics, connectionStatus } =
+  const { hasSensorData, rawEmgSamples, latestEmgValue, emgMetrics, connectionStatus, devicePresence } =
     useModelControl()
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -130,11 +130,15 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#FAF8F5]/85 backdrop-blur-[1px] p-4 text-center">
             <AlertCircle size={20} className="text-[#8C827A] mb-1.5" />
             <p className="text-xs font-mono font-semibold text-[#5C554E] tracking-wide">
-              Waiting for hardware data...
+              {devicePresence === 'ONLINE'
+                ? 'Awaiting Bio-Signal Transmission...'
+                : 'Waiting for physical hardware...'}
             </p>
             <p className="text-[11px] font-mono text-[#8C827A] mt-0.5 max-w-xs">
-              {connectionStatus === 'Connected'
-                ? 'Device connected. Awaiting transmission on configured topic.'
+              {devicePresence === 'ONLINE'
+                ? 'ESP32 is online. Awaiting EMG samples on configured channel.'
+                : connectionStatus === 'Connected'
+                ? 'MQTT broker reachable. No physical ESP32-S3 hardware detected.'
                 : 'Connect ESP32 hardware via MQTT to begin streaming live bio-signals.'}
             </p>
           </div>

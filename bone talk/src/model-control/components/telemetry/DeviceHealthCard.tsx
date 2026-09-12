@@ -3,7 +3,7 @@ import { Battery, Wifi, Gauge, Clock, ShieldCheck } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
 
 export const DeviceHealthCard: React.FC = () => {
-  const { deviceHealth, connectionStatus, settings } = useModelControl()
+  const { deviceHealth, connectionStatus, devicePresence, settings } = useModelControl()
 
   const { battery, rssi, packetRate, lastPacketTime } = deviceHealth
 
@@ -24,21 +24,22 @@ export const DeviceHealthCard: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 font-mono text-xs">
-        {/* Connection Status */}
+        {/* Hardware Link Status */}
         <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
-            Link Status
+            Hardware Link
           </span>
           <span
             className={`font-semibold text-[11px] block mt-0.5 ${
-              connectionStatus === 'Connected'
+              devicePresence === 'ONLINE'
                 ? 'text-[#2B382D]'
-                : connectionStatus === 'Connection Error'
-                ? 'text-[#991B1B]'
                 : 'text-[#8C827A]'
             }`}
           >
-            {connectionStatus}
+            {devicePresence === 'ONLINE' ? 'ESP32 ONLINE' : 'DEVICE OFFLINE'}
+          </span>
+          <span className="text-[9px] text-[#8C827A] block truncate mt-0.5">
+            {connectionStatus === 'Connected' ? 'Broker Reachable' : connectionStatus}
           </span>
         </div>
 

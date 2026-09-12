@@ -3,7 +3,7 @@ import { Compass, Move } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
 
 export const IMUViewer: React.FC = () => {
-  const { hasSensorData, imu } = useModelControl()
+  const { hasSensorData, imu, connectionStatus, devicePresence } = useModelControl()
 
   const { accel, gyro } = imu
 
@@ -22,10 +22,16 @@ export const IMUViewer: React.FC = () => {
       {!hasSensorData ? (
         <div className="py-6 px-4 rounded-sm border border-[#E5E0D8] bg-[#FAF8F5] text-center">
           <p className="text-xs font-mono font-semibold text-[#5C554E]">
-            Waiting for hardware data...
+            {devicePresence === 'ONLINE'
+              ? 'Awaiting IMU Telemetry Stream...'
+              : 'Waiting for physical hardware...'}
           </p>
           <span className="text-[11px] font-mono text-[#8C827A] mt-1 block">
-            IMU telemetry active when connected device broadcasts 6-axis vectors.
+            {devicePresence === 'ONLINE'
+              ? 'ESP32 is online. Awaiting 6-axis spatial vectors.'
+              : connectionStatus === 'Connected'
+              ? 'MQTT broker reachable. No physical ESP32-S3 hardware detected.'
+              : 'IMU telemetry active when physical device broadcasts 6-axis vectors.'}
           </span>
         </div>
       ) : (

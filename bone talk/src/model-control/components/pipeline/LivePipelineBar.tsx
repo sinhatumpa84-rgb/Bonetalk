@@ -30,7 +30,12 @@ export const LivePipelineBar: React.FC = () => {
     {
       id: 'mqtt',
       label: '4. MQTT BROKER',
-      subtext: 'WebSocket Bus',
+      subtext:
+        pipeline.mqtt === 'CONNECTED'
+          ? 'Device Link Active'
+          : pipeline.mqtt === 'BROKER READY — NO DEVICE'
+          ? 'No Device Detected'
+          : 'WebSocket Bus',
       status: pipeline.mqtt,
       icon: ShieldCheck,
     },
@@ -68,13 +73,16 @@ export const LivePipelineBar: React.FC = () => {
       case 'ACTIVE':
       case 'READY':
         return 'bg-[#E8EFEA] text-[#2B382D] border-[#41634F]/30'
+      case 'BROKER READY — NO DEVICE':
       case 'CONNECTING':
       case 'LOADING':
         return 'bg-[#FEF3C7] text-[#92400E] border-[#F59E0B]/40'
       case 'WAITING':
+      case 'STANDBY':
       case 'IDLE':
         return 'bg-[#F5F2EB] text-[#736B63] border-[#E5E0D8]'
       case 'DISCONNECTED':
+      case 'OFFLINE':
       case 'UNAVAILABLE':
         return 'bg-[#F9F6F0] text-[#A8A29E] border-[#E5E0D8]'
       case 'ERROR':
@@ -115,7 +123,7 @@ export const LivePipelineBar: React.FC = () => {
               </div>
 
               <div className="my-1">
-                <span className="block text-xs font-mono font-bold truncate">
+                <span className="block text-[11px] leading-tight font-mono font-bold">
                   {stage.status}
                 </span>
                 <span className="text-[10px] font-mono opacity-80 truncate block">

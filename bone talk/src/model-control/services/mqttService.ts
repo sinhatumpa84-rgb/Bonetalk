@@ -1,7 +1,19 @@
 import { mqttService as coreMqttService } from '../../services/mqttService'
-import type { ValidatedDeviceMessage, ConnectionDetails, MqttServiceConfig } from '../../services/mqttService'
+import type {
+  ValidatedDeviceMessage,
+  ConnectionDetails,
+  MqttServiceConfig,
+  DevicePresenceStatus,
+  DeviceMetadata,
+} from '../../services/mqttService'
 
-export type { ValidatedDeviceMessage, ConnectionDetails, MqttServiceConfig }
+export type {
+  ValidatedDeviceMessage,
+  ConnectionDetails,
+  MqttServiceConfig,
+  DevicePresenceStatus,
+  DeviceMetadata,
+}
 
 export interface MqttConfig {
   brokerUrl: string
@@ -59,9 +71,25 @@ class MqttServiceBridge {
     return toLegacyStatus(details.status, details.errorMessage)
   }
 
-  public onStatusChange(listener: (status: MqttConnectionStatus, error?: string) => void): () => void {
+  public getCoreDetails(): ConnectionDetails {
+    return coreMqttService.getDetails()
+  }
+
+  public getDevicePresence(): DevicePresenceStatus {
+    return coreMqttService.getDevicePresence()
+  }
+
+  public isHandshakeVerified(): boolean {
+    return coreMqttService.isHandshakeVerified()
+  }
+
+  public setConfiguredDeviceId(id: string): void {
+    coreMqttService.setConfiguredDeviceId(id)
+  }
+
+  public onStatusChange(listener: (status: MqttConnectionStatus, error?: string, details?: ConnectionDetails) => void): () => void {
     return coreMqttService.onStatusChange((details) => {
-      listener(toLegacyStatus(details.status, details.errorMessage), details.errorMessage || undefined)
+      listener(toLegacyStatus(details.status, details.errorMessage), details.errorMessage || undefined, details)
     })
   }
 
@@ -110,7 +138,16 @@ class MqttServiceBridge {
   public sendCommand(commandName: string, extra: Record<string, unknown> = {}): boolean {
     return coreMqttService.sendCommand(commandName, extra)
   }
+
+  public async handshake(deviceId?: string, timeoutMs = 5000): Promise<{ success: boolean; latencyMs: number; error?: string }> {
+    return coreMqttService.handshake(deviceId, timeoutMs)
+  }
+
+  public async sendCommandWithAck(commandName: string, extra: Record<string, unknown> = {}, timeoutMs = 5000): Promise<{ success: boolean; ack?: Record<string, unknown>; error?: string }> {
+    return coreMqttService.sendCommandWithAck(commandName, extra, timeoutMs)
+  }
 }
 
 export const mqttService = new MqttServiceBridge()
 export default mqttService
+

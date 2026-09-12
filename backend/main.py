@@ -44,11 +44,13 @@ async def get_status():
     if inference_engine.is_loaded():
         return {
             "model_loaded": True,
+            "model_name": "BoneTalk Silent Speech Recognition",
             "classes": inference_engine.classes,
             "feature_count": inference_engine.feature_count,
-            "model_type": inference_engine.model_type
+            "model_type": inference_engine.model_type,
+            "timestamp": datetime.now().isoformat(),
         }
-    return {"model_loaded": False}
+    return {"model_loaded": False, "model_name": None}
 
 @app.post("/api/predict")
 async def predict(request: PredictionRequest):

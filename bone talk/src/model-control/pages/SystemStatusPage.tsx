@@ -15,6 +15,9 @@ import { useModelControl } from '../context/ModelControlContext'
 export const SystemStatusPage: React.FC = () => {
   const {
     connectionStatus,
+    devicePresence,
+    handshakeStatus,
+    lastHeartbeatAge,
     modelStatus,
     hasSensorData,
     latestPrediction,
@@ -29,16 +32,20 @@ export const SystemStatusPage: React.FC = () => {
       title: 'Hardware Link',
       component: settings.deviceId,
       state:
-        connectionStatus === 'Connected'
+        devicePresence === 'ONLINE' && handshakeStatus === 'SUCCESS'
           ? 'READY'
+          : devicePresence === 'ONLINE'
+          ? 'WAITING'
           : connectionStatus === 'Connecting...' || connectionStatus === 'Reconnecting'
           ? 'WAITING'
           : connectionStatus === 'Connection Error'
           ? 'ERROR'
           : 'DISCONNECTED',
       details:
-        connectionStatus === 'Connected'
-          ? `Link active. Battery: ${deviceHealth.battery !== null ? deviceHealth.battery + '%' : 'N/A'}`
+        devicePresence === 'ONLINE'
+          ? `ESP32 online (Heartbeat: ${lastHeartbeatAge !== null ? lastHeartbeatAge + 's ago' : 'active'}, Handshake: ${handshakeStatus}). Battery: ${deviceHealth.battery !== null ? deviceHealth.battery + '%' : 'N/A'}`
+          : connectionStatus === 'Connected'
+          ? `Broker connected. Waiting for physical ESP32 "${settings.deviceId}" heartbeat & handshake.`
           : 'Hardware ESP32-S3 module not actively connected over MQTT.',
       icon: Radio,
     },
@@ -48,13 +55,20 @@ export const SystemStatusPage: React.FC = () => {
       component: settings.mqttBrokerUrl,
       state:
         connectionStatus === 'Connected'
-          ? 'READY'
+          ? devicePresence === 'ONLINE' && handshakeStatus === 'SUCCESS'
+            ? 'READY'
+            : 'WAITING'
           : connectionStatus === 'Connecting...'
           ? 'WAITING'
           : connectionStatus === 'Connection Error'
           ? 'ERROR'
           : 'DISCONNECTED',
-      details: `Subscribing to: ${settings.subscribeTopic} | Publishing to: ${settings.publishTopic}`,
+      details:
+        connectionStatus === 'Connected'
+          ? devicePresence === 'ONLINE' && handshakeStatus === 'SUCCESS'
+            ? `Subscribing to: ${settings.subscribeTopic} | Live device traffic verified`
+            : `Broker service reachable. Awaiting physical ESP32 packets on topic: ${settings.subscribeTopic}`
+          : `Broker disconnected: ${settings.mqttBrokerUrl}`,
       icon: ShieldCheck,
     },
     {

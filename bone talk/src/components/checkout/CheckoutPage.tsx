@@ -21,7 +21,6 @@ import type {
   RazorpayFailureResponse,
   RazorpayCheckoutOptions,
 } from '../../lib/razorpay'
-import { SaakanthaLogo } from '../ui/SaakanthaLogo'
 
 // List of Indian States & UTs
 const INDIAN_STATES = [

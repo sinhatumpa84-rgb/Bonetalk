@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, X } from 'lucide-react'
+import { Volume2 } from 'lucide-react'
 import {
   SIGNAL_COMMANDS,
   SIGNAL_PATTERNS,
@@ -10,7 +10,6 @@ import { EMGWaveform } from '../ui/EMGWaveform'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { useLanguage } from '../../context/LanguageContext'
 import { speechService } from '../../lib/speechService'
-import { DashboardContainer } from '../dashboard/DashboardContainer'
 
 export function SignalSection() {
   const [selected, setSelected] = useState<SignalCommand | null>(null)
@@ -35,12 +34,6 @@ export function SignalSection() {
     setSelected(cmd)
     setAnalyzing(true)
     setDetected(false)
-    setConfidence(0)
-  }
-
-  const handleClear = () => {
-    setDetected(false)
-    setSelected(null)
     setConfidence(0)
   }
 
@@ -185,9 +178,9 @@ export function SignalSection() {
                       </div>
                       <div>
                         <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
-                          Detected Message
+                          {t.signal.intentOutput}
                         </span>
-                        <span className="font-display text-lg sm:text-xl font-bold text-cyan-signal">
+                        <span className="font-display text-lg sm:text-xl font-bold text-medical">
                           {translateCommand(selected)}
                         </span>
                       </div>
@@ -195,26 +188,18 @@ export function SignalSection() {
                         <span className="block text-[8px] sm:text-[9px] tracking-[0.2em] text-cream-muted uppercase">
                           {t.signal.latency}
                         </span>
-                        <span className="font-display text-lg sm:text-xl font-bold text-cream">
+                        <span className="font-display text-lg sm:text-xl font-bold text-cyan-signal">
                           12.4 ms
                         </span>
                       </div>
-                      <div className="col-span-2 flex items-center gap-2 sm:col-span-1">
+                      <div className="col-span-2 flex items-end sm:col-span-1">
                         <button
                           type="button"
                           onClick={() => speakPhrase(selected)}
-                          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-sm border border-cyan-signal/40 bg-cyan-signal/15 hover:bg-cyan-signal/25 px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors min-h-[38px] cursor-pointer font-bold uppercase"
-                          title="Speak Detected Message"
+                          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.08] px-3 py-2 font-mono text-[10px] text-cyan-signal transition-colors hover:bg-cyan-signal/[0.18] min-h-[38px] cursor-pointer font-bold uppercase"
+                          title="Replay Voice Speech Synthesis"
                         >
-                          <Volume2 size={13} /> Speak
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleClear}
-                          className="inline-flex items-center justify-center gap-1 rounded-sm border border-border hover:border-red-500/40 bg-graphite-elevated hover:bg-red-500/10 px-2.5 py-2 font-mono text-[10px] text-cream-muted hover:text-red-300 transition-colors min-h-[38px] cursor-pointer"
-                          title="Clear current detected message"
-                        >
-                          <X size={13} /> Clear
+                          <Volume2 size={12} /> {t.signal.playVoiceBtn}
                         </button>
                       </div>
                     </motion.div>
@@ -266,9 +251,6 @@ export function SignalSection() {
             </div>
           </div>
         </div>
-
-        {/* ── Complete Telemetry & Dashboard Section ── */}
-        <DashboardContainer currentCommand={detected ? selected : null} />
       </div>
     </section>
   )

@@ -13,15 +13,17 @@ import { FinalRevealSection } from './components/sections/FinalRevealSection'
 import { SignalBridge } from './components/motion/SignalBridge'
 import ExperiencePage from './components/experience/ExperiencePage'
 import { CheckoutPage } from './components/checkout/CheckoutPage'
+import { ModelControlApp } from './model-control/ModelControlApp'
 import { useLenis } from './hooks/useLenis'
 
 import { OrderProvider } from './context/OrderContext'
 
-type AppRoute = 'home' | 'experience' | 'checkout'
+type AppRoute = 'home' | 'experience' | 'checkout' | 'model-control'
 
 function getRoute(): AppRoute {
   if (typeof window === 'undefined') return 'home'
   const path = window.location.pathname
+  if (path.startsWith('/model-control')) return 'model-control'
   if (path === '/experience' || path === '/experience/') return 'experience'
   if (path === '/checkout' || path === '/checkout/') return 'checkout'
   return 'home'
@@ -61,6 +63,10 @@ function App() {
         window.scrollTo({ top: 0, behavior: 'instant' })
       }
     }, 150)
+  }
+
+  if (route === 'model-control') {
+    return <ModelControlApp />
   }
 
   return (

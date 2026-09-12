@@ -84,7 +84,16 @@ export function Navigation() {
             <MagneticButton href="/experience" variant="ghost">
               {t.nav.experience}
             </MagneticButton>
-
+            <a
+              href="/model-control"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] tracking-wider uppercase px-2.5 py-1.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-colors duration-200 inline-flex items-center gap-1"
+              title="Open Separate BoneTalk Model & Hardware Control Console"
+            >
+              <span>MODEL CONTROL</span>
+              <span className="text-[10px] opacity-70">↗</span>
+            </a>
           </div>
 
           <div className="flex items-center gap-1.5 lg:hidden">
@@ -140,6 +149,15 @@ export function Navigation() {
               >
                 {t.nav.experience} →
               </MagneticButton>
+              <a
+                href="/model-control"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full min-h-[44px] flex items-center justify-center font-mono text-xs tracking-wider uppercase px-3 py-2 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors text-center"
+                onClick={() => setMobileOpen(false)}
+              >
+                MODEL CONTROL ↗
+              </a>
             </div>
           </motion.div>
         )}

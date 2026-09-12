@@ -89,11 +89,20 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
           <span>BoneTalk</span>
         </button>
 
-        <div className="flex items-center gap-4 text-xs font-mono">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono">
           <span className="hidden sm:inline text-neutral-500 tracking-widest uppercase">EXHIBITION ARCHIVE</span>
           <span className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
             {EXHIBITION_PRODUCTS.length} EDITIONS
           </span>
+          <a
+            href="/model-control"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-1 rounded border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+            title="Open Separate Model & Hardware Control Console"
+          >
+            CONNECT MODEL ↗
+          </a>
         </div>
       </header>
 

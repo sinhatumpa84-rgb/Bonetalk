@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingBag } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { cn } from '../../lib/constants'
 import { useScrollY } from '../../hooks/useScrollProgress'
 import { MagneticButton } from '../ui/MagneticButton'
@@ -8,14 +8,14 @@ import { ThemeToggle } from '../ui/ThemeToggle'
 import { LanguageSelector } from '../ui/LanguageSelector'
 import { useLanguage } from '../../context/LanguageContext'
 import { SaakanthaLogo } from '../ui/SaakanthaLogo'
-import { useOrder } from '../../context/OrderContext'
+
 
 export function Navigation() {
   const scrollY = useScrollY()
   const scrolled = scrollY > 40
   const [mobileOpen, setMobileOpen] = useState(false)
   const { t } = useLanguage()
-  const { openOrderModal } = useOrder()
+
 
   const navLinks = [
     { label: t.nav.technology, href: '#technology' },
@@ -84,14 +84,7 @@ export function Navigation() {
             <MagneticButton href="/experience" variant="ghost">
               {t.nav.experience}
             </MagneticButton>
-            <button
-              type="button"
-              onClick={() => openOrderModal()}
-              className="inline-flex items-center gap-1.5 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-[0_0_15px_rgba(0,216,165,0.3)] hover:shadow-[0_0_20px_rgba(0,216,165,0.5)] cursor-pointer"
-            >
-              <ShoppingBag size={13} />
-              <span>Order Now</span>
-            </button>
+
           </div>
 
           <div className="flex items-center gap-1.5 lg:hidden">
@@ -138,17 +131,7 @@ export function Navigation() {
               ))}
             </ul>
             <div className="mt-8 pb-12 flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false)
-                  openOrderModal()
-                }}
-                className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite font-display font-bold text-base uppercase tracking-wider shadow-[0_0_20px_rgba(0,216,165,0.3)] cursor-pointer transition-colors"
-              >
-                <ShoppingBag size={16} />
-                <span>Order BoneTalk</span>
-              </button>
+
               <MagneticButton
                 href="/experience"
                 variant="secondary"

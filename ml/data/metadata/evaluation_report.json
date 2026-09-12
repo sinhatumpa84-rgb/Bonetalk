@@ -1,0 +1,9 @@
+{
+  "accuracy": 0.13708381171067738,
+  "precision_macro": 0.1272872443699954,
+  "recall_macro": 0.10908850645564665,
+  "f1_macro": 0.1059307803185034,
+  "num_test_samples": 4355,
+  "num_classes": 21,
+  "confusion_matrix_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\models\\confusion_matrix_test.png"
+}

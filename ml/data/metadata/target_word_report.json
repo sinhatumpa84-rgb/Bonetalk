@@ -1,0 +1,259 @@
+{
+    "REST": {
+        "available": true,
+        "count": -1,
+        "examples": [
+            "(Silence/Baseline)"
+        ],
+        "subdirs": [],
+        "files": []
+    },
+    "YES": {
+        "available": true,
+        "count": 114,
+        "examples": [
+            "\u201cYES.",
+            "\u201cYES, I DID BANG OUT OF THE HOUSE,\u201d SHE SAID, \u201cFOR IT MADE ME ANGRY TO SEE THE EASY WAY IN WHICH MR. WINDIBANK\u2014THAT IS, MY FATHER\u2014TOOK IT ALL.",
+            "\u201cYES, MY STEP-FATHER."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\16_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\251_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\258_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\261_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\303_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\317_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\354_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\359_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\374_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\386_info.json"
+        ]
+    },
+    "NO": {
+        "available": true,
+        "count": 472,
+        "examples": [
+            "THERE IS NO DOUBT THAT YOU HAVE DETECTED AND DEFEATED IN THE MOST COMPLETE MANNER ONE OF THE MOST DETERMINED ATTEMPTS AT BANK ROBBERY THAT HAVE EVER COME WITHIN MY EXPERIENCE.\u201d",
+            "THE METHOD WAS NO DOUBT SUGGESTED TO CLAY\u2019S INGENIOUS MIND BY THE COLOR OF HIS ACCOMPLICE\u2019S HAIR.",
+            "WE ARE AT PRESENT, DOCTOR\u2014AS NO DOUBT YOU HAVE DIVINED\u2014IN THE CELLAR OF THE CITY BRANCH OF ONE OF THE PRINCIPAL LONDON BANKS."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\105_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\111_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\11_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\152_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\198_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\231_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\256_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\269_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\274_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\300_info.json"
+        ]
+    },
+    "HELP": {
+        "available": true,
+        "count": 57,
+        "examples": [
+            "THESE LITTLE PROBLEMS HELP ME TO DO SO.\u201d",
+            "ITS SPLENDOR WAS IN SUCH CONTRAST TO HIS HOMELY WAYS AND SIMPLE LIFE THAT I COULD NOT HELP COMMENTING UPON IT.",
+            "HE WOULDN\u2019T HAVE ANY VISITORS IF HE COULD HELP IT, AND HE USED TO SAY THAT A WOMAN SHOULD BE HAPPY IN HER OWN FAMILY CIRCLE."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\162_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\203_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\309_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\210_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\340_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\662_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\765_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\80_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\273_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\466_info.json"
+        ]
+    },
+    "WATER": {
+        "available": true,
+        "count": 103,
+        "examples": [
+            "THE BOSCOMBE POOL, WHICH IS A LITTLE REED-GIRT SHEET OF WATER SOME FIFTY YARDS ACROSS, IS SITUATED AT THE BOUNDARY BETWEEN THE HATHERLEY FARM AND THE PRIVATE PARK OF THE WEALTHY MR. TURNER.",
+            "THERE WAS NO SIGN OF ANY VIOLENCE, AND THE WATER WAS BUT TWO FEET DEEP, SO THAT THE JURY, HAVING REGARD TO HIS KNOWN ECCENTRICITY, BROUGHT IN A VERDICT OF SUICIDE.",
+            "\u201cMY EYE CAUGHT THE NAME OF OPENSHAW, AND THE HEADING, \u2018TRAGEDY NEAR WATERLOO BRIDGE.\u2019 HERE IS THE ACCOUNT: \u2018BETWEEN NINE AND TEN LAST NIGHT POLICE-CONSTABLE COOK, OF THE H DIVISION, ON DUTY NEAR WATERLOO BRIDGE, HEARD A CRY FOR HELP AND A SPLASH IN THE WATER."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\468_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\152_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\466_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\468_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\502_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\242_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\26_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\409_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\176_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\911_info.json"
+        ]
+    },
+    "STOP": {
+        "available": true,
+        "count": 20,
+        "examples": [
+            "SOMETIMES HOLMES WOULD HURRY ON, SOMETIMES STOP DEAD, AND ONCE HE MADE QUITE A LITTLE _D\u00c9TOUR_ INTO THE MEADOW.",
+            "\u201cIT MUST STOP HERE, HOWEVER,\u201d SAID BRADSTREET.",
+            "IT MAY STOP HIS GOSSIP."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\466_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\281_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\373_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\108_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\185_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\41_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\676_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\710_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\silent_parallel_data\\5-11_silent\\171_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\silent_parallel_data\\5-11_silent\\18_info.json"
+        ]
+    },
+    "PAIN": {
+        "available": true,
+        "count": 7,
+        "examples": [
+            "SHE WRITHED AS ONE WHO IS IN TERRIBLE PAIN, AND HER LIMBS WERE DREADFULLY CONVULSED.",
+            "IT SWELLED UP LOUDER AND LOUDER, A HOARSE YELL OF PAIN AND FEAR AND ANGER ALL MINGLED IN THE ONE DREADFUL SHRIEK.",
+            "THEN IT FLASHED THROUGH MY MIND THAT THE PAIN OF MY DEATH WOULD DEPEND VERY MUCH UPON THE POSITION IN WHICH I MET IT."
+        ],
+        "subdirs": [
+            "nonparallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\174_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\670_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\398_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\445_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\705_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\333_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\690_info.json"
+        ]
+    },
+    "PLEASE": {
+        "available": true,
+        "count": 7,
+        "examples": [
+            "HAVE THE GOODNESS, ALSO, WHEN YOU ADDRESS ME ALWAYS TO SAY \u2018SIR\u2019 AND \u2018PLEASE.\u2019\u201d",
+            "\u201cWELL, WOULD YOU PLEASE, SIR, MARCH UP-STAIRS, WHERE WE CAN GET A CAB TO CARRY YOUR HIGHNESS TO THE POLICE-STATION?\u201d",
+            "AND NOW LET US TALK ABOUT GEORGE MEREDITH, IF YOU PLEASE, AND WE SHALL LEAVE ALL MINOR MATTERS UNTIL TO-MORROW.\u201d"
+        ],
+        "subdirs": [
+            "nonparallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\97_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\99_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\416_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\149_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\314_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\150_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\238_info.json"
+        ]
+    },
+    "THANK YOU": {
+        "available": true,
+        "count": 19,
+        "examples": [
+            "\u201cREALLY MR. HOLMES,\u201d SAID MR. MERRYWEATHER, AS WE FOLLOWED THEM FROM THE CELLAR, \u201cI DO NOT KNOW HOW THE BANK CAN THANK YOU OR REPAY YOU.",
+            "\u201cTHANK YOU.",
+            "\u201cTHANK YOU."
+        ],
+        "subdirs": [
+            "nonparallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\104_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\407_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\417_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\319_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\333_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\160_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\295_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\312_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\370_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\74_info.json"
+        ]
+    },
+    "COME": {
+        "available": true,
+        "count": 168,
+        "examples": [
+            "THERE IS NO DOUBT THAT YOU HAVE DETECTED AND DEFEATED IN THE MOST COMPLETE MANNER ONE OF THE MOST DETERMINED ATTEMPTS AT BANK ROBBERY THAT HAVE EVER COME WITHIN MY EXPERIENCE.\u201d",
+            "FROM THE TIME THAT I HEARD OF THE ASSISTANT HAVING COME FOR HALF WAGES, IT WAS OBVIOUS TO ME THAT HE HAD SOME STRONG MOTIVE FOR SECURING THE SITUATION.\u201d",
+            "FOR ALL THESE REASONS I EXPECTED THEM TO COME TO-NIGHT.\u201d"
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\105_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\118_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\155_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\173_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\188_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\23_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\243_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\249_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\268_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\304_info.json"
+        ]
+    },
+    "GO": {
+        "available": true,
+        "count": 114,
+        "examples": [
+            "HE WOULD NOT GO TO THE POLICE, AND HE WOULD NOT GO TO YOU, AND SO AT LAST, AS HE WOULD DO NOTHING, AND KEPT ON SAYING THAT THERE WAS NO HARM DONE, IT MADE ME MAD, AND I JUST ON WITH MY THINGS AND CAME RIGHT AWAY TO YOU.\u201d",
+            "MR. WINDIBANK DID NOT WISH US TO GO.",
+            "HE NEVER DID WISH US TO GO ANYWHERE."
+        ],
+        "subdirs": [
+            "silent_parallel_data",
+            "nonparallel_data",
+            "voiced_parallel_data"
+        ],
+        "files": [
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\256_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\289_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\290_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\294_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\484_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\592_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\622_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\635_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\15_info.json",
+            "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-23\\22_info.json"
+        ]
+    }
+}

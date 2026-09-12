@@ -1,0 +1,207 @@
+[
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\silent_parallel_data\\5-10_silent\\106_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\silent_parallel_data\\5-10_silent\\106_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\voiced_parallel_data\\5-10\\108_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\voiced_parallel_data\\5-10\\108_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\16_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\16_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\305_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\305_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\407_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\407_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\409_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\409_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\417_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\417_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\526_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-21\\526_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\160_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\160_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\263_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\263_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\370_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\370_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\542_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-24\\542_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\346_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\346_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\74_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25\\74_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\129_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\129_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\316_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\316_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\347_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\347_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\35_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\35_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\39_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\39_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\43_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\43_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\45_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\45_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\507_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\507_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\605_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\605_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\79_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-25_2\\79_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\482_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\482_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\492_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\492_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\591_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-26\\591_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\255_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-27\\255_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\320_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\320_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\335_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\335_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\337_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\337_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\374_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\374_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\439_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\439_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\529_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-29\\529_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\380_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\380_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\382_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\382_emg.npy"
+  },
+  {
+    "word": "THANK YOU",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\454_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\454_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\537_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\4-30\\537_emg.npy"
+  },
+  {
+    "word": "NO",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\275_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\275_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\571_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\571_emg.npy"
+  },
+  {
+    "word": "YES",
+    "info_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\575_info.json",
+    "emg_path": "C:\\Users\\Soumik\\OneDrive\\Desktop\\vibeforge\\Bonetalk\\ml\\data\\raw\\emg_data\\nonparallel_data\\5-2\\575_emg.npy"
+  }
+]

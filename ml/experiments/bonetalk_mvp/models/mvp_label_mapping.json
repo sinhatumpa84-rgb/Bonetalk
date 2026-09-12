@@ -1,0 +1,14 @@
+{
+  "id_to_label": {
+    "0": "NO",
+    "1": "REST",
+    "2": "THANK YOU",
+    "3": "YES"
+  },
+  "classes": [
+    "NO",
+    "REST",
+    "THANK YOU",
+    "YES"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+    "total_recordings": 9653,
+    "silent_recordings": 1588,
+    "vocalized_recordings": 7065,
+    "reference_signals_skipped": 2732,
+    "total_duration_hours": 19.12991333333333,
+    "channels": 8,
+    "sampling_rate": 1000,
+    "subjects": 1,
+    "available_labels": 7425,
+    "samples_per_subdir": {
+        "closed_vocab": 1000,
+        "nonparallel_data": 5477,
+        "silent_parallel_data": 1588,
+        "voiced_parallel_data": 1588
+    }
+}

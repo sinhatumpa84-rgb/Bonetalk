@@ -30,6 +30,10 @@ export interface DeviceHealth {
   rssi: number | null
   packetRate: number | null
   lastPacketTime: string | null
+  noiseLevel: number | null
+  speechDetected: boolean | null
+  vibration: boolean | null
+  status: string | null
 }
 
 export interface ControlSettings {
@@ -53,14 +57,14 @@ const DEFAULT_SETTINGS: ControlSettings = {
   autoSpeak: false,
   speechRate: 1.0,
   selectedVoiceName: null,
-  mqttBrokerUrl: 'ws://broker.emqx.io:8083/mqtt',
-  mqttPort: 8083,
-  mqttUsername: '',
-  mqttPassword: '',
-  mqttClientId: '',
-  subscribeTopic: 'bonetalk/sensors',
-  publishTopic: 'bonetalk/commands',
-  deviceId: 'ESP32-S3-BT-01',
+  mqttBrokerUrl: import.meta.env.VITE_MQTT_URL || 'wss://broker.emqx.io:8084/mqtt',
+  mqttPort: import.meta.env.VITE_MQTT_PORT ? parseInt(import.meta.env.VITE_MQTT_PORT, 10) : 8084,
+  mqttUsername: import.meta.env.VITE_MQTT_USERNAME || '',
+  mqttPassword: import.meta.env.VITE_MQTT_PASSWORD || '',
+  mqttClientId: import.meta.env.VITE_MQTT_CLIENT_ID || '',
+  subscribeTopic: import.meta.env.VITE_MQTT_TOPIC || 'bonetalk/device/#',
+  publishTopic: 'bonetalk/device/commands',
+  deviceId: import.meta.env.VITE_DEVICE_ID || 'BONE-01',
   connectionType: 'mqtt-ws',
 }
 
@@ -205,6 +209,22 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const disconnectHardware = useCallback(() => {
     mqttService.disconnect()
+    setHasSensorData(false)
+    setLatestEmgValue(null)
+    setDeviceHealth({
+      battery: null,
+      rssi: null,
+      packetRate: null,
+      lastPacketTime: null,
+      noiseLevel: null,
+      speechDetected: null,
+      vibration: null,
+      status: null,
+    })
+    setImu({
+      accel: { x: null, y: null, z: null },
+      gyro: { x: null, y: null, z: null },
+    })
   }, [])
 
   const sendCommand = useCallback((cmd: string, args: Record<string, unknown> = {}) => {
@@ -230,6 +250,10 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
     rssi: null,
     packetRate: null,
     lastPacketTime: null,
+    noiseLevel: null,
+    speechDetected: null,
+    vibration: null,
+    status: null,
   })
 
   // Packet counters for calculating true packet rate
@@ -309,12 +333,23 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
         }))
       }
 
-      // Update Device Health if provided in packet
-      if (payload.battery !== undefined || payload.rssi !== undefined) {
+      // Update Device Health & Telemetry if provided in packet
+      if (
+        payload.battery !== undefined ||
+        payload.rssi !== undefined ||
+        payload.noise_level !== undefined ||
+        payload.speech_detected !== undefined ||
+        payload.vibration !== undefined ||
+        payload.status !== undefined
+      ) {
         setDeviceHealth((prev) => ({
           ...prev,
           battery: payload.battery !== undefined ? payload.battery : prev.battery,
           rssi: payload.rssi !== undefined ? payload.rssi : prev.rssi,
+          noiseLevel: payload.noise_level !== undefined ? payload.noise_level : prev.noiseLevel,
+          speechDetected: payload.speech_detected !== undefined ? payload.speech_detected : prev.speechDetected,
+          vibration: payload.vibration !== undefined ? payload.vibration : prev.vibration,
+          status: payload.status !== undefined ? payload.status : prev.status,
           lastPacketTime: new Date().toLocaleTimeString(),
         }))
       }
@@ -424,6 +459,10 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
         rssi: null,
         packetRate: null,
         lastPacketTime: null,
+        noiseLevel: null,
+        speechDetected: null,
+        vibration: null,
+        status: null,
       })
     }
   }, [connectionStatus])

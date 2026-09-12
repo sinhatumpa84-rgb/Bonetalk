@@ -8,6 +8,7 @@ import { ThemeToggle } from '../ui/ThemeToggle'
 import { LanguageSelector } from '../ui/LanguageSelector'
 import { useLanguage } from '../../context/LanguageContext'
 import { SaakanthaLogo } from '../ui/SaakanthaLogo'
+import { RealtimeConnectionIndicator } from '../connection/RealtimeConnectionIndicator'
 
 
 export function Navigation() {
@@ -81,6 +82,7 @@ export function Navigation() {
           <div className="hidden items-center gap-3 lg:flex">
             <LanguageSelector />
             <ThemeToggle />
+            <RealtimeConnectionIndicator compact />
             <MagneticButton href="/experience" variant="ghost">
               {t.nav.experience}
             </MagneticButton>

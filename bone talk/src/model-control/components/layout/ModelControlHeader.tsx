@@ -1,10 +1,10 @@
 import React from 'react'
-import { Activity, Cpu, Radio, ArrowLeft, RefreshCw } from 'lucide-react'
+import { Activity, Cpu, ArrowLeft, RefreshCw } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
+import { RealtimeConnectionIndicator } from '../../../components/connection/RealtimeConnectionIndicator'
 
 export const ModelControlHeader: React.FC = () => {
   const {
-    connectionStatus,
     modelStatus,
     modelInfo,
     hasSensorData,
@@ -48,21 +48,8 @@ export const ModelControlHeader: React.FC = () => {
 
       {/* ── Real Status Indicators ── */}
       <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 text-xs font-mono">
-        {/* Hardware / MQTT Status */}
-        <div
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-sm border ${
-            connectionStatus === 'Connected'
-              ? 'bg-[#E8EFEA] border-[#41634F]/30 text-[#2B382D]'
-              : connectionStatus === 'Connecting...' || connectionStatus === 'Reconnecting'
-              ? 'bg-[#F5F2EB] border-[#D97706]/40 text-[#92400E]'
-              : 'bg-[#F7F4EE] border-[#E5E0D8] text-[#8C827A]'
-          }`}
-          title={`MQTT Broker: ${settings.mqttBrokerUrl}`}
-        >
-          <Radio size={13} className={connectionStatus === 'Connected' ? 'text-[#41634F]' : ''} />
-          <span className="font-semibold text-[11px] uppercase tracking-wider">MQTT</span>
-          <span className="text-[10px] font-medium">({connectionStatus})</span>
-        </div>
+        {/* Real-Time MQTT + WebSocket Telemetry Status Indicator */}
+        <RealtimeConnectionIndicator />
 
         {/* Sensors Receiving Status */}
         <div

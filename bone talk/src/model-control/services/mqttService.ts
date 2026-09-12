@@ -1,13 +1,15 @@
-import mqtt from 'mqtt'
-import type { MqttClient } from 'mqtt'
+import { mqttService as coreMqttService } from '../../services/mqttService'
+import type { ValidatedDeviceMessage, ConnectionDetails, MqttServiceConfig } from '../../services/mqttService'
+
+export type { ValidatedDeviceMessage, ConnectionDetails, MqttServiceConfig }
 
 export interface MqttConfig {
-  brokerUrl: string // e.g. ws://broker.emqx.io:8083/mqtt or ws://localhost:9001
+  brokerUrl: string
   clientId?: string
   username?: string
   password?: string
-  subscribeTopic: string // e.g. bonetalk/sensors
-  publishTopic: string // e.g. bonetalk/commands
+  subscribeTopic: string
+  publishTopic: string
 }
 
 export type MqttConnectionStatus =
@@ -20,7 +22,7 @@ export type MqttConnectionStatus =
 export interface SensorPayload {
   deviceId?: string
   timestamp?: number | string
-  emg?: number[] | number // single value or multi-channel array
+  emg?: number[] | number
   accel?: { x: number; y: number; z: number }
   gyro?: { x: number; y: number; z: number }
   battery?: number
@@ -29,138 +31,86 @@ export interface SensorPayload {
   prediction?: string
   confidence?: number
   packetRate?: number
+  noise_level?: number
+  speech_detected?: boolean
+  vibration?: boolean
+  status?: string
 }
 
-class MqttService {
-  private client: MqttClient | null = null
-  private status: MqttConnectionStatus = 'Disconnected'
-  private statusListeners: Array<(status: MqttConnectionStatus, error?: string) => void> = []
-  private messageListeners: Array<(topic: string, payload: SensorPayload) => void> = []
-  private activeConfig: MqttConfig | null = null
+// Convert 4-state uppercase status to legacy string if needed by older components
+function toLegacyStatus(status: string, err: string | null): MqttConnectionStatus {
+  if (err && status !== 'CONNECTED') return 'Connection Error'
+  switch (status) {
+    case 'CONNECTED':
+      return 'Connected'
+    case 'CONNECTING':
+      return 'Connecting...'
+    case 'RECONNECTING':
+      return 'Reconnecting'
+    case 'DISCONNECTED':
+    default:
+      return 'Disconnected'
+  }
+}
 
+class MqttServiceBridge {
   public getStatus(): MqttConnectionStatus {
-    return this.status
+    const details = coreMqttService.getDetails()
+    return toLegacyStatus(details.status, details.errorMessage)
   }
 
   public onStatusChange(listener: (status: MqttConnectionStatus, error?: string) => void): () => void {
-    this.statusListeners.push(listener)
-    listener(this.status)
-    return () => {
-      this.statusListeners = this.statusListeners.filter((l) => l !== listener)
-    }
+    return coreMqttService.onStatusChange((details) => {
+      listener(toLegacyStatus(details.status, details.errorMessage), details.errorMessage || undefined)
+    })
   }
 
   public onMessage(listener: (topic: string, payload: SensorPayload) => void): () => void {
-    this.messageListeners.push(listener)
-    return () => {
-      this.messageListeners = this.messageListeners.filter((l) => l !== listener)
-    }
-  }
-
-  private setStatus(newStatus: MqttConnectionStatus, error?: string) {
-    this.status = newStatus
-    this.statusListeners.forEach((l) => l(newStatus, error))
+    return coreMqttService.onMessage((msg: ValidatedDeviceMessage) => {
+      const payload: SensorPayload = {
+        deviceId: msg.device_id,
+        timestamp: msg.timestamp,
+        emg: msg.emg ?? undefined,
+        accel: msg.accel ? { x: msg.accel.x, y: msg.accel.y, z: msg.accel.z } : undefined,
+        gyro: msg.gyro ? { x: msg.gyro.x, y: msg.gyro.y, z: msg.gyro.z } : undefined,
+        battery: msg.battery ?? undefined,
+        rssi: msg.rssi ?? undefined,
+        packetRate: msg.packetRate,
+        command: msg.command ?? undefined,
+        prediction: msg.prediction ?? undefined,
+        confidence: msg.confidence ?? undefined,
+        noise_level: msg.noise_level ?? undefined,
+        speech_detected: msg.speech_detected ?? undefined,
+        vibration: msg.vibration ?? undefined,
+        status: msg.status,
+      }
+      listener(msg._topic, payload)
+    })
   }
 
   public connect(config: MqttConfig): void {
-    this.disconnect()
-
-    this.activeConfig = config
-    this.setStatus('Connecting...')
-
-    try {
-      const clientId = config.clientId || `bonetalk_web_${Math.random().toString(16).substring(2, 8)}`
-      
-      const options: mqtt.IClientOptions = {
-        clientId,
-        clean: true,
-        connectTimeout: 5000,
-        reconnectPeriod: 3000,
-      }
-
-      if (config.username) options.username = config.username
-      if (config.password) options.password = config.password
-
-      this.client = mqtt.connect(config.brokerUrl, options)
-
-      this.client.on('connect', () => {
-        this.setStatus('Connected')
-        if (this.client && config.subscribeTopic) {
-          this.client.subscribe(config.subscribeTopic, (err) => {
-            if (err) {
-              console.warn(`[MQTT] Subscription error on ${config.subscribeTopic}:`, err)
-            }
-          })
-        }
-      })
-
-      this.client.on('reconnect', () => {
-        this.setStatus('Reconnecting')
-      })
-
-      this.client.on('error', (err) => {
-        console.warn('[MQTT] Connection error:', err)
-        this.setStatus('Connection Error', err.message || 'MQTT Connection Failed')
-      })
-
-      this.client.on('close', () => {
-        if (this.status !== 'Connection Error') {
-          this.setStatus('Disconnected')
-        }
-      })
-
-      this.client.on('message', (topic, rawMessage) => {
-        try {
-          const text = rawMessage.toString('utf-8')
-          const parsed = JSON.parse(text)
-          this.messageListeners.forEach((l) => l(topic, parsed))
-        } catch {
-          // Non-JSON raw string
-          const text = rawMessage.toString('utf-8')
-          this.messageListeners.forEach((l) =>
-            l(topic, {
-              command: text,
-              timestamp: Date.now(),
-            })
-          )
-        }
-      })
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Unknown MQTT initialization failure'
-      this.setStatus('Connection Error', msg)
-    }
+    coreMqttService.connect({
+      brokerUrl: config.brokerUrl,
+      clientId: config.clientId,
+      username: config.username,
+      password: config.password,
+      subscribeTopics: [config.subscribeTopic, 'markusblue/device/#', 'bonetalk/device/#'],
+      publishTopic: config.publishTopic,
+    })
   }
 
   public disconnect(): void {
-    if (this.client) {
-      try {
-        this.client.end(true)
-      } catch {
-        // ignore disconnect exceptions
-      }
-      this.client = null
-    }
-    this.setStatus('Disconnected')
+    coreMqttService.disconnect()
   }
 
   public publish(topic: string, message: string | object): boolean {
-    if (!this.client || this.status !== 'Connected') {
-      return false
-    }
-
-    const payload = typeof message === 'string' ? message : JSON.stringify(message)
-    this.client.publish(topic, payload)
-    return true
+    return coreMqttService.publish(topic, message)
   }
 
   public sendCommand(commandName: string, extra: Record<string, unknown> = {}): boolean {
-    if (!this.activeConfig?.publishTopic) return false
-    return this.publish(this.activeConfig.publishTopic, {
-      command: commandName,
-      timestamp: Date.now(),
-      ...extra,
-    })
+    return coreMqttService.sendCommand(commandName, extra)
   }
 }
 
-export const mqttService = new MqttService()
+export const mqttService = new MqttServiceBridge()
+export default mqttService

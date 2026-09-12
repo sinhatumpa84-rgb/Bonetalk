@@ -66,26 +66,26 @@ export const BoneTalkAssist: React.FC = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="bonetalk-assist-title"
-            className="absolute bottom-12 right-0 w-[calc(100vw-2rem)] sm:w-80 max-w-sm rounded-sm bg-[#0A0E17]/95 backdrop-blur-xl border border-emerald-500/30 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_25px_rgba(45,212,191,0.08)] animate-in fade-in zoom-in-95 duration-200"
+            className="absolute bottom-12 right-0 w-[calc(100vw-2rem)] sm:w-80 max-w-sm rounded-sm bg-graphite-elevated/95 backdrop-blur-xl border border-cyan-signal/30 p-5 shadow-[var(--shadow-level-3)] animate-in fade-in zoom-in-95 duration-200 transition-colors duration-300"
           >
             {/* Header */}
-            <div className="flex items-start justify-between border-b border-white/[0.08] pb-3 mb-4">
+            <div className="flex items-start justify-between border-b border-border pb-3 mb-4">
               <div>
                 <h3
                   id="bonetalk-assist-title"
-                  className="font-mono text-sm font-semibold text-white tracking-wider uppercase flex items-center gap-2"
+                  className="font-mono text-sm font-semibold text-cream tracking-wider uppercase flex items-center gap-2"
                 >
-                  <span className="text-emerald-400">🎙</span>
+                  <span className="text-cyan-signal">🎙</span>
                   <span>BoneTalk Assist</span>
                 </h3>
-                <p className="font-mono text-[11px] text-neutral-400 tracking-wide mt-0.5">
+                <p className="font-mono text-[11px] text-cream-muted tracking-wide mt-0.5">
                   EMG Communication
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="w-6 h-6 flex items-center justify-center rounded-sm border border-white/10 hover:border-emerald-400 text-neutral-400 hover:text-white font-mono text-xs transition-colors cursor-pointer"
+                className="w-6 h-6 flex items-center justify-center rounded-sm border border-border hover:border-cyan-signal text-cream-muted hover:text-cream font-mono text-xs transition-colors cursor-pointer"
                 aria-label="Close BoneTalk Assist panel"
               >
                 ✕
@@ -93,18 +93,18 @@ export const BoneTalkAssist: React.FC = () => {
             </div>
 
             {/* Status Grid */}
-            <div className="space-y-2 font-mono text-xs mb-5 bg-white/[0.02] p-3 rounded-sm border border-white/[0.05]">
+            <div className="space-y-2 font-mono text-xs mb-5 bg-graphite p-3 rounded-sm border border-border">
               <div className="flex items-center justify-between">
-                <span className="text-neutral-400">Sensor:</span>
-                <span className="inline-flex items-center gap-1.5 text-neutral-300">
+                <span className="text-cream-muted">Sensor:</span>
+                <span className="inline-flex items-center gap-1.5 text-cream font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80" />
                   <span>{sensorStatus}</span>
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-neutral-400">Model:</span>
-                <span className="inline-flex items-center gap-1.5 text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-cream-muted">Model:</span>
+                <span className="inline-flex items-center gap-1.5 text-cyan-signal font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-signal animate-pulse" />
                   <span>{modelStatus}</span>
                 </span>
               </div>
@@ -115,27 +115,27 @@ export const BoneTalkAssist: React.FC = () => {
               <button
                 type="button"
                 onClick={handleStartListening}
-                className="w-full py-2.5 px-4 rounded-sm border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs uppercase tracking-widest transition-colors font-medium cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-sm border border-cyan-signal/40 bg-cyan-signal/10 hover:bg-cyan-signal/20 text-cyan-signal font-mono text-xs uppercase tracking-widest transition-colors font-medium cursor-pointer"
               >
                 [ Start Listening ]
               </button>
 
               {listeningNotice && (
-                <p className="mt-2.5 font-mono text-[11px] text-emerald-400/90 animate-in fade-in duration-150">
+                <p className="mt-2.5 font-mono text-[11px] text-cyan-signal animate-in fade-in duration-150">
                   {listeningNotice}
                 </p>
               )}
             </div>
 
             {/* Output Diagnostics */}
-            <div className="border-t border-white/[0.08] pt-3.5 space-y-1.5 font-mono text-xs">
+            <div className="border-t border-border pt-3.5 space-y-1.5 font-mono text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-neutral-500">Prediction:</span>
-                <span className="text-neutral-300 font-semibold">{prediction}</span>
+                <span className="text-cream-muted">Prediction:</span>
+                <span className="text-cream font-semibold">{prediction}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-neutral-500">Confidence:</span>
-                <span className="text-neutral-300 font-semibold">{confidence}</span>
+                <span className="text-cream-muted">Confidence:</span>
+                <span className="text-cream font-semibold">{confidence}</span>
               </div>
             </div>
           </div>
@@ -148,10 +148,10 @@ export const BoneTalkAssist: React.FC = () => {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className="group relative flex items-center gap-2 rounded-sm border border-white/15 bg-[#0A0E17]/95 backdrop-blur-md px-3 py-2 sm:px-3.5 sm:py-2 text-xs font-mono tracking-wider text-neutral-300 hover:text-white hover:border-emerald-400/60 shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-all duration-200 cursor-pointer"
+        className="group relative flex items-center gap-2 rounded-sm border border-border bg-graphite-elevated/95 backdrop-blur-md px-3 py-2 sm:px-3.5 sm:py-2 text-xs font-mono tracking-wider text-cream-muted hover:text-cream hover:border-cyan-signal shadow-[var(--shadow-level-2)] transition-all duration-200 cursor-pointer"
       >
-        <span className="text-emerald-400 group-hover:scale-110 transition-transform duration-200">🎙</span>
-        <span className="font-medium uppercase tracking-wider">BoneTalk Assist</span>
+        <span className="text-cyan-signal group-hover:scale-110 transition-transform duration-200">🎙</span>
+        <span className="font-medium uppercase tracking-wider text-cream">BoneTalk Assist</span>
       </button>
     </aside>
   )

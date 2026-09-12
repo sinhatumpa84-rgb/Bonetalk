@@ -24,8 +24,22 @@
 }
 
 /* ─── LIGHT MODE ROOT TOKENS ─────────────────────────────────────────────── */
-:root {
+:root,
+html[data-theme="light"] {
   color-scheme: light;
+
+  --color-graphite: #FAF9F6;
+  --color-graphite-light: #F5F4F0;
+  --color-graphite-elevated: #EDECE6;
+  --color-cream: #111213;
+  --color-cream-muted: #666A73;
+  --color-cyan-signal: #00A889;
+  --color-cyan-dim: #008F72;
+  --color-medical: #00A889;
+  --color-medical-dim: #008F72;
+  --color-border: rgba(0, 0, 0, 0.06);
+  --color-border-strong: rgba(0, 0, 0, 0.12);
+  --color-glass: rgba(0, 0, 0, 0.015);
 
   /* Spacing Scale */
   --section-gap: 6rem;

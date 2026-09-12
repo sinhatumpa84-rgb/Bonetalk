@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ThemeToggle } from '../ui/ThemeToggle'
 
 interface ExperienceNavigationProps {
   onNavigateHome: () => void
@@ -27,13 +28,16 @@ export function ExperienceNavigation({ onNavigateHome }: ExperienceNavigationPro
       <div className="mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
         <button
           onClick={onNavigateHome}
-          className="label-technical hover:opacity-70 transition-opacity"
+          className="label-technical hover:opacity-70 transition-opacity cursor-pointer"
           style={{ color: 'var(--color-cyan-signal)' }}
         >
           ← BoneTalk
         </button>
-        <div className="label-technical" style={{ color: 'var(--color-cyan-signal)' }}>
-          EXHIBITION
+        <div className="flex items-center gap-4">
+          <div className="label-technical" style={{ color: 'var(--color-cyan-signal)' }}>
+            EXHIBITION
+          </div>
+          <ThemeToggle />
         </div>
       </div>
     </nav>

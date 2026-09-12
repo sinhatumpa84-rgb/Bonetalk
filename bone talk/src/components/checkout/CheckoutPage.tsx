@@ -21,6 +21,8 @@ import type {
   RazorpayFailureResponse,
   RazorpayCheckoutOptions,
 } from '../../lib/razorpay'
+import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { ThemeToggle } from '../ui/ThemeToggle'
 
 // List of Indian States & UTs
 const INDIAN_STATES = [
@@ -320,14 +322,18 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
   }
 
   return (
-    <div className="min-h-screen bg-[#06080B] text-cream font-sans">
+    <div className="min-h-screen bg-graphite text-cream font-sans relative transition-colors duration-300">
+      {/* ── Reusable Homepage-Style Blueprint Grid System ── */}
+      <TechnicalGrid fixed variant="default" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(0,168,137,0.05),transparent_70%)]" />
+
       {/* ─── CHECKOUT HEADER ─── */}
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-[#0A0E17]/95 backdrop-blur-lg">
+      <header className="sticky top-0 z-40 border-b border-border bg-graphite/90 backdrop-blur-lg transition-colors duration-300">
         <div className="mx-auto max-w-4xl flex items-center justify-between px-4 sm:px-6 py-3.5">
           <button
             type="button"
             onClick={handleGoBack}
-            className="flex items-center gap-2.5 text-cream-muted hover:text-cyan-signal transition-all cursor-pointer group py-1 px-2 -ml-2 rounded-sm hover:bg-graphite-light/40"
+            className="flex items-center gap-2.5 text-cream hover:text-cyan-signal transition-all cursor-pointer group py-1.5 px-2.5 -ml-2 rounded-sm hover:bg-graphite-elevated/40"
             aria-label="Back to BoneTalk"
           >
             <ArrowLeft size={18} className="text-cyan-signal group-hover:-translate-x-1 transition-transform" />
@@ -336,37 +342,40 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
             </span>
           </button>
 
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-cyan-signal animate-pulse" />
-            <div className="text-right">
-              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-cyan-signal font-bold block">
-                {view === 'success'
-                  ? 'ORDER CONFIRMED'
-                  : view === 'failed'
-                  ? 'PAYMENT STATUS'
-                  : 'SECURE CHECKOUT // RAZORPAY'}
-              </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-cream-muted hidden sm:block">
-                BoneTalk Assistive Neurotechnology Systems
-              </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full bg-cyan-signal animate-pulse" />
+              <div className="text-right">
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-cyan-signal font-bold block">
+                  {view === 'success'
+                    ? 'ORDER CONFIRMED'
+                    : view === 'failed'
+                    ? 'PAYMENT STATUS'
+                    : 'SECURE CHECKOUT // RAZORPAY'}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-mono text-cream-muted hidden sm:block">
+                  BoneTalk Assistive Neurotechnology Systems
+                </span>
+              </div>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
 
       {/* ─── MAIN CHECKOUT CONTENT ─── */}
-      <main className="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-12">
+      <main className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-12">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Tech Corner Accents */}
-          <div className="relative rounded-sm border border-cyan-signal/20 bg-[#0A0E17] shadow-[0_25px_70px_rgba(0,0,0,0.6),0_0_40px_rgba(0,216,165,0.08)] overflow-hidden">
-            <div className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-cyan-signal/50 pointer-events-none" />
-            <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-cyan-signal/50 pointer-events-none" />
-            <div className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-cyan-signal/50 pointer-events-none" />
-            <div className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-cyan-signal/50 pointer-events-none" />
+          <div className="relative rounded-sm border border-border bg-graphite-light shadow-[var(--shadow-level-3)] overflow-hidden transition-colors duration-300">
+            <div className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-cyan-signal/40 pointer-events-none" />
+            <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-cyan-signal/40 pointer-events-none" />
+            <div className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-cyan-signal/40 pointer-events-none" />
+            <div className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-cyan-signal/40 pointer-events-none" />
 
             <div className="p-6 sm:p-10 space-y-8">
               {/* ── ERROR MESSAGE BANNER ── */}
@@ -386,8 +395,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
               {(view === 'form' || view === 'processing') && (
                 <form onSubmit={handlePlaceOrderAndPay} noValidate className="space-y-8">
                   {/* 1. ORDER SUMMARY SECTION */}
-                  <div className="rounded-sm border border-border/80 bg-graphite/60 p-5 sm:p-7">
-                    <div className="flex items-center justify-between pb-3 mb-5 border-b border-border/60">
+                  <div className="rounded-sm border border-border bg-graphite-elevated/70 p-5 sm:p-7 transition-colors duration-300">
+                    <div className="flex items-center justify-between pb-3 mb-5 border-b border-border">
                       <span className="font-mono text-[11px] uppercase tracking-widest text-cyan-signal font-semibold flex items-center gap-2">
                         <ShoppingBag size={13} />
                         Order Summary
@@ -399,7 +408,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                       {activeProduct?.image && (
-                        <div className="h-24 w-28 sm:h-28 sm:w-36 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite-elevated flex items-center justify-center">
+                        <div className="h-24 w-28 sm:h-28 sm:w-36 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite flex items-center justify-center">
                           <img
                             src={activeProduct.image}
                             alt={activeProduct.name}
@@ -422,7 +431,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                       </div>
 
                       {/* Quantity Selector */}
-                      <div className="flex items-center gap-3 border border-border rounded-sm bg-graphite-light/50 px-3 py-2 sm:self-center">
+                      <div className="flex items-center gap-3 border border-border rounded-sm bg-graphite px-3 py-2 sm:self-center">
                         <button
                           type="button"
                           onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -448,16 +457,16 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                     </div>
 
                     {/* Pricing Breakdown */}
-                    <div className="mt-6 pt-5 border-t border-border/60 space-y-2.5 font-mono text-sm">
+                    <div className="mt-6 pt-5 border-t border-border space-y-2.5 font-mono text-sm">
                       <div className="flex items-center justify-between text-cream-muted">
                         <span>Subtotal ({quantity} item{quantity > 1 ? 's' : ''})</span>
-                        <span>₹{subtotal.toLocaleString('en-IN')}</span>
+                        <span className="text-cream font-medium">₹{subtotal.toLocaleString('en-IN')}</span>
                       </div>
                       <div className="flex items-center justify-between text-cream-muted">
                         <span>Delivery Charge</span>
-                        <span className="text-emerald-400 font-medium">FREE EXPRESS</span>
+                        <span className="text-cyan-signal font-semibold">FREE EXPRESS</span>
                       </div>
-                      <div className="flex items-center justify-between pt-3 border-t border-border/80 text-base sm:text-lg font-bold text-cream">
+                      <div className="flex items-center justify-between pt-3 border-t border-border text-base sm:text-lg font-bold text-cream">
                         <span>Total Amount</span>
                         <span className="text-cyan-signal font-display text-xl sm:text-2xl">
                           ₹{totalAmount.toLocaleString('en-IN')}
@@ -468,7 +477,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
 
                   {/* 2. CUSTOMER & DELIVERY DETAILS SECTION */}
                   <div className="space-y-5">
-                    <div className="flex items-center justify-between border-b border-border/80 pb-3">
+                    <div className="flex items-center justify-between border-b border-border pb-3">
                       <span className="font-mono text-[11px] uppercase tracking-widest text-cyan-signal font-semibold">
                         Customer Details & Delivery Address
                       </span>
@@ -491,7 +500,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setName(e.target.value)
                             if (formErrors.name) setFormErrors((prev) => ({ ...prev, name: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.name ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -515,7 +524,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setPhone(e.target.value)
                             if (formErrors.phone) setFormErrors((prev) => ({ ...prev, phone: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.phone ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -539,7 +548,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setEmail(e.target.value)
                             if (formErrors.email) setFormErrors((prev) => ({ ...prev, email: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.email ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -563,7 +572,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setAddress(e.target.value)
                             if (formErrors.address) setFormErrors((prev) => ({ ...prev, address: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.address ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -587,7 +596,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setCity(e.target.value)
                             if (formErrors.city) setFormErrors((prev) => ({ ...prev, city: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.city ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -612,7 +621,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setState(e.target.value)
                             if (formErrors.state) setFormErrors((prev) => ({ ...prev, state: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.state ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -642,7 +651,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                             setPincode(e.target.value)
                             if (formErrors.pincode) setFormErrors((prev) => ({ ...prev, pincode: '' }))
                           }}
-                          className={`w-full rounded-sm border bg-graphite-elevated px-3.5 py-2.5 text-sm text-cream focus:border-cyan-signal focus:outline-none transition-colors ${
+                          className={`w-full rounded-sm border bg-graphite px-3.5 py-2.5 text-sm text-cream placeholder:text-cream-muted/50 focus:border-cyan-signal focus:outline-none transition-colors ${
                             formErrors.pincode ? 'border-red-500/80 bg-red-500/[0.03]' : 'border-border'
                           }`}
                         />
@@ -654,7 +663,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                   </div>
 
                   {/* 3. PAYMENT METHOD SECTION */}
-                  <div className="rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.03] p-5 sm:p-6">
+                  <div className="rounded-sm border border-cyan-signal/30 bg-cyan-signal/[0.04] p-5 sm:p-6 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-3">
                       <span className="font-mono text-[11px] uppercase tracking-widest text-cyan-signal font-semibold flex items-center gap-2">
                         <CreditCard size={13} />
@@ -665,7 +674,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between p-3.5 rounded-sm border border-cyan-signal/40 bg-[#06080B]/80 mt-2">
+                    <div className="flex items-center justify-between p-3.5 rounded-sm border border-border bg-graphite mt-2">
                       <div className="flex items-center gap-3">
                         <div className="h-4 w-4 rounded-full border-2 border-cyan-signal flex items-center justify-center">
                           <div className="h-2 w-2 rounded-full bg-cyan-signal" />
@@ -685,7 +694,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
 
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-cream-muted px-1">
                       <span>UPI • GooglePay • PhonePe • Cards • NetBanking</span>
-                      <span className="text-emerald-400">Zero Convenience Fee</span>
+                      <span className="text-cyan-signal font-medium">Zero Convenience Fee</span>
                     </div>
                   </div>
 
@@ -694,11 +703,11 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                     <button
                       type="submit"
                       disabled={view === 'processing'}
-                      className="w-full relative overflow-hidden flex items-center justify-center gap-2.5 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite px-6 py-4 font-display font-bold text-sm sm:text-base tracking-wider uppercase transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_0_25px_rgba(0,216,165,0.3)] cursor-pointer"
+                      className="w-full relative overflow-hidden flex items-center justify-center gap-2.5 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-neutral-950 px-6 py-4 font-display font-bold text-sm sm:text-base tracking-wider uppercase transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_0_25px_rgba(0,168,137,0.25)] cursor-pointer"
                     >
                       {view === 'processing' ? (
                         <>
-                          <span className="h-4 w-4 rounded-full border-2 border-graphite border-t-transparent animate-spin" />
+                          <span className="h-4 w-4 rounded-full border-2 border-neutral-950 border-t-transparent animate-spin" />
                           <span>{loadingStep || 'Processing Order...'}</span>
                         </>
                       ) : (
@@ -709,7 +718,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                       )}
                     </button>
 
-                    <div className="mt-4 flex items-center justify-center gap-2 text-center text-[10px] font-mono text-cream-muted/70">
+                    <div className="mt-4 flex items-center justify-center gap-2 text-center text-[10px] font-mono text-cream-muted/80">
                       <ShieldCheck size={12} className="text-cyan-signal" />
                       <span>Server-verified transaction • 100% cryptographic payment security</span>
                     </div>
@@ -741,8 +750,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                   </div>
 
                   {/* Receipt Card */}
-                  <div className="rounded-sm border border-border/80 bg-graphite-elevated/70 p-6 sm:p-8 text-left font-mono text-sm space-y-4 shadow-inner max-w-xl mx-auto">
-                    <div className="flex items-center justify-between border-b border-border/60 pb-3">
+                  <div className="rounded-sm border border-border bg-graphite-elevated/80 p-6 sm:p-8 text-left font-mono text-sm space-y-4 shadow-sm max-w-xl mx-auto">
+                    <div className="flex items-center justify-between border-b border-border pb-3">
                       <span className="text-cream-muted uppercase text-[10px] tracking-wider">Payment Status</span>
                       <span className="rounded-full bg-emerald-500/15 border border-emerald-400/40 px-2.5 py-0.5 text-emerald-400 text-[10px] font-bold">
                         {verifiedOrder.payment_status}
@@ -781,7 +790,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                       <span className="text-cream">{verifiedOrder.customer_name}</span>
                     </div>
 
-                    <div className="border-t border-border/60 pt-3 text-xs">
+                    <div className="border-t border-border pt-3 text-xs">
                       <span className="text-cream-muted block mb-1">Shipping Destination:</span>
                       <span className="text-cream/90 leading-relaxed block">
                         {verifiedOrder.delivery_address.address}, {verifiedOrder.delivery_address.city},{' '}
@@ -794,7 +803,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                     <button
                       type="button"
                       onClick={handleGoBack}
-                      className="w-full max-w-md mx-auto flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite font-display font-bold py-3.5 px-6 text-sm uppercase tracking-wider transition-colors cursor-pointer"
+                      className="w-full max-w-md mx-auto flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-neutral-950 font-display font-bold py-3.5 px-6 text-sm uppercase tracking-wider transition-colors cursor-pointer"
                     >
                       <span>Continue Shopping</span>
                     </button>
@@ -829,7 +838,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
                     <button
                       type="button"
                       onClick={() => handlePlaceOrderAndPay()}
-                      className="flex-1 flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite font-display font-bold py-3.5 px-6 text-sm uppercase tracking-wider transition-colors cursor-pointer"
+                      className="flex-1 flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-neutral-950 font-display font-bold py-3.5 px-6 text-sm uppercase tracking-wider transition-colors cursor-pointer"
                     >
                       <RotateCcw size={14} />
                       <span>Try Again</span>
@@ -848,7 +857,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
           </div>
 
           {/* Footer branding */}
-          <div className="mt-6 text-center text-[10px] font-mono text-cream-muted/40 uppercase tracking-widest">
+          <div className="mt-6 text-center text-[10px] font-mono text-cream-muted/50 uppercase tracking-widest">
             BoneTalk / SAAKANTHA — Secure Checkout System
           </div>
         </motion.div>

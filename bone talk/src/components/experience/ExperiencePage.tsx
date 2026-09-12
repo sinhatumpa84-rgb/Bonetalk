@@ -4,6 +4,8 @@ import { EXHIBITION_PRODUCTS } from './data/exhibitionProducts'
 import type { ExhibitionProduct } from './data/exhibitionProducts'
 import { BoneTalkAssist } from './BoneTalkAssist'
 import { useOrder } from '../../context/OrderContext'
+import { TechnicalGrid } from '../layout/TechnicalGrid'
+import { ThemeToggle } from '../ui/ThemeToggle'
 
 interface ExperiencePageProps {
   onNavigateHome?: () => void
@@ -65,75 +67,67 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
   }
 
   return (
-    <div className="min-h-screen bg-[#06080B] text-[#E6ECEF] relative selection:bg-emerald-500/20 selection:text-emerald-300 font-sans">
-      {/* ── Background Grid & Visual Language ── */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-20"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)
-          `,
-          backgroundSize: '4rem 4rem'
-        }}
-      />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(45,212,191,0.08),transparent_70%)]" />
+    <div className="min-h-screen bg-graphite text-cream relative selection:bg-cyan-signal/20 selection:text-cyan-signal font-sans transition-colors duration-300">
+      {/* ── Reusable Homepage-Style Blueprint Grid System ── */}
+      <TechnicalGrid fixed variant="default" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(0,168,137,0.06),transparent_70%)]" />
 
-      {/* ── Fixed Minimal Exhibition Navigation Bar ── */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-[#06080B]/85 border-b border-white/[0.08] px-6 sm:px-12 py-4 flex items-center justify-between">
+      {/* ── Sticky Minimal Exhibition Navigation Bar ── */}
+      <header className="sticky top-0 z-40 backdrop-blur-md bg-graphite/90 border-b border-border px-6 sm:px-12 py-4 flex items-center justify-between transition-colors duration-300">
         <button
+          type="button"
           onClick={handleNavigateHome}
-          className="group flex items-center gap-3 text-xs font-mono tracking-widest text-neutral-400 hover:text-white transition-colors duration-200"
+          className="group flex items-center gap-3 text-xs font-mono tracking-widest text-cream-muted hover:text-cream transition-colors duration-200 cursor-pointer"
         >
-          <span className="text-emerald-400 group-hover:-translate-x-1 transition-transform duration-200">←</span>
+          <span className="text-cyan-signal group-hover:-translate-x-1 transition-transform duration-200">←</span>
           <span>BoneTalk</span>
         </button>
 
         <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono">
-          <span className="hidden sm:inline text-neutral-500 tracking-widest uppercase">EXHIBITION ARCHIVE</span>
-          <span className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          <span className="hidden sm:inline text-cream-muted tracking-widest uppercase">EXHIBITION ARCHIVE</span>
+          <span className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-0.5 rounded-full bg-cyan-signal/10 border border-cyan-signal/30 text-cyan-signal">
             {EXHIBITION_PRODUCTS.length} EDITIONS
           </span>
           <a
             href="/model-control"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-1 rounded border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+            className="text-[10px] tracking-wider font-semibold uppercase px-2.5 py-1 rounded border border-cyan-signal/40 bg-cyan-signal/10 text-cyan-signal hover:bg-cyan-signal/20 transition-colors"
             title="Open Separate Model & Hardware Control Console"
           >
             CONNECT MODEL ↗
           </a>
+          <ThemeToggle />
         </div>
       </header>
 
       {/* ── Exhibition Header ── */}
       <section className="relative z-10 pt-20 pb-16 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[11px] font-mono uppercase tracking-widest text-emerald-400 mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-graphite-elevated text-[11px] font-mono uppercase tracking-widest text-cyan-signal mb-6 shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-signal animate-pulse" />
           <span>OFFICIAL PRODUCT EXHIBITION</span>
         </div>
         
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white uppercase mb-6 leading-tight">
+        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-cream uppercase mb-6 leading-tight font-display">
           THE BoneTalk <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-signal via-emerald-500 to-teal-600 dark:from-emerald-300 dark:via-teal-200 dark:to-cyan-400">
             COLLECTION
           </span>
         </h1>
         
-        <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-cream-muted text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
           Silent speech EMG wearable technology, presented across heritage editions, skin-tone calibration series, and bespoke collaborations.
         </p>
 
-        <div className="mt-8 flex items-center justify-center gap-2 text-xs font-mono text-neutral-500">
+        <div className="mt-8 flex items-center justify-center gap-2 text-xs font-mono text-cream-muted">
           <span>SELECT ANY ARTIFACT TO REVEAL SPECIFICATIONS</span>
-          <span className="text-emerald-400 animate-bounce">↓</span>
+          <span className="text-cyan-signal animate-bounce">↓</span>
         </div>
       </section>
 
       {/* ── Main Continuous Vertical Exhibition Stream ── */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pb-36 space-y-24 sm:space-y-36">
         {EXHIBITION_PRODUCTS.map((product, index) => {
-          // Rule 7: index 0 = RIGHT, index 1 = LEFT, index 2 = RIGHT, index 3 = LEFT...
           const isRight = index % 2 === 0
           const isOpen = activeProductId === product.id
 
@@ -153,13 +147,14 @@ export const ExperiencePage: React.FC<ExperiencePageProps> = ({ onNavigateHome }
       </main>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 border-t border-white/[0.08] bg-[#040608] py-12 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-neutral-500">
+      <footer className="relative z-10 border-t border-border bg-graphite-light py-12 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-cream-muted transition-colors duration-300">
         <div>
           <span>© {new Date().getFullYear()} BoneTalk BIOTECH. ALL HARDWARE PHOTOGRAPHS RECORDED IN LAB.</span>
         </div>
         <button
+          type="button"
           onClick={handleNavigateHome}
-          className="text-neutral-400 hover:text-emerald-400 transition-colors uppercase tracking-widest flex items-center gap-2"
+          className="text-cream-muted hover:text-cyan-signal transition-colors uppercase tracking-widest flex items-center gap-2 cursor-pointer"
         >
           <span>RETURN TO HOME</span>
           <span>↗</span>
@@ -204,39 +199,29 @@ const ProductExhibitionMoment: React.FC<ProductExhibitionMomentProps> = ({
       className="relative scroll-mt-28"
     >
       {/* Subtle Row Divider with Monospace Serial & Edition Tag */}
-      <div className="flex items-center justify-between border-b border-white/[0.06] pb-3 mb-8 text-[11px] font-mono uppercase tracking-widest text-neutral-500">
+      <div className="flex items-center justify-between border-b border-border pb-3 mb-8 text-[11px] font-mono uppercase tracking-widest text-cream-muted">
         <div className="flex items-center gap-3">
-          <span className="text-emerald-500/70 font-semibold">#{serialNumber}</span>
-          <span className="text-neutral-400">{product.name}</span>
+          <span className="text-cyan-signal font-semibold">#{serialNumber}</span>
+          <span className="text-cream font-medium">{product.name}</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline text-neutral-600">{product.edition}</span>
-          <span className="text-emerald-400/80">{product.availability}</span>
+          <span className="hidden sm:inline text-cream-muted">{product.edition}</span>
+          <span className="text-cyan-signal/90 font-medium">{product.availability}</span>
         </div>
       </div>
 
-      {/* 
-        Desk: 2-Column Grid for Opposite-Side Pairing
-        If isRight === true (even index):
-          Left Slot: Detail Panel (when open) OR Calm Editorial Indicator (when closed)
-          Right Slot: Product Photograph
-        If isRight === false (odd index):
-          Left Slot: Product Photograph
-          Right Slot: Detail Panel (when open) OR Calm Editorial Indicator (when closed)
-      */}
+      {/* 2-Column Grid for Opposite-Side Pairing */}
       <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isRight ? 'lg:grid-flow-row' : ''}`}>
         
         {/* LEFT COLUMN SLOT (lg:col-span-6) */}
         <div className={`lg:col-span-6 order-2 ${isRight ? 'order-2 lg:order-1' : 'order-1 lg:order-1'}`}>
           {isRight ? (
-            /* Left Slot on RIGHT product: Shows Detail Panel if OPEN, else Editorial Teaser */
             isOpen ? (
               <DetailPanel product={product} onClose={onClose} />
             ) : (
               <ClosedEditorialHint product={product} serialNumber={serialNumber} onOpen={onToggle} align="left" />
             )
           ) : (
-            /* Left Slot on LEFT product: Shows Product Image */
             <ProductImageFrame
               product={product}
               index={index}
@@ -249,7 +234,6 @@ const ProductExhibitionMoment: React.FC<ProductExhibitionMomentProps> = ({
         {/* RIGHT COLUMN SLOT (lg:col-span-6) */}
         <div className={`lg:col-span-6 order-1 ${isRight ? 'order-1 lg:order-2' : 'order-2 lg:order-2'}`}>
           {isRight ? (
-            /* Right Slot on RIGHT product: Shows Product Image */
             <ProductImageFrame
               product={product}
               index={index}
@@ -257,7 +241,6 @@ const ProductExhibitionMoment: React.FC<ProductExhibitionMomentProps> = ({
               onToggle={onToggle}
             />
           ) : (
-            /* Right Slot on LEFT product: Shows Detail Panel if OPEN, else Editorial Teaser */
             isOpen ? (
               <DetailPanel product={product} onClose={onClose} />
             ) : (
@@ -290,17 +273,12 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col items-center">
-      {/* 
-        Controlled 4:3 Editorial Frame 
-        Desktop: 35vw–48vw, max-width: 680px
-        Mobile: 75vw–90vw
-      */}
       <div
         onClick={onToggle}
-        className={`group relative w-full max-w-[620px] aspect-[4/3] rounded-sm overflow-hidden cursor-pointer transition-all duration-300 bg-[#0B0E14] border ${
+        className={`group relative w-full max-w-[620px] aspect-[4/3] rounded-sm overflow-hidden cursor-pointer transition-all duration-300 bg-graphite-elevated/70 border ${
           isOpen
-            ? 'border-emerald-400/60 shadow-[0_0_40px_rgba(45,212,191,0.15)] ring-1 ring-emerald-400/40'
-            : 'border-white/[0.12] hover:border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)]'
+            ? 'border-cyan-signal/70 shadow-[0_0_35px_rgba(0,168,137,0.18)] ring-1 ring-cyan-signal/50'
+            : 'border-border hover:border-border-strong shadow-[var(--shadow-level-2)]'
         }`}
         role="button"
         tabIndex={0}
@@ -313,18 +291,15 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
         }}
       >
         {/* Subtle Inner Frame Grid lines */}
-        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0,transparent_70%)]" />
+        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_center,rgba(0,168,137,0.06)_0,transparent_70%)]" />
         
         {/* Technical Corner Brackets */}
-        <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-white/20 pointer-events-none" />
-        <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-white/20 pointer-events-none" />
-        <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-white/20 pointer-events-none" />
-        <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-white/20 pointer-events-none" />
+        <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-border-strong pointer-events-none" />
+        <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-border-strong pointer-events-none" />
+        <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-border-strong pointer-events-none" />
+        <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-border-strong pointer-events-none" />
 
-        {/* 
-          Actual Photograph from picture/
-          Using object-fit: contain inside the 4:3 frame to preserve exact proportions without distortion
-        */}
+        {/* Product Photograph */}
         <img
           src={product.image}
           alt={product.name}
@@ -336,8 +311,8 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
         <div className="absolute bottom-3 right-3 z-10">
           <div className={`px-2.5 py-1 rounded text-[10px] font-mono tracking-wider uppercase transition-all duration-200 flex items-center gap-1.5 ${
             isOpen 
-              ? 'bg-emerald-400 text-black font-semibold shadow-lg' 
-              : 'bg-black/70 backdrop-blur-sm text-neutral-300 border border-white/20 group-hover:border-emerald-400 group-hover:text-white'
+              ? 'bg-cyan-signal text-neutral-950 font-bold shadow-md' 
+              : 'bg-graphite/85 backdrop-blur-sm text-cream-muted border border-border group-hover:border-cyan-signal group-hover:text-cyan-signal'
           }`}>
             <span>{isOpen ? 'INSPECTING' : 'CLICK TO INSPECT'}</span>
             <span className="text-[9px]">{isOpen ? '●' : '↗'}</span>
@@ -346,23 +321,16 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
       </div>
 
       {/* Caption directly under the photograph */}
-      <div className="w-full max-w-[620px] mt-3 flex items-center justify-between text-[11px] font-mono text-neutral-400 px-1">
-        <span className="uppercase tracking-wider text-neutral-300 font-medium">{product.name}</span>
-        <span className="text-emerald-400/90">{product.price}</span>
+      <div className="w-full max-w-[620px] mt-3 flex items-center justify-between text-[11px] font-mono text-cream-muted px-1">
+        <span className="uppercase tracking-wider text-cream font-medium">{product.name}</span>
+        <span className="text-cyan-signal font-semibold">{product.price}</span>
       </div>
     </div>
   )
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DETAIL PANEL (Editorial Information Sheet / Luxury Envelope)
-// STRICT INFORMATION HIERARCHY:
-// 1. PRICE (visually dominant)
-// 2. PRODUCT NAME
-// 3. MAIN BENEFIT
-// 4. SPECIALTY / DIFFERENTIATOR
-// 5. WHY THIS PRICE / VALUE
-// 6. AVAILABILITY
+// DETAIL PANEL (Editorial Information Sheet)
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface DetailPanelProps {
@@ -374,82 +342,83 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ product, onClose }) => {
   const { openOrderModal } = useOrder()
   return (
     <div 
-      className="relative w-full max-w-[580px] bg-[#0A0E17]/95 backdrop-blur-xl border border-emerald-500/30 rounded-sm p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(45,212,191,0.08)] animate-in fade-in zoom-in-95 duration-200"
+      className="relative w-full max-w-[580px] bg-graphite-elevated/95 backdrop-blur-xl border border-cyan-signal/30 rounded-sm p-6 sm:p-8 shadow-[var(--shadow-level-3)] animate-in fade-in zoom-in-95 duration-200 transition-colors duration-300"
       role="region"
       aria-label={`Detailed specifications for ${product.name}`}
     >
-      {/* Top Technical Header & Small Close Button (Rule 18) */}
-      <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-6">
-        <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+      {/* Top Technical Header & Small Close Button */}
+      <div className="flex items-center justify-between border-b border-border pb-4 mb-6">
+        <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-cyan-signal">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-signal" />
           <span>TECHNICAL SPECIFICATION ENVELOPE</span>
         </div>
         <button
+          type="button"
           onClick={onClose}
-          className="w-7 h-7 flex items-center justify-center rounded-sm border border-white/10 hover:border-emerald-400 text-neutral-400 hover:text-white font-mono text-sm transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded-sm border border-border hover:border-cyan-signal text-cream-muted hover:text-cream font-mono text-sm transition-colors cursor-pointer"
           aria-label="Close specifications sheet"
         >
           ✕
         </button>
       </div>
 
-      {/* 1. PRICE (Visually Dominant - Rule 12 & Pricing Rule) */}
-      <div className="mb-6 pb-4 border-b border-white/[0.06]">
-        <span className="block text-[10px] font-mono uppercase tracking-widest text-emerald-400/80 mb-1.5">
+      {/* 1. PRICE */}
+      <div className="mb-6 pb-4 border-b border-border">
+        <span className="block text-[10px] font-mono uppercase tracking-widest text-cyan-signal/80 mb-1.5">
           VALUATION (INR)
         </span>
-        <div className="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-white flex items-baseline gap-1">
-          <span className="text-emerald-400">{product.price}</span>
-          <span className="text-[10px] font-mono text-neutral-400 ml-2 font-normal uppercase tracking-wider">ALL INCL.</span>
+        <div className="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-cream flex items-baseline gap-1">
+          <span className="text-cyan-signal">{product.price}</span>
+          <span className="text-[10px] font-mono text-cream-muted ml-2 font-normal uppercase tracking-wider">ALL INCL.</span>
         </div>
       </div>
 
       {/* 2. PRODUCT NAME & EDITION */}
-      <div className="mb-6 pb-6 border-b border-white/[0.06]">
-        <span className="block text-[10px] font-mono uppercase tracking-widest text-emerald-400/80 mb-1">
+      <div className="mb-6 pb-6 border-b border-border">
+        <span className="block text-[10px] font-mono uppercase tracking-widest text-cyan-signal/80 mb-1">
           {product.edition}
         </span>
-        <h3 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-tight">
+        <h3 className="text-xl sm:text-2xl font-bold text-cream uppercase tracking-tight font-display">
           {product.name}
         </h3>
       </div>
 
       {/* 3. MAIN BENEFIT */}
       <div className="mb-5">
-        <span className="block text-[10px] font-mono uppercase tracking-widest text-neutral-500 mb-1">
+        <span className="block text-[10px] font-mono uppercase tracking-widest text-cream-muted mb-1">
           PRIMARY BENEFIT
         </span>
-        <p className="text-sm text-neutral-200 leading-relaxed">
+        <p className="text-sm text-cream/90 leading-relaxed">
           {product.benefit}
         </p>
       </div>
 
       {/* 4. SPECIALTY / DIFFERENTIATOR */}
       <div className="mb-5">
-        <span className="block text-[10px] font-mono uppercase tracking-widest text-neutral-500 mb-1">
+        <span className="block text-[10px] font-mono uppercase tracking-widest text-cream-muted mb-1">
           SPECIALTY & HARDWARE CHARACTERISTICS
         </span>
-        <p className="text-xs font-mono text-neutral-300 leading-relaxed bg-white/[0.02] p-3 rounded-sm border border-white/[0.06]">
+        <p className="text-xs font-mono text-cream-muted leading-relaxed bg-graphite p-3 rounded-sm border border-border">
           {product.specialty}
         </p>
       </div>
 
       {/* 5. WHY THIS PRICE / VALUE */}
       <div className="mb-6">
-        <span className="block text-[10px] font-mono uppercase tracking-widest text-neutral-500 mb-1">
+        <span className="block text-[10px] font-mono uppercase tracking-widest text-cream-muted mb-1">
           VALUE JUSTIFICATION & SENSING ARCHITECTURE
         </span>
-        <p className="text-xs font-mono text-neutral-400 leading-relaxed">
+        <p className="text-xs font-mono text-cream-muted leading-relaxed">
           {product.valueReason}
         </p>
       </div>
 
       {/* 6. ORDER NOW ACTION & ENQUIRY */}
-      <div className="pt-4 border-t border-white/[0.08] space-y-3">
+      <div className="pt-4 border-t border-border space-y-3">
         <button
           type="button"
           onClick={() => openOrderModal(product)}
-          className="w-full flex items-center justify-center gap-2 rounded-sm bg-emerald-400 hover:bg-emerald-300 text-black font-display font-bold py-3 px-5 text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(52,211,153,0.25)] hover:shadow-[0_0_30px_rgba(52,211,153,0.45)] cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-neutral-950 font-display font-bold py-3 px-5 text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(0,168,137,0.25)] hover:shadow-[0_0_30px_rgba(0,168,137,0.4)] cursor-pointer"
         >
           <ShoppingBag size={15} />
           <span>ORDER NOW — {product.price}</span>
@@ -457,17 +426,17 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ product, onClose }) => {
 
         <div className="flex items-center justify-between flex-wrap gap-3 pt-1">
           <div>
-            <span className="block text-[9px] font-mono uppercase tracking-widest text-neutral-500 mb-0.5">
+            <span className="block text-[9px] font-mono uppercase tracking-widest text-cream-muted mb-0.5">
               PRODUCTION STATUS
             </span>
-            <span className="inline-block text-[10px] font-mono font-semibold uppercase px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+            <span className="inline-block text-[10px] font-mono font-semibold uppercase px-2.5 py-0.5 rounded bg-cyan-signal/10 border border-cyan-signal/30 text-cyan-signal">
               {product.availability}
             </span>
           </div>
 
           <a
             href={`mailto:concierge@bonetalk.in?subject=Enquiry%20regarding%20BoneTalk%20${encodeURIComponent(product.name)}`}
-            className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+            className="text-[11px] font-mono uppercase tracking-widest text-cream-muted hover:text-cyan-signal underline underline-offset-4 transition-colors"
           >
             CONTACT CONCIERGE ↗
           </a>
@@ -499,29 +468,31 @@ const ClosedEditorialHint: React.FC<ClosedEditorialHintProps> = ({
     <div className={`w-full max-w-[500px] py-8 ${align === 'right' ? 'lg:pl-8' : 'lg:pr-8'}`}>
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono text-emerald-500 font-semibold">[{serialNumber}]</span>
-          <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">{product.edition}</span>
+          <span className="text-xs font-mono text-cyan-signal font-semibold">[{serialNumber}]</span>
+          <span className="text-xs font-mono text-cream-muted uppercase tracking-widest">{product.edition}</span>
         </div>
         
-        <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white/90">
+        <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-cream font-display">
           {product.name}
         </h3>
         
-        <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed line-clamp-2">
+        <p className="text-xs sm:text-sm text-cream-muted leading-relaxed line-clamp-2">
           {product.benefit}
         </p>
 
         <div className="pt-2 flex items-center gap-4 flex-wrap">
           <button
+            type="button"
             onClick={onOpen}
-            className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-emerald-400 transition-colors cursor-pointer"
+            className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-cream-muted hover:text-cyan-signal transition-colors cursor-pointer"
           >
             <span>REVEAL SPECIFICATIONS</span>
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
           <button
+            type="button"
             onClick={() => openOrderModal(product)}
-            className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 hover:bg-emerald-400 hover:text-black transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded bg-cyan-signal/10 border border-cyan-signal/30 text-cyan-signal hover:bg-cyan-signal hover:text-neutral-950 transition-colors cursor-pointer"
           >
             <ShoppingBag size={12} />
             <span>ORDER ({product.price})</span>

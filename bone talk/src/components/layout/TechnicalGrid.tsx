@@ -3,18 +3,21 @@ import { cn } from '../../lib/constants'
 interface TechnicalGridProps {
   variant?: 'default' | 'hardware' | 'hidden'
   className?: string
+  fixed?: boolean
 }
 
 export function TechnicalGrid({
   variant = 'default',
   className,
+  fixed = false,
 }: TechnicalGridProps) {
   if (variant === 'hidden') return null
 
   return (
     <div
       className={cn(
-        'pointer-events-none absolute inset-0 overflow-hidden select-none z-0',
+        'pointer-events-none overflow-hidden select-none z-0',
+        fixed ? 'fixed inset-0' : 'absolute inset-0',
         className
       )}
       aria-hidden="true"

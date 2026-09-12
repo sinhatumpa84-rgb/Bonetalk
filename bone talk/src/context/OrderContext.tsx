@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from 'react'
+import { BONETALK_PRICING } from '../lib/constants'
 
 export interface OrderProductPayload {
   id: string
@@ -14,7 +15,7 @@ export const DEFAULT_PRODUCT: OrderProductPayload = {
   id: 'saakantha-01',
   name: 'BoneTalk CORE',
   edition: 'FLAGSHIP EDITION',
-  price: '₹4,499',
+  price: BONETALK_PRICING.display,
   image: '/products/new/charcoal-black.jpeg',
   benefit: 'Assistive wearable that converts muscle signals into communication through personalized signal recognition.',
   specialty: 'Core communication device with advanced EMG sensing.',

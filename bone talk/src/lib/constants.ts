@@ -101,3 +101,12 @@ export function generateWaveformPoint(
 export function cn(...classes: (string | false | undefined | null)[]): string {
   return classes.filter(Boolean).join(' ')
 }
+
+// ─── SINGLE SOURCE OF TRUTH FOR BONETALK PRICING ────────────────────────────
+export const BONETALK_PRICING = {
+  display: '₹15,999',
+  numeric: 15999,
+  paise: 1599900,
+  currency: 'INR',
+} as const
+

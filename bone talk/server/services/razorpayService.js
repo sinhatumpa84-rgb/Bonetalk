@@ -52,8 +52,26 @@ export async function createRazorpayOrder({ amountPaise, currency = 'INR', recei
     },
   }
 
-  const order = await rzp.orders.create(options)
-  return order
+  try {
+    const order = await rzp.orders.create(options)
+    return order
+  } catch (sdkErr) {
+    console.warn('[Razorpay SDK Warning]: Retrying with direct Razorpay REST endpoint:', sdkErr?.message || sdkErr)
+    const authHeader = 'Basic ' + Buffer.from(`${config.razorpay.keyId}:${config.razorpay.keySecret}`).toString('base64')
+    const response = await fetch('https://api.razorpay.com/v1/orders', {
+      method: 'POST',
+      headers: {
+        Authorization: authHeader,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(options),
+    })
+    const data = await response.json()
+    if (!response.ok || data.error) {
+      throw new Error(data.error?.description || data.error?.reason || 'Razorpay order creation failed.')
+    }
+    return data
+  }
 }
 
 /**

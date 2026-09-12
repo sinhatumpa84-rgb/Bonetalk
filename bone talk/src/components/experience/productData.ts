@@ -15,7 +15,7 @@ export const products: Product[] = [
     id: 'saakantha-01',
     name: 'BoneTalk CORE',
     image: '/products/new/charcoal-black.jpeg',
-    price: '₹4,499',
+    price: '₹15,999',
     currency: 'INR',
     benefit: 'Assistive wearable that converts muscle signals into communication through personalized signal recognition.',
     specialty: 'Core communication device with advanced EMG sensing.',

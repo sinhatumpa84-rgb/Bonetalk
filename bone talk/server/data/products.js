@@ -2,6 +2,15 @@
 // Prices are stored in INR (Indian Rupee integer amount)
 
 export const PRODUCT_CATALOG = {
+  // Test Integration Item (₹10 / 1000 paise)
+  'test-item-10': {
+    id: 'test-item-10',
+    name: 'BoneTalk Integration Test Node',
+    edition: 'TEST MODE',
+    price: 10,
+    image: '/favicon.svg',
+    currency: 'INR',
+  },
   // Exhibition Series Products
   'silver-sage': {
     id: 'silver-sage',
@@ -192,7 +201,7 @@ export const PRODUCT_CATALOG = {
     id: 'saakantha-01',
     name: 'BoneTalk CORE',
     edition: 'FLAGSHIP SERIES',
-    price: 4499,
+    price: 15999,
     image: '/products/new/charcoal-black.jpeg',
     currency: 'INR',
   },
@@ -241,3 +250,8 @@ export function parsePrice(priceString) {
   const clean = priceString.replace(/[^0-9]/g, '')
   return parseInt(clean, 10) || 0
 }
+
+// Single Source of Truth for Default BoneTalk Product Pricing
+export const BONETALK_PRICE_INR = 15999
+export const BONETALK_PRICE_PAISE = 1599900
+

@@ -2,7 +2,7 @@ import express from 'express'
 import { config, isRazorpayConfigured } from '../config.js'
 import { createRazorpayOrder, verifyRazorpaySignature } from '../services/razorpayService.js'
 import { orderStore, ORDER_STATUS } from '../store/orderStore.js'
-import { getProductById } from '../data/products.js'
+import { getProductById, BONETALK_PRICE_INR } from '../data/products.js'
 
 export const paymentRouter = express.Router()
 
@@ -117,9 +117,11 @@ paymentRouter.post('/create-order', async (req, res) => {
       unitPrice = catalogProduct.price
       finalProductName = catalogProduct.name
       productImage = catalogProduct.image
+    } else if (req.body.amount && Number(req.body.amount) > 0) {
+      unitPrice = Math.max(1, Math.round(Number(req.body.amount)))
     } else {
       // Fallback if custom product or dynamic ID
-      unitPrice = 3999
+      unitPrice = BONETALK_PRICE_INR
     }
 
     const subtotal = unitPrice * orderQty

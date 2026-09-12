@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useOrder } from '../../context/OrderContext'
 import { loadRazorpayScript } from '../../lib/razorpay'
+import { BONETALK_PRICING } from '../../lib/constants'
 import type {
   RazorpaySuccessResponse,
   RazorpayFailureResponse,
@@ -116,9 +117,9 @@ export const OrderModal: React.FC = () => {
   // Clean numeric price
   const parseNumericPrice = (p: string | number | undefined): number => {
     if (typeof p === 'number') return p
-    if (!p) return 3999
+    if (!p) return BONETALK_PRICING.numeric
     const clean = String(p).replace(/[^0-9]/g, '')
-    return parseInt(clean, 10) || 3999
+    return parseInt(clean, 10) || BONETALK_PRICING.numeric
   }
 
   const unitPrice = parseNumericPrice(activeProduct?.price)

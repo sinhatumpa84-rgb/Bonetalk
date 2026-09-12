@@ -1,7 +1,7 @@
 import { config, isRazorpayConfigured } from '../../server/config.js'
 import { createRazorpayOrder } from '../../server/services/razorpayService.js'
 import { orderStore, ORDER_STATUS } from '../../server/store/orderStore.js'
-import { getProductById } from '../../server/data/products.js'
+import { getProductById, BONETALK_PRICE_INR } from '../../server/data/products.js'
 
 function isValidPhone(phone) {
   if (!phone) return false
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
     const orderQty = Math.max(1, parseInt(quantity, 10) || 1)
     const catalogProduct = getProductById(productId)
-    let unitPrice = 3999
+    let unitPrice = BONETALK_PRICE_INR
     let finalProductName = productName || 'BoneTalk Device'
     let productImage = ''
 
@@ -63,6 +63,8 @@ export default async function handler(req, res) {
       unitPrice = catalogProduct.price
       finalProductName = catalogProduct.name
       productImage = catalogProduct.image
+    } else if (req.body.amount && Number(req.body.amount) > 0) {
+      unitPrice = Math.max(1, Math.round(Number(req.body.amount)))
     }
 
     const finalTotalINR = unitPrice * orderQty

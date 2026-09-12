@@ -2,6 +2,7 @@ import { config, isRazorpayConfigured } from '../../server/config.js'
 import { createRazorpayOrder } from '../../server/services/razorpayService.js'
 import { orderStore, ORDER_STATUS } from '../../server/store/orderStore.js'
 import { getProductById, BONETALK_PRICE_INR } from '../../server/data/products.js'
+import { calculateBoneTalkPrice } from '../../server/data/pricing.js'
 
 function isValidPhone(phone) {
   if (!phone) return false
@@ -63,12 +64,20 @@ export default async function handler(req, res) {
       unitPrice = catalogProduct.price
       finalProductName = catalogProduct.name
       productImage = catalogProduct.image
+    } else if (req.body.price && Number(req.body.price) > 0) {
+      unitPrice = Number(req.body.price)
     } else if (req.body.amount && Number(req.body.amount) > 0) {
-      unitPrice = Math.max(1, Math.round(Number(req.body.amount)))
+      unitPrice = Number(req.body.amount)
     }
 
-    const finalTotalINR = unitPrice * orderQty
-    const amountPaise = finalTotalINR * 100
+    const isTestItem = productId === 'test-item-10'
+    const priceObj = isTestItem 
+      ? { numeric: unitPrice, display: `₹${unitPrice}`, paise: unitPrice * 100 }
+      : calculateBoneTalkPrice(unitPrice)
+
+    const finalUnitPrice = priceObj.numeric
+    const finalTotalINR = finalUnitPrice * orderQty
+    const amountPaise = isTestItem ? finalTotalINR * 100 : (priceObj.paise * orderQty)
     const internalOrderId = `BT-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`
 
     if (!isRazorpayConfigured()) {

@@ -1,3 +1,5 @@
+import { calculateBoneTalkPrice } from '../../lib/pricing'
+
 export interface Product {
   id: string
   name: string
@@ -15,7 +17,7 @@ export const products: Product[] = [
     id: 'saakantha-01',
     name: 'BoneTalk CORE',
     image: '/products/new/charcoal-black.jpeg',
-    price: '₹15,999',
+    price: calculateBoneTalkPrice(12999).display,
     currency: 'INR',
     benefit: 'Assistive wearable that converts muscle signals into communication through personalized signal recognition.',
     specialty: 'Core communication device with advanced EMG sensing.',
@@ -26,7 +28,7 @@ export const products: Product[] = [
     id: 'saakantha-02',
     name: 'BoneTalk PRO',
     image: '/products/new/silver-sage.jpeg',
-    price: '₹4,999',
+    price: calculateBoneTalkPrice(13799).display,
     currency: 'INR',
     benefit: 'Enhanced communication wearable with advanced muscle pattern recognition.',
     specialty: 'Professional-grade sensing with extended battery life.',
@@ -37,7 +39,7 @@ export const products: Product[] = [
     id: 'saakantha-03',
     name: 'BoneTalk ELITE',
     image: '/products/new/deep-teal.jpeg',
-    price: '₹5,499',
+    price: calculateBoneTalkPrice(14099).display,
     currency: 'INR',
     benefit: 'Premium assistive device with personalized learning algorithms.',
     specialty: 'Elite-tier signal processing with adaptive learning.',
@@ -48,7 +50,7 @@ export const products: Product[] = [
     id: 'saakantha-04',
     name: 'BoneTalk ULTRA',
     image: '/products/new/midnight-navy.jpeg',
-    price: '₹6,499',
+    price: calculateBoneTalkPrice(14799).display,
     currency: 'INR',
     benefit: 'Flagship communication wearable with multi-modal signal interpretation.',
     specialty: 'Ultra-precision sensing with real-time AI adaptation.',
@@ -59,7 +61,7 @@ export const products: Product[] = [
     id: 'saakantha-05',
     name: 'BoneTalk SIGNATURE',
     image: '/products/new/plum-purple.jpeg',
-    price: '₹7,499',
+    price: calculateBoneTalkPrice(15799).display,
     currency: 'INR',
     benefit: 'Signature edition with personalized calibration and premium construction.',
     specialty: 'Handcrafted assembly with individualized tuning.',
@@ -67,3 +69,4 @@ export const products: Product[] = [
     availability: 'Made to order'
   }
 ]
+

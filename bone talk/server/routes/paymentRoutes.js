@@ -3,6 +3,7 @@ import { config, isRazorpayConfigured } from '../config.js'
 import { createRazorpayOrder, verifyRazorpaySignature } from '../services/razorpayService.js'
 import { orderStore, ORDER_STATUS } from '../store/orderStore.js'
 import { getProductById, BONETALK_PRICE_INR } from '../data/products.js'
+import { calculateBoneTalkPrice } from '../data/pricing.js'
 
 export const paymentRouter = express.Router()
 
@@ -117,18 +118,29 @@ paymentRouter.post('/create-order', async (req, res) => {
       unitPrice = catalogProduct.price
       finalProductName = catalogProduct.name
       productImage = catalogProduct.image
+    } else if (req.body.price && Number(req.body.price) > 0) {
+      unitPrice = Number(req.body.price)
     } else if (req.body.amount && Number(req.body.amount) > 0) {
-      unitPrice = Math.max(1, Math.round(Number(req.body.amount)))
+      unitPrice = Number(req.body.amount)
     } else {
       // Fallback if custom product or dynamic ID
       unitPrice = BONETALK_PRICE_INR
     }
 
-    const subtotal = unitPrice * orderQty
+    // Pass through centralized pricing function (Single Source of Truth)
+    // Preserves non-BoneTalk test node (test-item-10) while strictly enforcing
+    // the XX99 ending and ₹12,900 - ₹15,799 bounds for all BoneTalk purchases
+    const isTestItem = productId === 'test-item-10'
+    const priceObj = isTestItem 
+      ? { numeric: unitPrice, display: `₹${unitPrice}`, paise: unitPrice * 100 }
+      : calculateBoneTalkPrice(unitPrice)
+
+    const finalUnitPrice = priceObj.numeric
+    const subtotal = finalUnitPrice * orderQty
     const deliveryCharge = 0 // Free Express Delivery promotion
     const discount = 0
     const finalTotalINR = subtotal + deliveryCharge - discount
-    const amountPaise = finalTotalINR * 100
+    const amountPaise = isTestItem ? finalTotalINR * 100 : (priceObj.paise * orderQty)
 
     // 3. Generate internal order ID
     const internalOrderId = `BT-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`

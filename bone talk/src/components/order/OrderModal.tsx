@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { useOrder } from '../../context/OrderContext'
 import { loadRazorpayScript } from '../../lib/razorpay'
-import { BONETALK_PRICING } from '../../lib/constants'
+import { calculateBoneTalkPrice } from '../../lib/constants'
 import type {
   RazorpaySuccessResponse,
   RazorpayFailureResponse,
@@ -114,15 +114,9 @@ export const OrderModal: React.FC = () => {
     }
   }, [isModalOpen, activeProduct])
 
-  // Clean numeric price
-  const parseNumericPrice = (p: string | number | undefined): number => {
-    if (typeof p === 'number') return p
-    if (!p) return BONETALK_PRICING.numeric
-    const clean = String(p).replace(/[^0-9]/g, '')
-    return parseInt(clean, 10) || BONETALK_PRICING.numeric
-  }
-
-  const unitPrice = parseNumericPrice(activeProduct?.price)
+  // Centralized BoneTalk price calculation (Single Source of Truth)
+  const priceObj = calculateBoneTalkPrice(activeProduct?.price)
+  const unitPrice = priceObj.numeric
   const subtotal = unitPrice * quantity
   const deliveryCharge = 0 // Free Express Delivery
   const totalAmount = subtotal + deliveryCharge
@@ -184,10 +178,12 @@ export const OrderModal: React.FC = () => {
     setLoadingStep('Creating Order...')
 
     try {
-      // 1. Create Order on Backend
+      // 1. Create Order on Backend with exact normalized price
       const orderPayload = {
         productId: activeProduct?.id || 'saakantha-core',
         productName: activeProduct?.name || 'BoneTalk Core Wearable',
+        price: unitPrice,
+        amount: unitPrice,
         quantity,
         customer: {
           name: name.trim(),

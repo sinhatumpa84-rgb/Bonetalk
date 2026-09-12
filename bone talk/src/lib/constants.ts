@@ -103,10 +103,16 @@ export function cn(...classes: (string | false | undefined | null)[]): string {
 }
 
 // ─── SINGLE SOURCE OF TRUTH FOR BONETALK PRICING ────────────────────────────
-export const BONETALK_PRICING = {
-  display: '₹15,999',
-  numeric: 15999,
-  paise: 1599900,
-  currency: 'INR',
-} as const
+export {
+  calculateBoneTalkPrice,
+  formatBoneTalkPrice,
+  MIN_BONETALK_PRICE,
+  MAX_BONETALK_PRICE,
+  DEFAULT_BONETALK_PRICE,
+} from './pricing'
+export type { BoneTalkPriceResult } from './pricing'
+
+import { calculateBoneTalkPrice } from './pricing'
+export const BONETALK_PRICING = calculateBoneTalkPrice(12999)
+
 

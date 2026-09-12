@@ -1,4 +1,4 @@
-import { Suspense, lazy, useRef, useState, useEffect } from 'react'
+import { Suspense, lazy, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, ArrowRight, Cpu, Activity, Zap, Radio, Volume2 } from 'lucide-react'
 import { SplitLines } from '../ui/SplitText'
@@ -114,14 +114,11 @@ export function HeroSection() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [1, 0.75, exit.heroOpacity[0]])
 
 
-  const [initSequence, setInitSequence] = useState(0)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setInitSequence((prev) => (prev < 3 ? prev + 1 : prev))
-    }, 450)
-    return () => clearInterval(timer)
-  }, [])
+  // Editorial headline structure (3 lines in English: THE BODY / HAS A / VOICE.)
+  const headlineLines =
+    t.hero.line1 === 'THE BODY' && t.hero.line2 === 'HAS A VOICE.'
+      ? ['THE BODY', 'HAS A', 'VOICE.']
+      : [t.hero.line1, t.hero.line2]
 
   const technicalAnnotations = [
     {
@@ -129,35 +126,35 @@ export function HeroSection() {
       label: t.hero.annotations.emgLabel,
       sub: t.hero.annotations.emgSub,
       icon: Activity,
-      className: 'top-3 left-1 sm:top-6 sm:left-2 md:top-10 md:-left-6',
+      className: 'top-3 -left-2 sm:top-5 sm:left-0 md:top-8 md:-left-6 lg:top-10 lg:-left-8',
     },
     {
       id: 'ai',
       label: t.hero.annotations.aiLabel,
       sub: t.hero.annotations.aiSub,
       icon: Radio,
-      className: 'top-4 right-1 sm:top-8 sm:right-2 md:top-16 md:-right-6',
+      className: 'top-3 -right-2 sm:top-5 sm:right-0 md:top-10 md:-right-6 lg:top-14 lg:-right-8',
     },
     {
       id: 'signal',
       label: t.hero.annotations.signalLabel,
       sub: t.hero.annotations.signalSub,
       icon: Zap,
-      className: 'bottom-16 left-1 sm:bottom-20 sm:left-2 md:bottom-28 md:-left-8',
+      className: 'bottom-20 -left-2 sm:bottom-24 sm:left-0 md:bottom-28 md:-left-8 lg:bottom-32 lg:-left-10',
     },
     {
       id: 'voice',
       label: t.hero.annotations.voiceLabel,
       sub: t.hero.annotations.voiceSub,
       icon: Volume2,
-      className: 'bottom-14 right-1 sm:bottom-18 sm:right-2 md:bottom-24 md:-right-8',
+      className: 'bottom-16 -right-2 sm:bottom-20 sm:right-0 md:bottom-24 md:-right-8 lg:bottom-28 lg:-right-10',
     },
     {
       id: 'esp32',
       label: t.hero.annotations.esp32Label,
       sub: t.hero.annotations.esp32Sub,
       icon: Cpu,
-      className: 'bottom-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-6 md:left-16',
+      className: 'bottom-1 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-4 md:left-14 lg:bottom-6 lg:left-16',
     },
   ]
 
@@ -171,7 +168,7 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-graphite" />
 
-      <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 items-center gap-8 px-4 pt-24 sm:px-6 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
+      <div className="relative mx-auto grid w-full max-w-[1440px] flex-1 grid-cols-1 items-center gap-8 px-4 pt-24 sm:px-6 md:grid-cols-2 md:gap-12 md:px-10 md:pt-36">
         <motion.div
           className="relative z-10"
           style={reducedMotion ? undefined : { y: textY, opacity: heroOpacity }}
@@ -189,9 +186,9 @@ export function HeroSection() {
           </motion.div>
 
           <SplitLines
-            lines={[t.hero.line1, t.hero.line2]}
+            lines={headlineLines}
             className="mb-6 md:mb-8"
-            lineClassName="font-display text-[clamp(2.25rem,9.5vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-cream"
+            lineClassName="font-display text-[clamp(2.5rem,8vw,6.2rem)] font-bold leading-[0.92] tracking-[-0.03em] text-cream"
             delay={0.25}
           />
 
@@ -295,18 +292,6 @@ export function HeroSection() {
                 </motion.div>
               )
             })}
-
-            {initSequence < 3 && (
-              <div className="absolute top-2 left-2 z-30 hidden md:block font-mono text-[9px] text-cyan-signal/80 bg-graphite/80 px-3 py-2 rounded border border-cyan-signal/30 backdrop-blur-sm max-w-[calc(100%-1rem)]">
-                <div>BoneTalk SIGNAL ENGINE INITIALIZING...</div>
-                <div className="text-cream-muted text-[8px] mt-1 truncate">
-                  EMG SENSOR ARRAY ...... {initSequence >= 1 ? 'READY ✓' : 'CALIBRATING'}
-                </div>
-                <div className="text-cream-muted text-[8px] truncate">
-                  TINYML INFERENCE CORE .. {initSequence >= 2 ? 'READY ✓' : 'CALIBRATING'}
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="w-[calc(100%-24px)] max-w-[420px] mx-auto mt-4 rounded-sm border border-border/80 bg-graphite-light/70 p-3 backdrop-blur-md md:hidden">

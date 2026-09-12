@@ -299,7 +299,7 @@ export const en: TranslationSchema = {
     commsLabel: 'COMMS:',
     annotations: {
       emgLabel: 'EMG SENSOR',
-      emgSub: 'Biopotential Electrodes',
+      emgSub: 'Biopotential Electrode',
       aiLabel: 'AI RECOGNITION',
       aiSub: 'Gesture Classification',
       signalLabel: 'MUSCLE SIGNAL',
@@ -307,7 +307,7 @@ export const en: TranslationSchema = {
       voiceLabel: 'VOICE OUTPUT',
       voiceSub: 'Real-Time Speech Engine',
       esp32Label: 'ESP32-S3 POD',
-      esp32Sub: '240MHz TinyML DSP',
+      esp32Sub: 'Embedded TinyML DSP',
     },
   },
   story: {

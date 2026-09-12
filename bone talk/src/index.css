@@ -54,12 +54,12 @@ html[data-theme="light"] {
   --nav-border-scrolled: rgba(0, 0, 0, 0.06);
 
   /* Background Precision Engineering Grid Tokens - Light Mode */
-  --grid-primary: rgba(0, 0, 0, 0.055);
-  --grid-secondary: rgba(0, 0, 0, 0.025);
+  --grid-primary: rgba(0, 0, 0, 0.032);
+  --grid-secondary: rgba(0, 0, 0, 0.014);
   --grid-size: 60px;
   --grid-subsize: 15px;
-  --grid-line: rgba(0, 0, 0, 0.04);
-  --grid-axis: rgba(0, 0, 0, 0.06);
+  --grid-line: rgba(0, 0, 0, 0.025);
+  --grid-axis: rgba(0, 0, 0, 0.04);
 
   /* 3D Depth & Layered Shadow System - Light Mode */
   --shadow-level-1: 0 2px 6px rgba(0, 0, 0, 0.03);
@@ -143,10 +143,10 @@ html[data-theme="dark"] {
   --nav-border-scrolled: rgba(255, 255, 255, 0.06);
 
   /* Background Precision Engineering Grid Tokens - Dark Mode (Warm Muted Gold) */
-  --grid-primary: rgba(201, 170, 105, 0.10);
-  --grid-secondary: rgba(201, 170, 105, 0.045);
-  --grid-line: rgba(201, 170, 105, 0.06);
-  --grid-axis: rgba(201, 170, 105, 0.08);
+  --grid-primary: rgba(201, 170, 105, 0.065);
+  --grid-secondary: rgba(201, 170, 105, 0.025);
+  --grid-line: rgba(201, 170, 105, 0.035);
+  --grid-axis: rgba(201, 170, 105, 0.05);
 
   /* 3D Depth & Layered Shadow System - Dark Mode */
   --shadow-level-1: 0 2px 8px rgba(0, 0, 0, 0.25);

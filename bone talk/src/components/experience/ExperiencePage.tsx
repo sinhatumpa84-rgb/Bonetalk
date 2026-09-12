@@ -6,6 +6,7 @@ import { BoneTalkAssist } from './BoneTalkAssist'
 import { useOrder } from '../../context/OrderContext'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { ThemeToggle } from '../ui/ThemeToggle'
+import { ProductImage } from '../ui/ProductImage'
 
 interface ExperiencePageProps {
   onNavigateHome?: () => void
@@ -275,7 +276,7 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
     <div className="w-full flex flex-col items-center">
       <div
         onClick={onToggle}
-        className={`group relative w-full max-w-[620px] aspect-[4/3] rounded-sm overflow-hidden cursor-pointer transition-all duration-300 bg-graphite-elevated/70 border ${
+        className={`group relative w-full max-w-[620px] rounded-sm overflow-hidden cursor-pointer transition-all duration-300 border ${
           isOpen
             ? 'border-cyan-signal/70 shadow-[0_0_35px_rgba(0,168,137,0.18)] ring-1 ring-cyan-signal/50'
             : 'border-border hover:border-border-strong shadow-[var(--shadow-level-2)]'
@@ -291,24 +292,25 @@ const ProductImageFrame: React.FC<ProductImageFrameProps> = ({
         }}
       >
         {/* Subtle Inner Frame Grid lines */}
-        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_center,rgba(0,168,137,0.06)_0,transparent_70%)]" />
+        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_center,rgba(0,168,137,0.06)_0,transparent_70%)] z-10" />
         
         {/* Technical Corner Brackets */}
-        <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-border-strong pointer-events-none" />
-        <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-border-strong pointer-events-none" />
-        <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-border-strong pointer-events-none" />
-        <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-border-strong pointer-events-none" />
+        <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-border-strong pointer-events-none z-10" />
+        <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-border-strong pointer-events-none z-10" />
+        <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-border-strong pointer-events-none z-10" />
+        <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-border-strong pointer-events-none z-10" />
 
-        {/* Product Photograph */}
-        <img
+        {/* Standardized Product Photograph */}
+        <ProductImage
           src={product.image}
           alt={product.name}
-          loading={index === 0 ? 'eager' : 'lazy'}
-          className="w-full h-full object-contain p-2 sm:p-4 transition-transform duration-500 group-hover:scale-[1.02]"
+          aspectRatio="16/10"
+          priority={index === 0}
+          imageClassName="transition-transform duration-500 group-hover:scale-[1.03]"
         />
 
         {/* Hover / Active Badge Overlay */}
-        <div className="absolute bottom-3 right-3 z-10">
+        <div className="absolute bottom-3 right-3 z-20">
           <div className={`px-2.5 py-1 rounded text-[10px] font-mono tracking-wider uppercase transition-all duration-200 flex items-center gap-1.5 ${
             isOpen 
               ? 'bg-cyan-signal text-neutral-950 font-bold shadow-md' 

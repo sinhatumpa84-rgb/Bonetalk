@@ -21,6 +21,7 @@ import type {
   RazorpayFailureResponse,
   RazorpayCheckoutOptions,
 } from '../../lib/razorpay'
+import { ProductImage } from '../ui/ProductImage'
 
 // List of Indian States & UTs
 const INDIAN_STATES = [
@@ -407,11 +408,12 @@ export const OrderModal: React.FC = () => {
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     {activeProduct?.image && (
-                      <div className="h-20 w-24 sm:w-28 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite-elevated flex items-center justify-center">
-                        <img
+                      <div className="w-24 sm:w-28 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite shadow-sm">
+                        <ProductImage
                           src={activeProduct.image}
                           alt={activeProduct.name}
-                          className="h-full w-full object-contain p-1"
+                          aspectRatio="16/10"
+                          priority={true}
                         />
                       </div>
                     )}

@@ -23,6 +23,7 @@ import type {
 } from '../../lib/razorpay'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { ThemeToggle } from '../ui/ThemeToggle'
+import { ProductImage } from '../ui/ProductImage'
 
 // List of Indian States & UTs
 const INDIAN_STATES = [
@@ -408,11 +409,12 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                       {activeProduct?.image && (
-                        <div className="h-24 w-28 sm:h-28 sm:w-36 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite flex items-center justify-center">
-                          <img
+                        <div className="w-28 sm:w-36 flex-shrink-0 overflow-hidden rounded-sm border border-border bg-graphite shadow-sm">
+                          <ProductImage
                             src={activeProduct.image}
                             alt={activeProduct.name}
-                            className="h-full w-full object-contain p-1.5"
+                            aspectRatio="16/10"
+                            priority={true}
                           />
                         </div>
                       )}
@@ -770,7 +772,18 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigateBack }) =>
 
                     <div className="flex items-center justify-between">
                       <span className="text-cream-muted">Product:</span>
-                      <span className="text-cream font-medium">{verifiedOrder.product_name}</span>
+                      <div className="flex items-center gap-2.5">
+                        {activeProduct?.image && (
+                          <div className="w-10 overflow-hidden rounded-sm border border-border flex-shrink-0">
+                            <ProductImage
+                              src={activeProduct.image}
+                              alt={verifiedOrder.product_name}
+                              aspectRatio="16/10"
+                            />
+                          </div>
+                        )}
+                        <span className="text-cream font-medium">{verifiedOrder.product_name}</span>
+                      </div>
                     </div>
 
                     <div className="flex items-center justify-between">

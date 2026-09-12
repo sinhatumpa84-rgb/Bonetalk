@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Product } from './productData'
+import { ProductImage } from '../ui/ProductImage'
 
 interface ProductItemProps {
   product: Product
@@ -12,7 +13,6 @@ interface ProductItemProps {
 export function ProductItem({ product, position, index, onClick, isSelected }: ProductItemProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [imageLoaded, setImageLoaded] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -67,19 +67,6 @@ export function ProductItem({ product, position, index, onClick, isSelected }: P
     transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
   }
 
-  const imageContainerStyle: React.CSSProperties = {
-    position: 'relative',
-    width: '100%',
-    aspectRatio: '4 / 3',
-    overflow: 'hidden',
-    borderRadius: '4px',
-    background: 'var(--color-graphite-elevated)',
-    border: '1px solid var(--color-border)',
-    boxShadow: 'var(--shadow-level-2)',
-    opacity: imageLoaded ? 1 : 0,
-    transition: 'opacity 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease',
-  }
-
   const labelStyle: React.CSSProperties = {
     fontFamily: 'var(--font-mono)',
     fontSize: '0.625rem',
@@ -118,18 +105,12 @@ export function ProductItem({ product, position, index, onClick, isSelected }: P
           }
         }}
       >
-        <div style={imageContainerStyle}>
-          <img
+        <div className="overflow-hidden rounded-sm border border-border shadow-[var(--shadow-level-2)]">
+          <ProductImage
             src={product.image}
             alt={product.name}
-            loading={index < 2 ? 'eager' : 'lazy'}
-            onLoad={() => setImageLoaded(true)}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              display: 'block',
-            }}
+            aspectRatio="16/10"
+            priority={index < 2}
           />
         </div>
         <div style={labelStyle}>

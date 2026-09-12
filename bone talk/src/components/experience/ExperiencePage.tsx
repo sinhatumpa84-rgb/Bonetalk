@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { ShoppingBag } from 'lucide-react'
 import { EXHIBITION_PRODUCTS } from './data/exhibitionProducts'
 import type { ExhibitionProduct } from './data/exhibitionProducts'
 import { BoneTalkAssist } from './BoneTalkAssist'
+import { useOrder } from '../../context/OrderContext'
 
 interface ExperiencePageProps {
   onNavigateHome?: () => void
@@ -360,6 +362,7 @@ interface DetailPanelProps {
 }
 
 const DetailPanel: React.FC<DetailPanelProps> = ({ product, onClose }) => {
+  const { openOrderModal } = useOrder()
   return (
     <div 
       className="relative w-full max-w-[580px] bg-[#0A0E17]/95 backdrop-blur-xl border border-emerald-500/30 rounded-sm p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(45,212,191,0.08)] animate-in fade-in zoom-in-95 duration-200"
@@ -432,23 +435,34 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ product, onClose }) => {
         </p>
       </div>
 
-      {/* 6. AVAILABILITY & DIRECT ENQUIRY */}
-      <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <span className="block text-[9px] font-mono uppercase tracking-widest text-neutral-500 mb-0.5">
-            PRODUCTION STATUS
-          </span>
-          <span className="inline-block text-[11px] font-mono font-semibold uppercase px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
-            {product.availability}
-          </span>
-        </div>
-
-        <a
-          href={`mailto:concierge@bonetalk.in?subject=Enquiry%20regarding%20BoneTalk%20${encodeURIComponent(product.name)}`}
-          className="text-xs font-mono uppercase tracking-widest text-neutral-300 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+      {/* 6. ORDER NOW ACTION & ENQUIRY */}
+      <div className="pt-4 border-t border-white/[0.08] space-y-3">
+        <button
+          type="button"
+          onClick={() => openOrderModal(product)}
+          className="w-full flex items-center justify-center gap-2 rounded-sm bg-emerald-400 hover:bg-emerald-300 text-black font-display font-bold py-3 px-5 text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(52,211,153,0.25)] hover:shadow-[0_0_30px_rgba(52,211,153,0.45)] cursor-pointer"
         >
-          CONTACT CONCIERGE ↗
-        </a>
+          <ShoppingBag size={15} />
+          <span>ORDER NOW — {product.price}</span>
+        </button>
+
+        <div className="flex items-center justify-between flex-wrap gap-3 pt-1">
+          <div>
+            <span className="block text-[9px] font-mono uppercase tracking-widest text-neutral-500 mb-0.5">
+              PRODUCTION STATUS
+            </span>
+            <span className="inline-block text-[10px] font-mono font-semibold uppercase px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+              {product.availability}
+            </span>
+          </div>
+
+          <a
+            href={`mailto:concierge@bonetalk.in?subject=Enquiry%20regarding%20BoneTalk%20${encodeURIComponent(product.name)}`}
+            className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+          >
+            CONTACT CONCIERGE ↗
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -471,6 +485,7 @@ const ClosedEditorialHint: React.FC<ClosedEditorialHintProps> = ({
   onOpen,
   align,
 }) => {
+  const { openOrderModal } = useOrder()
   return (
     <div className={`w-full max-w-[500px] py-8 ${align === 'right' ? 'lg:pl-8' : 'lg:pr-8'}`}>
       <div className="space-y-4">
@@ -487,13 +502,20 @@ const ClosedEditorialHint: React.FC<ClosedEditorialHintProps> = ({
           {product.benefit}
         </p>
 
-        <div className="pt-2">
+        <div className="pt-2 flex items-center gap-4 flex-wrap">
           <button
             onClick={onOpen}
-            className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-emerald-400 transition-colors"
+            className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-emerald-400 transition-colors cursor-pointer"
           >
-            <span>REVEAL TECHNICAL ENVELOPE</span>
+            <span>REVEAL SPECIFICATIONS</span>
             <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </button>
+          <button
+            onClick={() => openOrderModal(product)}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 hover:bg-emerald-400 hover:text-black transition-colors cursor-pointer"
+          >
+            <ShoppingBag size={12} />
+            <span>ORDER ({product.price})</span>
           </button>
         </div>
       </div>

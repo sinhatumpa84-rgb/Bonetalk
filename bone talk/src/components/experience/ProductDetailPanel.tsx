@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Product } from './productData'
+import { useOrder } from '../../context/OrderContext'
 
 interface ProductDetailPanelProps {
   product: Product
@@ -8,6 +9,7 @@ interface ProductDetailPanelProps {
 }
 
 export function ProductDetailPanel({ product, position, onClose }: ProductDetailPanelProps) {
+  const { openOrderModal } = useOrder()
   const [isVisible, setIsVisible] = useState(false)
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
@@ -226,6 +228,42 @@ export function ProductDetailPanel({ product, position, onClose }: ProductDetail
           <div style={statusDotStyle} />
           {product.availability}
         </div>
+
+        <button
+          type="button"
+          onClick={() => openOrderModal(product)}
+          style={{
+            width: '100%',
+            marginTop: '1.5rem',
+            padding: '0.75rem 1rem',
+            background: 'var(--color-cyan-signal)',
+            color: '#06080B',
+            border: 'none',
+            borderRadius: '2px',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: '0.8125rem',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            boxShadow: '0 0 20px rgba(0, 216, 165, 0.3)',
+            transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#34D399'
+            e.currentTarget.style.boxShadow = '0 0 25px rgba(0, 216, 165, 0.5)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'var(--color-cyan-signal)'
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 216, 165, 0.3)'
+          }}
+        >
+          ORDER NOW — {product.price}
+        </button>
       </div>
     </div>
   )

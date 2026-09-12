@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Activity, Cpu, Brain, Volume2, UserCheck } from 'lucide-react'
+import { ArrowRight, Activity, Cpu, Brain, Volume2, UserCheck, ShoppingBag } from 'lucide-react'
 import { SplitLines } from '../ui/SplitText'
 import { MagneticButton } from '../ui/MagneticButton'
 import { TechnicalGrid } from '../layout/TechnicalGrid'
 import { SystemStatus } from '../ui/SystemStatus'
 import { SaakanthaLogo } from '../ui/SaakanthaLogo'
 import { useLanguage } from '../../context/LanguageContext'
+import { useOrder } from '../../context/OrderContext'
 
 const ECOSYSTEM_NODES = [
   { name: 'USER', icon: UserCheck, detail: 'Muscle Movement' },
@@ -17,6 +18,7 @@ const ECOSYSTEM_NODES = [
 
 export function FinalRevealSection() {
   const { currentLanguage, t } = useLanguage()
+  const { openOrderModal } = useOrder()
 
   return (
     <section
@@ -85,6 +87,14 @@ export function FinalRevealSection() {
               transition={{ delay: 0.8 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 md:mt-12"
             >
+              <button
+                type="button"
+                onClick={() => openOrderModal()}
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 rounded-sm bg-cyan-signal hover:bg-emerald-400 text-graphite px-6 font-display text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(0,216,165,0.3)] hover:shadow-[0_0_25px_rgba(0,216,165,0.5)] cursor-pointer"
+              >
+                <ShoppingBag size={14} />
+                <span>Order BoneTalk</span>
+              </button>
               <MagneticButton href="/experience" variant="primary" className="w-full sm:w-auto min-h-[44px] justify-center">
                 {t.nav.experience} <ArrowRight size={14} />
               </MagneticButton>

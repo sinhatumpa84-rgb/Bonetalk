@@ -14,6 +14,9 @@ import { SignalBridge } from './components/motion/SignalBridge'
 import ExperiencePage from './components/experience/ExperiencePage'
 import { useLenis } from './hooks/useLenis'
 
+import { OrderProvider } from './context/OrderContext'
+import { OrderModal } from './components/order/OrderModal'
+
 function isExperiencePath(): boolean {
   if (typeof window === 'undefined') return false
   const path = window.location.pathname
@@ -43,44 +46,47 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
-  if (inExperience) {
-    return <ExperiencePage onNavigateHome={handleNavigateHome} />
-  }
-
   return (
-    <>
-      <Navigation />
-      <main>
-        <HeroSection />
-        <SignalBridge variant="flow" label="DEVICE → SIGNAL" />
+    <OrderProvider>
+      {inExperience ? (
+        <ExperiencePage onNavigateHome={handleNavigateHome} />
+      ) : (
+        <>
+          <Navigation />
+          <main>
+            <HeroSection />
+            <SignalBridge variant="flow" label="DEVICE → SIGNAL" />
 
-        <ScrollStorySection />
-        <SignalBridge variant="wave-to-line" label="SIGNAL → DATA" />
+            <ScrollStorySection />
+            <SignalBridge variant="wave-to-line" label="SIGNAL → DATA" />
 
-        <SignalSection />
-        <SignalBridge variant="flow" label="DATA → PIPELINE" />
+            <SignalSection />
+            <SignalBridge variant="flow" label="DATA → PIPELINE" />
 
-        <PipelineSection />
-        <SignalBridge variant="pulse-down" label="PIPELINE → HARDWARE" />
+            <PipelineSection />
+            <SignalBridge variant="pulse-down" label="PIPELINE → HARDWARE" />
 
-        <HardwareSection />
-        <SignalBridge variant="converge" label="HARDWARE → LEARN" />
+            <HardwareSection />
+            <SignalBridge variant="converge" label="HARDWARE → LEARN" />
 
-        <TeachSection />
-        <SignalBridge variant="flow" label="LEARN → AI" />
+            <TeachSection />
+            <SignalBridge variant="flow" label="LEARN → AI" />
 
-        <AISection />
-        <SignalBridge variant="expand" label="AI → WORLD" />
+            <AISection />
+            <SignalBridge variant="expand" label="AI → WORLD" />
 
-        <WorldwideVisionSection />
-        <SignalBridge variant="converge" label="WORLD → VOICE" />
+            <WorldwideVisionSection />
+            <SignalBridge variant="converge" label="WORLD → VOICE" />
 
-        <HumanConnectionSection />
-        <SignalBridge variant="flow" label="VOICE → VISION" />
+            <HumanConnectionSection />
+            <SignalBridge variant="flow" label="VOICE → VISION" />
 
-        <FinalRevealSection />
-      </main>
-    </>
+            <FinalRevealSection />
+          </main>
+        </>
+      )}
+      <OrderModal />
+    </OrderProvider>
   )
 }
 

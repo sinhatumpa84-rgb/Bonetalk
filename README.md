@@ -1,5 +1,11 @@
 # BoneTalk
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-bonetalk.vercel.app-2B382D?style=for-the-badge&logo=vercel&logoColor=white)](https://bonetalk.vercel.app)
+[![Deployment Status](https://img.shields.io/badge/Deployment-Live_Online-41634F?style=for-the-badge)](https://bonetalk.vercel.app)
+
+> ### 🌐 Live Application: [https://bonetalk.vercel.app](https://bonetalk.vercel.app)
+> Access the deployed BoneTalk assistive communication platform and neural engineering console directly at **[bonetalk.vercel.app](https://bonetalk.vercel.app)**.
+
 An assistive communication system leveraging facial Electromyography (EMG) to enable silent speech recognition. BoneTalk translates subtle muscle movements into text or synthesized speech, providing a communication channel for individuals with vocal impairments.
 
 ## Architecture

@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# BoneTalk Frontend
+
+> ### 🌐 Live Application: [https://bonetalk.vercel.app](https://bonetalk.vercel.app)
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 

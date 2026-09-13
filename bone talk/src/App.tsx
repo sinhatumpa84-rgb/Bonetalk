@@ -14,15 +14,18 @@ import { SignalBridge } from './components/motion/SignalBridge'
 import ExperiencePage from './components/experience/ExperiencePage'
 import { CheckoutPage } from './components/checkout/CheckoutPage'
 import { ModelControlApp } from './model-control/ModelControlApp'
+import { ConnectDevicePage } from './components/connection/ConnectDevicePage'
 import { useLenis } from './hooks/useLenis'
 
 import { OrderProvider } from './context/OrderContext'
 
-type AppRoute = 'home' | 'experience' | 'checkout' | 'model-control'
+type AppRoute = 'home' | 'experience' | 'checkout' | 'model-control' | 'connect-device'
 
 function getRoute(): AppRoute {
   if (typeof window === 'undefined') return 'home'
   const path = window.location.pathname
+  const hash = window.location.hash
+  if (path.startsWith('/connect-device') || path.startsWith('/connect') || hash === '#connect-device' || hash === '#connect') return 'connect-device'
   if (path.startsWith('/model-control')) return 'model-control'
   if (path === '/experience' || path === '/experience/') return 'experience'
   if (path === '/checkout' || path === '/checkout/') return 'checkout'
@@ -63,6 +66,10 @@ function App() {
         window.scrollTo({ top: 0, behavior: 'instant' })
       }
     }, 150)
+  }
+
+  if (route === 'connect-device') {
+    return <ConnectDevicePage onNavigateHome={handleNavigateHome} />
   }
 
   if (route === 'model-control') {

@@ -43,10 +43,10 @@ export const SystemStatusPage: React.FC = () => {
           : 'DISCONNECTED',
       details:
         devicePresence === 'ONLINE'
-          ? `ESP32 online (Heartbeat: ${lastHeartbeatAge !== null ? lastHeartbeatAge + 's ago' : 'active'}, Handshake: ${handshakeStatus}). Battery: ${deviceHealth.battery !== null ? deviceHealth.battery + '%' : 'N/A'}`
+          ? `Arduino UNO R4 online (Heartbeat: ${lastHeartbeatAge !== null ? lastHeartbeatAge + 's ago' : 'active'}, Handshake: ${handshakeStatus}). Battery: ${deviceHealth.battery !== null ? deviceHealth.battery + '%' : 'N/A'}`
           : connectionStatus === 'Connected'
-          ? `Broker connected. Waiting for physical ESP32 "${settings.deviceId}" heartbeat & handshake.`
-          : 'Hardware ESP32-S3 module not actively connected over MQTT.',
+          ? `Broker connected. Waiting for physical Arduino UNO R4 "${settings.deviceId}" heartbeat & handshake.`
+          : 'Hardware Arduino UNO R4 WiFi module not actively connected over MQTT.',
       icon: Radio,
     },
     {
@@ -67,7 +67,7 @@ export const SystemStatusPage: React.FC = () => {
         connectionStatus === 'Connected'
           ? devicePresence === 'ONLINE' && handshakeStatus === 'SUCCESS'
             ? `Subscribing to: ${settings.subscribeTopic} | Live device traffic verified`
-            : `Broker service reachable. Awaiting physical ESP32 packets on topic: ${settings.subscribeTopic}`
+            : `Broker service reachable. Awaiting physical Arduino UNO R4 packets on topic: ${settings.subscribeTopic}`
           : `Broker disconnected: ${settings.mqttBrokerUrl}`,
       icon: ShieldCheck,
     },

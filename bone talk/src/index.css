@@ -190,6 +190,8 @@ html[data-theme="dark"] {
 
 html {
   scroll-behavior: auto;
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 
 html[data-theme-transition] *,

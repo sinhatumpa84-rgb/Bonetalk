@@ -120,7 +120,10 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
       </div>
 
       {/* ── Canvas Waveform or Waiting state ── */}
-      <div className="relative rounded-sm overflow-hidden border border-[#E5E0D8] bg-[#FAF8F5]">
+      <div
+        className="relative rounded-sm overflow-hidden border border-[#E5E0D8] bg-[#FAF8F5]"
+        style={{ height: `${height}px` }}
+      >
         <canvas
           ref={canvasRef}
           style={{ width: '100%', height: `${height}px`, display: 'block' }}
@@ -131,15 +134,15 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
             <AlertCircle size={20} className="text-[#8C827A] mb-1.5" />
             <p className="text-xs font-mono font-semibold text-[#5C554E] tracking-wide">
               {devicePresence === 'ONLINE'
-                ? 'Awaiting Bio-Signal Transmission...'
+                ? 'Waiting for EMG signal...'
                 : 'Waiting for physical hardware...'}
             </p>
             <p className="text-[11px] font-mono text-[#8C827A] mt-0.5 max-w-xs">
               {devicePresence === 'ONLINE'
-                ? 'ESP32 is online. Awaiting EMG samples on configured channel.'
+                ? 'Arduino UNO R4 WiFi is online. Awaiting EMG samples on configured channel.'
                 : connectionStatus === 'Connected'
-                ? 'MQTT broker reachable. No physical ESP32-S3 hardware detected.'
-                : 'Connect ESP32 hardware via MQTT to begin streaming live bio-signals.'}
+                ? 'MQTT broker reachable. No physical Arduino UNO R4 hardware detected.'
+                : 'Connect Arduino UNO R4Y5 hardware via MQTT to begin streaming live bio-signals.'}
             </p>
           </div>
         )}
@@ -148,38 +151,38 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
       {/* ── Real Metrics Display (Strictly real, '—' if no data) ── */}
       {showDetailedMetrics && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-3 pt-3 border-t border-[#E5E0D8]/60 font-mono text-xs">
-          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[52px] flex flex-col justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
               Current Val
             </span>
-            <span className="font-semibold text-[#262220]">
+            <span className="font-semibold text-[#262220] truncate">
               {hasSensorData && latestEmgValue !== null ? `${latestEmgValue.toFixed(3)} mV` : '—'}
             </span>
           </div>
 
-          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[52px] flex flex-col justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
               RMS Amplitude
             </span>
-            <span className="font-semibold text-[#262220]">
+            <span className="font-semibold text-[#262220] truncate">
               {hasSensorData && emgMetrics.rms !== null ? `${emgMetrics.rms.toFixed(2)} µV` : '—'}
             </span>
           </div>
 
-          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[52px] flex flex-col justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
               MAV (Mean Abs)
             </span>
-            <span className="font-semibold text-[#262220]">
+            <span className="font-semibold text-[#262220] truncate">
               {hasSensorData && emgMetrics.mav !== null ? `${emgMetrics.mav.toFixed(2)} µV` : '—'}
             </span>
           </div>
 
-          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+          <div className="p-2 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[52px] flex flex-col justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
               ZCR (Crossing)
             </span>
-            <span className="font-semibold text-[#262220]">
+            <span className="font-semibold text-[#262220] truncate">
               {hasSensorData && emgMetrics.zcr !== null ? `${emgMetrics.zcr} Hz` : '—'}
             </span>
           </div>

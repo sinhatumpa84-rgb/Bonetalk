@@ -25,64 +25,66 @@ export const DeviceHealthCard: React.FC = () => {
 
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 font-mono text-xs">
         {/* Hardware Link Status */}
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[68px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
             Hardware Link
           </span>
-          <span
-            className={`font-semibold text-[11px] block mt-0.5 ${
-              devicePresence === 'ONLINE'
-                ? 'text-[#2B382D]'
-                : 'text-[#8C827A]'
-            }`}
-          >
-            {devicePresence === 'ONLINE' ? 'ESP32 ONLINE' : 'DEVICE OFFLINE'}
-          </span>
-          <span className="text-[9px] text-[#8C827A] block truncate mt-0.5">
-            {connectionStatus === 'Connected' ? 'Broker Reachable' : connectionStatus}
-          </span>
+          <div>
+            <span
+              className={`font-semibold text-[11px] block ${
+                devicePresence === 'ONLINE'
+                  ? 'text-[#2B382D]'
+                  : 'text-[#8C827A]'
+              }`}
+            >
+              {devicePresence === 'ONLINE' ? 'ARDUINO ONLINE' : 'DEVICE OFFLINE'}
+            </span>
+            <span className="text-[9px] text-[#8C827A] block truncate mt-0.5">
+              {connectionStatus === 'Connected' ? 'Broker Reachable' : connectionStatus}
+            </span>
+          </div>
         </div>
 
         {/* Battery */}
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[68px] flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider">Battery</span>
             {getBatteryIcon()}
           </div>
-          <span className="font-semibold text-[#262220] block mt-0.5">
+          <span className="font-semibold text-[#262220] block">
             {battery !== null ? `${battery}%` : '—'}
           </span>
         </div>
 
         {/* Signal RSSI */}
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[68px] flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider">Signal RSSI</span>
             <Wifi size={13} className="text-[#41634F]" />
           </div>
-          <span className="font-semibold text-[#262220] block mt-0.5">
+          <span className="font-semibold text-[#262220] block">
             {rssi !== null ? `${rssi} dBm` : '—'}
           </span>
         </div>
 
         {/* Packet Rate */}
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[68px] flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider">Packet Rate</span>
             <Gauge size={13} className="text-[#41634F]" />
           </div>
-          <span className="font-semibold text-[#262220] block mt-0.5">
+          <span className="font-semibold text-[#262220] block">
             {packetRate !== null ? `${packetRate} pkt/s` : '—'}
           </span>
         </div>
 
         {/* Last Packet */}
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[68px] flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#8C827A] uppercase tracking-wider">Last Packet</span>
             <Clock size={13} className="text-[#41634F]" />
           </div>
-          <span className="font-semibold text-[#262220] block mt-0.5 truncate">
+          <span className="font-semibold text-[#262220] block truncate">
             {lastPacketTime !== null ? lastPacketTime : '—'}
           </span>
         </div>

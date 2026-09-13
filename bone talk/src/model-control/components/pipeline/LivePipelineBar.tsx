@@ -1,6 +1,7 @@
 import React from 'react'
 import { Cpu, Radio, Activity, Sparkles, Volume2, ShieldCheck, Zap } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
+import { DEVICE_CONFIG } from '../../../config/deviceConfig'
 
 export const LivePipelineBar: React.FC = () => {
   const { pipeline, latestPrediction } = useModelControl()
@@ -9,7 +10,7 @@ export const LivePipelineBar: React.FC = () => {
     {
       id: 'hardware',
       label: '1. HARDWARE',
-      subtext: 'ESP32-S3',
+      subtext: DEVICE_CONFIG.shortName,
       status: pipeline.hardware,
       icon: Radio,
     },
@@ -68,6 +69,7 @@ export const LivePipelineBar: React.FC = () => {
       return 'bg-[#2B382D] text-[#FFFFFF] border-[#2B382D]'
     }
     switch (status) {
+      case 'ONLINE':
       case 'CONNECTED':
       case 'RECEIVING':
       case 'ACTIVE':
@@ -113,20 +115,20 @@ export const LivePipelineBar: React.FC = () => {
           return (
             <div
               key={stage.id}
-              className={`flex flex-col justify-between p-2.5 rounded-sm border ${statusClass} transition-all`}
+              className={`h-[74px] flex flex-col justify-between p-2.5 rounded-sm border ${statusClass} overflow-hidden select-none transition-colors`}
             >
-              <div className="flex items-center justify-between gap-1 mb-1">
-                <span className="text-[10px] font-mono font-bold tracking-wider text-[#5C554E]">
+              <div className="flex items-center justify-between gap-1 shrink-0">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-[#5C554E] truncate">
                   {stage.label}
                 </span>
-                <Icon size={12} className="opacity-75" />
+                <Icon size={12} className="opacity-75 shrink-0" />
               </div>
 
-              <div className="my-1">
-                <span className="block text-[11px] leading-tight font-mono font-bold">
+              <div className="overflow-hidden min-w-0">
+                <span className="block text-[11px] leading-tight font-mono font-bold truncate">
                   {stage.status}
                 </span>
-                <span className="text-[10px] font-mono opacity-80 truncate block">
+                <span className="text-[10px] font-mono opacity-80 truncate block mt-0.5">
                   {stage.subtext}
                 </span>
               </div>

@@ -129,7 +129,7 @@ interface ModelControlContextValue {
 
   // Pipeline Statuses
   pipeline: {
-    hardware: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE'
+    hardware: 'ONLINE' | 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE'
     sensors: 'RECEIVING' | 'WAITING' | 'DISCONNECTED' | 'IDLE'
     processing: 'ACTIVE' | 'WAITING' | 'DISCONNECTED' | 'STANDBY' | 'OFFLINE'
     mqtt: 'CONNECTED' | 'BROKER READY — NO DEVICE' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR'
@@ -647,12 +647,12 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // ── Compute Real 7-Stage Pipeline Status ──
   const pipeline = {
-    // Hardware stage is strictly CONNECTED ONLY if ESP32 device presence is ONLINE (verified heartbeat)
+    // Hardware stage is strictly ONLINE ONLY if Arduino UNO R4 device presence is ONLINE (verified heartbeat)
     hardware: (devicePresence === 'ONLINE'
-      ? 'CONNECTED'
+      ? 'ONLINE'
       : connectionStatus === 'Connecting...' || connectionStatus === 'Reconnecting'
       ? 'CONNECTING'
-      : 'OFFLINE') as 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE',
+      : 'OFFLINE') as 'ONLINE' | 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE',
 
     sensors: (hasSensorData
       ? 'RECEIVING'

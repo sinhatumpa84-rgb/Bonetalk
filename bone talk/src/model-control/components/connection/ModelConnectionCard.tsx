@@ -81,28 +81,28 @@ export const ModelConnectionCard: React.FC = () => {
 
       {/* Connection Endpoint & Details */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs mb-4">
-        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[60px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Model Name</span>
-          <span className="font-semibold text-[#262220]">BoneTalk ML Model</span>
-          <span className="text-[10px] text-[#8C827A] block mt-0.5">
+          <span className="font-semibold text-[#262220] truncate">BoneTalk ML Model</span>
+          <span className="text-[10px] text-[#8C827A] block truncate">
             {modelInfo?.model_type || 'Random Forest / 1D-CNN'}
           </span>
         </div>
 
-        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[60px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Backend Endpoint</span>
           <span className="font-semibold text-[#262220] truncate block" title={backendUrl}>
             {backendUrl}
           </span>
-          <span className="text-[10px] text-[#8C827A] block mt-0.5">FastAPI REST + WebSocket</span>
+          <span className="text-[10px] text-[#8C827A] block truncate">FastAPI REST + WebSocket</span>
         </div>
 
-        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[60px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Class Vocabulary</span>
-          <span className="font-semibold text-[#262220]">
+          <span className="font-semibold text-[#262220] truncate">
             {modelInfo?.classes ? `${modelInfo.classes.length} Labels` : '4 Baseline Classes'}
           </span>
-          <span className="text-[10px] text-[#8C827A] block mt-0.5 truncate">
+          <span className="text-[10px] text-[#8C827A] block truncate">
             {modelInfo?.classes?.join(', ') || 'NO, REST, THANK YOU, YES'}
           </span>
         </div>

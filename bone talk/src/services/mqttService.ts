@@ -820,7 +820,7 @@ export class MqttService {
           resolve({
             success: false,
             step: 'BROKER_REACHABLE_NO_DEVICE_DETECTED',
-            details: `Connected to MQTT broker service (${this.activeConfig?.brokerUrl}) in ${Date.now() - startTime}ms. However, NO physical ESP32-S3 hardware was detected on topics. Awaiting real device transmission.`,
+            details: `Connected to MQTT broker service (${this.activeConfig?.brokerUrl}) in ${Date.now() - startTime}ms. However, NO physical Arduino UNO R4 hardware was detected on topics. Awaiting real device transmission.`,
             deviceStatus: currentDetails.deviceStatus,
           })
         } else {

@@ -55,7 +55,7 @@ export const LiveTelemetryPage: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
           <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
             <span className="text-[10px] text-[#8C827A] uppercase block">Analog Frontend</span>
-            <span className="font-semibold text-[#262220] block mt-0.5">ESP32-S3 ADC1 (12-bit)</span>
+            <span className="font-semibold text-[#262220] block mt-0.5">Arduino UNO R4 ADC (14-bit)</span>
           </div>
           <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
             <span className="text-[10px] text-[#8C827A] uppercase block">Bandpass Filter</span>

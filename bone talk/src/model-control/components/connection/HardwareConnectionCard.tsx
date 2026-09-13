@@ -181,16 +181,16 @@ export const HardwareConnectionCard: React.FC = () => {
         <div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs mb-4">
             {/* 1. Device ID */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Device ID</span>
               <span className="font-semibold text-[#262220] block truncate">{settings.deviceId}</span>
             </div>
 
             {/* 2. MQTT Broker */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">MQTT Broker</span>
               <span
-                className={`font-semibold text-[11px] block mt-0.5 ${
+                className={`font-semibold text-[11px] block truncate ${
                   isMqttConnected && isDeviceOnline && handshakeStatus === 'SUCCESS'
                     ? 'text-[#2B382D]'
                     : isMqttConnected
@@ -208,23 +208,23 @@ export const HardwareConnectionCard: React.FC = () => {
               </span>
             </div>
 
-            {/* 3. ESP32 Physical Device */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
-              <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">ESP32 Device</span>
+            {/* 3. Arduino UNO R4 Physical Device */}
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
+              <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Arduino UNO R4Y5</span>
               <span
-                className={`font-semibold text-[11px] block mt-0.5 ${
+                className={`font-semibold text-[11px] block truncate ${
                   isDeviceOnline ? 'text-[#2B382D]' : 'text-[#8C827A]'
                 }`}
               >
-                ● {isDeviceOnline ? 'ONLINE' : 'OFFLINE (NO PACKETS)'}
+                ● {isDeviceOnline ? 'ONLINE' : 'OFFLINE'}
               </span>
             </div>
 
             {/* 4. Real AI Model */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">AI Model</span>
               <span
-                className={`font-semibold text-[11px] block mt-0.5 ${
+                className={`font-semibold text-[11px] block truncate ${
                   isModelReady ? 'text-[#2B382D]' : 'text-[#8C827A]'
                 }`}
               >
@@ -233,18 +233,18 @@ export const HardwareConnectionCard: React.FC = () => {
             </div>
 
             {/* 5. Last Heartbeat */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Last Heartbeat</span>
-              <span className="font-semibold text-[#262220] block mt-0.5">
+              <span className="font-semibold text-[#262220] block truncate">
                 {isDeviceOnline && lastHeartbeatAge !== null ? `${lastHeartbeatAge}s ago` : 'None'}
               </span>
             </div>
 
             {/* 6. Live Signal */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Signal Feed</span>
               <span
-                className={`font-semibold text-[11px] block mt-0.5 ${
+                className={`font-semibold text-[11px] block truncate ${
                   hasSensorData ? 'text-[#2B382D]' : 'text-[#8C827A]'
                 }`}
               >
@@ -253,10 +253,10 @@ export const HardwareConnectionCard: React.FC = () => {
             </div>
 
             {/* 7. Handshake */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Handshake</span>
               <span
-                className={`font-semibold text-[11px] block mt-0.5 ${
+                className={`font-semibold text-[11px] block truncate ${
                   handshakeStatus === 'SUCCESS'
                     ? 'text-[#2B382D]'
                     : handshakeStatus === 'PENDING'
@@ -279,10 +279,10 @@ export const HardwareConnectionCard: React.FC = () => {
             </div>
 
             {/* 8. Firmware & Version */}
-            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8]">
+            <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
               <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Firmware Version</span>
-              <span className="font-semibold text-[#262220] block mt-0.5 truncate">
-                {deviceMetadata.firmware || 'ESP32-S3 (Ready)'}
+              <span className="font-semibold text-[#262220] block truncate">
+                {deviceMetadata.firmware || 'Arduino UNO R4 WiFi (Ready)'}
               </span>
             </div>
           </div>
@@ -318,7 +318,7 @@ export const HardwareConnectionCard: React.FC = () => {
                     onClick={handleRunHandshake}
                     disabled={isActing}
                     className="flex items-center gap-1.5 px-3 py-2 rounded-sm text-xs font-mono font-semibold border border-[#E5E0D8] bg-[#FBF9F5] text-[#262220] hover:bg-[#F5F2EB] transition-all cursor-pointer disabled:opacity-50"
-                    title="Send device_ping with unique request_id to verify handshake with ESP32"
+                    title="Send device_ping with unique request_id to verify handshake with Arduino UNO R4"
                   >
                     <RefreshCw size={12} className={isActing ? 'animate-spin' : ''} />
                     <span>DEVICE HANDSHAKE</span>

@@ -147,33 +147,41 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
 
   return (
     <div className={`relative inline-block text-left font-mono ${className}`} ref={popoverRef}>
-      {/* ── Main Trigger Button / Indicator Pill ── */}
+      {/* ── Main Trigger Button / Indicator Pill (Fixed Dimensions for Layout Stability) ── */}
       <button
         type="button"
         onClick={() => showDetailsPopover && setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 rounded-sm border px-2.5 py-1 text-xs transition-all duration-200 cursor-pointer select-none ${colors.bg} ${colors.border} ${colors.text} hover:opacity-90`}
+        className={`w-[195px] h-[26px] shrink-0 flex items-center justify-between gap-1.5 rounded-sm border px-2 py-0.5 text-xs transition-all duration-200 cursor-pointer select-none ${colors.bg} ${colors.border} ${colors.text} hover:opacity-90`}
         aria-label={`MQTT Status: ${status}`}
         aria-expanded={isOpen}
       >
-        <span className={`h-2 w-2 rounded-full ${colors.dot}`} aria-hidden="true" />
-        <span className="font-semibold tracking-wider uppercase text-[11px]">
-          {status === 'CONNECTED'
-            ? isDeviceVerified
-              ? 'DEVICE: ONLINE'
-              : 'BROKER READY — NO DEVICE'
-            : `MQTT: ${status}`}
-        </span>
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${colors.dot}`} aria-hidden="true" />
+          <span className="font-semibold tracking-wider uppercase text-[10px] truncate">
+            {status === 'CONNECTED'
+              ? isDeviceVerified
+                ? 'DEVICE: ONLINE'
+                : 'BROKER READY — NO DEVICE'
+              : `MQTT: ${status}`}
+          </span>
+        </div>
         {showDetailsPopover && (
           <ChevronDown
-            size={12}
-            className={`transition-transform duration-200 opacity-70 ${isOpen ? 'rotate-180' : ''}`}
+            size={11}
+            className={`shrink-0 transition-transform duration-200 opacity-70 ${isOpen ? 'rotate-180' : ''}`}
           />
         )}
       </button>
 
-      {/* ── Technical Diagnostics Popover ── */}
+      {/* ── Technical Diagnostics Popover (Fixed Overlay to Prevent Document Flow Displacement) ── */}
       {isOpen && showDetailsPopover && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-sm border border-border bg-graphite shadow-[var(--shadow-level-3)] z-50 p-4 text-xs space-y-3.5 backdrop-blur-md">
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/10 cursor-default"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="fixed top-14 right-4 sm:right-8 w-80 sm:w-96 rounded-sm border border-border bg-graphite shadow-[var(--shadow-level-3)] z-50 p-4 text-xs space-y-3.5 backdrop-blur-md">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border pb-2.5">
             <div className="flex items-center gap-2">
@@ -269,6 +277,10 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
             </div>
 
             <div className="space-y-1 pt-1 border-t border-border/50 text-[10px] text-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-cream-muted">Hardware:</span>
+                <span className="font-semibold text-cream">Arduino UNO R4 WiFi</span>
+              </div>
               <div className="flex items-center justify-between">
                 <span className="text-cream-muted">Device ID:</span>
                 <span className="font-semibold text-cyan-signal">
@@ -371,6 +383,7 @@ export const RealtimeConnectionIndicator: React.FC<RealtimeConnectionIndicatorPr
             </button>
           </div>
         </div>
+        </>
       )}
     </div>
   )

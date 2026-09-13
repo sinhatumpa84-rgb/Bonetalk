@@ -30,25 +30,23 @@ export const PredictionPanel: React.FC = () => {
         <span className="text-[11px] font-mono text-[#8C827A]">Real-time Pattern Classification</span>
       </div>
 
-      {/* ── Main Command Display Box ── */}
+      {/* ── Main Command Display Box (Fixed Dimensions for Zero Shift) ── */}
       <div className="p-6 rounded-sm border border-[#E5E0D8] bg-[#FAF8F5] text-center mb-4">
         <span className="text-[11px] font-mono uppercase tracking-widest text-[#8C827A] block mb-1">
           Predicted Silent Speech Command
         </span>
 
         {hasPrediction ? (
-          <div className="my-2">
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-mono tracking-tight text-[#262220] uppercase">
+          <div className="h-[84px] flex flex-col items-center justify-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-mono tracking-tight text-[#262220] uppercase truncate max-w-full">
               {latestPrediction.command}
             </h2>
-            {latestPrediction.timestamp && (
-              <span className="text-[10px] font-mono text-[#8C827A] block mt-1">
-                Detected at {latestPrediction.timestamp}
-              </span>
-            )}
+            <span className="text-[10px] font-mono text-[#8C827A] block mt-1">
+              {latestPrediction.timestamp ? `Detected at ${latestPrediction.timestamp}` : 'Real-time classification'}
+            </span>
           </div>
         ) : (
-          <div className="py-4">
+          <div className="h-[84px] flex flex-col items-center justify-center">
             <p className="text-sm font-mono text-[#8C827A] tracking-wide">Waiting for signal...</p>
             <span className="text-[11px] font-mono text-[#A8A29E] mt-1 block">
               Inference fires when pattern activation is classified by model.
@@ -56,13 +54,13 @@ export const PredictionPanel: React.FC = () => {
           </div>
         )}
 
-        {/* ── Controls: SPEAK and CLEAR ── */}
+        {/* ── Controls: SPEAK and CLEAR (Fixed Position & Sizing) ── */}
         <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-[#E5E0D8]/60">
           <button
             type="button"
             onClick={speakDetectedMessage}
             disabled={!detectedMessage}
-            className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider font-semibold transition-all ${
+            className={`w-28 flex items-center justify-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider font-semibold transition-all select-none ${
               detectedMessage
                 ? 'bg-[#2B382D] text-[#FFFFFF] hover:bg-[#38493B] shadow-xs cursor-pointer'
                 : 'bg-[#E5E0D8] text-[#8C827A] cursor-not-allowed opacity-60'
@@ -77,7 +75,7 @@ export const PredictionPanel: React.FC = () => {
             type="button"
             onClick={clearDetectedMessage}
             disabled={!detectedMessage}
-            className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider border transition-all ${
+            className={`w-28 flex items-center justify-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider border transition-all select-none ${
               detectedMessage
                 ? 'bg-[#FFFFFF] border-[#E5E0D8] text-[#5C554E] hover:text-[#262220] hover:bg-[#F5F2EB] cursor-pointer'
                 : 'border-[#E5E0D8] text-[#A8A29E] cursor-not-allowed opacity-60'
@@ -90,32 +88,32 @@ export const PredictionPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Telemetry Stats Grid: Confidence, Signal Quality, Model Status ── */}
+      {/* ── Telemetry Stats Grid: Confidence, Signal Quality, Model Status (Fixed Height) ── */}
       <div className="grid grid-cols-3 gap-2.5 font-mono text-xs">
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[58px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
             Confidence
           </span>
-          <span className="font-semibold text-[#262220] text-sm block mt-0.5">
+          <span className="font-semibold text-[#262220] text-sm block truncate">
             {formatConfidence(latestPrediction.confidence)}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[58px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
             Signal Quality
           </span>
-          <span className="font-semibold text-[#262220] text-sm block mt-0.5">
+          <span className="font-semibold text-[#262220] text-sm block truncate">
             {latestPrediction.signalQuality || '—'}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8]">
+        <div className="p-2.5 rounded-sm bg-[#FBF9F5] border border-[#E5E0D8] h-[58px] flex flex-col justify-between">
           <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">
             Model Status
           </span>
           <span
-            className={`font-semibold text-sm block mt-0.5 ${
+            className={`font-semibold text-sm block truncate ${
               modelStatus === 'Ready' ? 'text-[#2B382D]' : 'text-[#8C827A]'
             }`}
           >

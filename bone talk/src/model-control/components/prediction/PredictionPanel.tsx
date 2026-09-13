@@ -1,5 +1,5 @@
-import React from 'react'
-import { Sparkles, Volume2, XCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { Sparkles, Volume2, XCircle, Play, Sliders } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
 
 export const PredictionPanel: React.FC = () => {
@@ -9,13 +9,39 @@ export const PredictionPanel: React.FC = () => {
     speakDetectedMessage,
     clearDetectedMessage,
     modelStatus,
+    demoCalibration,
+    runDemoInference,
+    startDemoCalibration,
   } = useModelControl()
 
+  const [isTesting, setIsTesting] = useState(false)
+
   const hasPrediction = !!latestPrediction.command
+  const isDemoCalibrated = demoCalibration.isCalibrated
+  const isEffectiveReady = modelStatus === 'Ready' || isDemoCalibrated
 
   const formatConfidence = (val: number | null) => {
     if (val === null || val === undefined) return '—'
     return `${(val * 100).toFixed(1)}%`
+  }
+
+  const handleQuickTest = async () => {
+    setIsTesting(true)
+    try {
+      await runDemoInference()
+    } catch {
+      // handled
+    } finally {
+      setIsTesting(false)
+    }
+  }
+
+  const handleQuickCalibrate = async () => {
+    try {
+      await startDemoCalibration()
+    } catch {
+      // handled
+    }
   }
 
   return (
@@ -27,7 +53,14 @@ export const PredictionPanel: React.FC = () => {
             BoneTalk Prediction &amp; Neural Voice
           </h3>
         </div>
-        <span className="text-[11px] font-mono text-[#8C827A]">Real-time Pattern Classification</span>
+        <div className="flex items-center gap-2">
+          {isDemoCalibrated && (
+            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FEF3C7] text-[#92400E] border border-[#F59E0B]/30">
+              DEMO CALIBRATED
+            </span>
+          )}
+          <span className="text-[11px] font-mono text-[#8C827A]">Real-time Pattern Classification</span>
+        </div>
       </div>
 
       {/* ── Main Command Display Box (Fixed Dimensions for Zero Shift) ── */}
@@ -54,20 +87,20 @@ export const PredictionPanel: React.FC = () => {
           </div>
         )}
 
-        {/* ── Controls: SPEAK and CLEAR (Fixed Position & Sizing) ── */}
-        <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-[#E5E0D8]/60">
+        {/* ── Controls: SPEAK, CLEAR, and Quick Demo Controls ── */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mt-4 pt-4 border-t border-[#E5E0D8]/60">
           <button
             type="button"
             onClick={speakDetectedMessage}
             disabled={!detectedMessage}
-            className={`w-28 flex items-center justify-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider font-semibold transition-all select-none ${
+            className={`w-24 sm:w-28 flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm text-xs font-mono tracking-wider font-semibold transition-all select-none ${
               detectedMessage
                 ? 'bg-[#2B382D] text-[#FFFFFF] hover:bg-[#38493B] shadow-xs cursor-pointer'
                 : 'bg-[#E5E0D8] text-[#8C827A] cursor-not-allowed opacity-60'
             }`}
             title="Synthesize speech through audio device"
           >
-            <Volume2 size={14} />
+            <Volume2 size={13} />
             <span>SPEAK</span>
           </button>
 
@@ -75,15 +108,43 @@ export const PredictionPanel: React.FC = () => {
             type="button"
             onClick={clearDetectedMessage}
             disabled={!detectedMessage}
-            className={`w-28 flex items-center justify-center gap-2 px-4 py-2 rounded-sm text-xs font-mono tracking-wider border transition-all select-none ${
+            className={`w-24 sm:w-28 flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm text-xs font-mono tracking-wider border transition-all select-none ${
               detectedMessage
                 ? 'bg-[#FFFFFF] border-[#E5E0D8] text-[#5C554E] hover:text-[#262220] hover:bg-[#F5F2EB] cursor-pointer'
                 : 'border-[#E5E0D8] text-[#A8A29E] cursor-not-allowed opacity-60'
             }`}
             title="Clear current detected message"
           >
-            <XCircle size={14} />
+            <XCircle size={13} />
             <span>CLEAR</span>
+          </button>
+
+          {/* Quick Demo Inference Trigger */}
+          <button
+            type="button"
+            onClick={handleQuickTest}
+            disabled={!isDemoCalibrated || isTesting}
+            className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm text-xs font-mono tracking-wider border transition-all select-none ${
+              isDemoCalibrated && !isTesting
+                ? 'bg-[#FFFFFF] border-[#41634F] text-[#41634F] hover:bg-[#E8EFEA] shadow-xs cursor-pointer'
+                : 'border-[#E5E0D8] text-[#A8A29E] cursor-not-allowed opacity-60'
+            }`}
+            title={isDemoCalibrated ? 'Run quick simulated inference for "HELLO"' : 'Calibrate model first'}
+          >
+            <Play size={12} />
+            <span>{isTesting ? 'TESTING...' : 'TEST "HELLO"'}</span>
+          </button>
+
+          {/* Quick Calibrate Model Button */}
+          <button
+            type="button"
+            onClick={handleQuickCalibrate}
+            disabled={demoCalibration.status !== 'IDLE' && demoCalibration.status !== 'CALIBRATION_COMPLETE'}
+            className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm text-xs font-mono tracking-wider border border-[#E5E0D8] bg-[#F5F2EB] text-[#262220] hover:bg-[#EDE8DE] transition-all select-none cursor-pointer"
+            title="Launch 5-trial demo calibration for HELLO"
+          >
+            <Sliders size={12} />
+            <span>CALIBRATE MODEL</span>
           </button>
         </div>
       </div>
@@ -114,10 +175,12 @@ export const PredictionPanel: React.FC = () => {
           </span>
           <span
             className={`font-semibold text-sm block truncate ${
-              modelStatus === 'Ready' ? 'text-[#2B382D]' : 'text-[#8C827A]'
+              isEffectiveReady ? 'text-[#2B382D]' : 'text-[#8C827A]'
             }`}
           >
-            {modelStatus}
+            {isDemoCalibrated && modelStatus !== 'Ready'
+              ? 'READY (DEMO)'
+              : modelStatus.toUpperCase()}
           </span>
         </div>
       </div>

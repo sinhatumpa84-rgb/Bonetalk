@@ -6,6 +6,7 @@ import { DeviceHealthCard } from '../components/telemetry/DeviceHealthCard'
 import { PredictionPanel } from '../components/prediction/PredictionPanel'
 import { HardwareConnectionCard } from '../components/connection/HardwareConnectionCard'
 import { ModelConnectionCard } from '../components/connection/ModelConnectionCard'
+import { DemoCalibrationCard } from '../components/prediction/DemoCalibrationCard'
 import { PredictionHistoryTable } from '../components/prediction/PredictionHistoryTable'
 
 export const DashboardOverviewPage: React.FC = () => {
@@ -29,6 +30,11 @@ export const DashboardOverviewPage: React.FC = () => {
           <HardwareConnectionCard />
           <ModelConnectionCard />
         </div>
+      </div>
+
+      {/* ── Simulated EMG Calibration Engine ── */}
+      <div>
+        <DemoCalibrationCard />
       </div>
 
       {/* ── Recent Predictions Table Preview ── */}

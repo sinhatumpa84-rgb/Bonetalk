@@ -78,7 +78,10 @@ export const LivePipelineBar: React.FC = () => {
       case 'BROKER READY — NO DEVICE':
       case 'CONNECTING':
       case 'LOADING':
+      case 'CALIBRATING':
         return 'bg-[#FEF3C7] text-[#92400E] border-[#F59E0B]/40'
+      case 'VALIDATING':
+        return 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8]/40'
       case 'WAITING':
       case 'STANDBY':
       case 'IDLE':

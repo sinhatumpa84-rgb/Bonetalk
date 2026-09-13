@@ -11,8 +11,15 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
   height = 180,
   showDetailedMetrics = true,
 }) => {
-  const { hasSensorData, rawEmgSamples, latestEmgValue, emgMetrics, connectionStatus, devicePresence } =
-    useModelControl()
+  const {
+    hasSensorData,
+    rawEmgSamples,
+    latestEmgValue,
+    emgMetrics,
+    connectionStatus,
+    devicePresence,
+    isDemoStreamActive,
+  } = useModelControl()
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
@@ -113,6 +120,11 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
           </h4>
         </div>
         <div className="flex items-center gap-2 text-[11px] font-mono">
+          {isDemoStreamActive && (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#FEF3C7] text-[#92400E] border border-[#F59E0B]/40 animate-pulse">
+              [SIMULATED SIGNAL — DEMO MODE]
+            </span>
+          )}
           <span className="text-[#8C827A]">CH-1 Facialis</span>
           <span className="h-2 w-px bg-[#E5E0D8]" />
           <span className="text-[#8C827A]">1000 Hz</span>

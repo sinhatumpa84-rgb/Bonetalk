@@ -1,6 +1,7 @@
 import React from 'react'
 import { ModelConnectionCard } from '../components/connection/ModelConnectionCard'
 import { PredictionPanel } from '../components/prediction/PredictionPanel'
+import { DemoCalibrationCard } from '../components/prediction/DemoCalibrationCard'
 import { useModelControl } from '../context/ModelControlContext'
 import { Layers } from 'lucide-react'
 
@@ -39,6 +40,11 @@ export const ModelInferencePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ModelConnectionCard />
         <PredictionPanel />
+      </div>
+
+      {/* ── Simulated EMG Calibration Engine ── */}
+      <div>
+        <DemoCalibrationCard />
       </div>
 
       {/* ── Model Architecture Breakdown ── */}

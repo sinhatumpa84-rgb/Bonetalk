@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Cpu, RefreshCw, CheckCircle2, XCircle, AlertCircle, Play } from 'lucide-react'
+import { Cpu, RefreshCw, CheckCircle2, XCircle, AlertCircle, Play, Sliders } from 'lucide-react'
 import { useModelControl } from '../../context/ModelControlContext'
 
 export const ModelConnectionCard: React.FC = () => {
@@ -10,6 +10,8 @@ export const ModelConnectionCard: React.FC = () => {
     setBackendUrl,
     refreshModelStatus,
     testModelWithUtterance,
+    demoCalibration,
+    startDemoCalibration,
   } = useModelControl()
 
   const [isEditingUrl, setIsEditingUrl] = useState(false)
@@ -37,7 +39,11 @@ export const ModelConnectionCard: React.FC = () => {
     }
   }
 
-  const isReady = modelStatus === 'Ready'
+  const isDemoCalibrated = demoCalibration.isCalibrated
+  const isCalibrationRunning =
+    demoCalibration.status !== 'IDLE' &&
+    demoCalibration.status !== 'CALIBRATION_COMPLETE'
+  const isReady = modelStatus === 'Ready' || isDemoCalibrated
 
   return (
     <div className="bg-[#FFFFFF] border border-[#E5E0D8] rounded-sm p-4 sm:p-5 shadow-xs">
@@ -66,7 +72,11 @@ export const ModelConnectionCard: React.FC = () => {
             ) : (
               <XCircle size={11} />
             )}
-            <span>{modelStatus}</span>
+            <span>
+              {isDemoCalibrated && modelStatus !== 'Ready'
+                ? 'READY (DEMO)'
+                : modelStatus}
+            </span>
           </span>
 
           <button
@@ -126,23 +136,36 @@ export const ModelConnectionCard: React.FC = () => {
         </div>
       )}
 
-      {/* Testing Section: Runs a genuine call to /api/predict using actual recorded baseline EMG */}
+      {/* Testing & Demo Calibration Section */}
       <div className="pt-3 border-t border-[#E5E0D8]/60">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <span className="text-xs font-mono font-bold text-[#262220] block">
-              Inference Pipeline Verification
+              Inference &amp; Calibration Controls
             </span>
             <span className="text-[11px] font-mono text-[#8C827A]">
-              Test real ML inference endpoint with genuine EMG buffer
+              Test real ML inference endpoint or trigger simulated calibration
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => startDemoCalibration()}
+              disabled={isCalibrationRunning}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-mono font-semibold bg-[#41634F] text-[#FFFFFF] hover:bg-[#324f3e] transition-all shadow-xs cursor-pointer disabled:opacity-50"
+              title="Calibrate simulated bio-potentials for 'HELLO' command"
+            >
+              <Sliders size={11} />
+              <span>
+                {isCalibrationRunning ? 'CALIBRATING...' : 'DEMO CALIBRATION ("HELLO")'}
+              </span>
+            </button>
+
             <button
               type="button"
               onClick={() => handleRunInferenceTest('REST')}
-              disabled={!isReady || isTesting}
+              disabled={!modelStatus.includes('Ready') || isTesting}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-mono font-semibold bg-[#F5F2EB] border border-[#E5E0D8] text-[#262220] hover:bg-[#EDE8DE] transition-all disabled:opacity-50 cursor-pointer"
             >
               <Play size={11} />

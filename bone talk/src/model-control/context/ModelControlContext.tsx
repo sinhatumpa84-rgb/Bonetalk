@@ -41,6 +41,9 @@ export interface DeviceHealth {
 }
 
 export interface ControlSettings {
+  activeModel?: string
+  inferenceThreshold?: number
+  smoothingWindow?: number
   voiceOutputEnabled: boolean
   autoSpeak: boolean
   speechRate: number
@@ -56,7 +59,13 @@ export interface ControlSettings {
   connectionType: 'mqtt-ws' | 'backend-ws' | 'serial'
 }
 
+import { demoCalibrationService } from '../services/demoCalibrationService'
+import type { DemoCalibrationState } from '../services/demoCalibrationService'
+
 const DEFAULT_SETTINGS: ControlSettings = {
+  activeModel: 'random-forest-emg',
+  inferenceThreshold: 0.7,
+  smoothingWindow: 5,
   voiceOutputEnabled: true,
   autoSpeak: false,
   speechRate: 1.0,
@@ -127,14 +136,22 @@ interface ModelControlContextValue {
   clearDetectedMessage: () => void
   clearPredictionHistory: () => void
 
+  // Demo / Simulated Calibration & Inference
+  demoCalibration: DemoCalibrationState
+  startDemoCalibration: (onPrompt?: () => Promise<void>) => Promise<void>
+  triggerHelloAction: () => void
+  runDemoInference: () => Promise<void>
+  resetDemoCalibration: () => void
+  isDemoStreamActive: boolean
+
   // Pipeline Statuses
   pipeline: {
     hardware: 'ONLINE' | 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'OFFLINE'
     sensors: 'RECEIVING' | 'WAITING' | 'DISCONNECTED' | 'IDLE'
     processing: 'ACTIVE' | 'WAITING' | 'DISCONNECTED' | 'STANDBY' | 'OFFLINE'
     mqtt: 'CONNECTED' | 'BROKER READY — NO DEVICE' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR'
-    model: 'READY' | 'LOADING' | 'UNAVAILABLE' | 'ERROR'
-    prediction: 'ACTIVE' | 'WAITING' | 'IDLE'
+    model: 'READY' | 'LOADING' | 'CALIBRATING' | 'VALIDATING' | 'UNAVAILABLE' | 'ERROR'
+    prediction: 'ACTIVE' | 'WAITING' | 'ANALYZING' | 'IDLE' | string
     output: 'READY' | 'SPEAKING' | 'IDLE'
   }
 }
@@ -596,6 +613,103 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   }, [])
 
+  // ── Demo / Simulated Calibration & Inference State ──
+  const [demoCalibration, setDemoCalibration] = useState<DemoCalibrationState>(() =>
+    demoCalibrationService.getState()
+  )
+  const [isDemoStreamActive, setIsDemoStreamActive] = useState<boolean>(false)
+  const demoStreamTimerRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    const unsub = demoCalibrationService.onStateChange((state) => {
+      setDemoCalibration(state)
+    })
+    return unsub
+  }, [])
+
+  useEffect(() => {
+    const unsub = demoCalibrationService.onStreamSamples((chunk, latestVal, metrics) => {
+      setIsDemoStreamActive(true)
+      setHasSensorData(true)
+      setLatestEmgValue(latestVal)
+      setRawEmgSamples((prev) => [...prev, ...chunk].slice(-250))
+      setEmgMetrics({
+        rms: metrics.rms,
+        mav: metrics.mav,
+        zcr: metrics.zcr,
+        peakToPeak: metrics.peakToPeak,
+      })
+
+      if (demoStreamTimerRef.current) clearTimeout(demoStreamTimerRef.current)
+      demoStreamTimerRef.current = window.setTimeout(() => {
+        setIsDemoStreamActive(false)
+      }, 1500)
+    })
+    return () => {
+      unsub()
+      if (demoStreamTimerRef.current) clearTimeout(demoStreamTimerRef.current)
+    }
+  }, [])
+
+  const startDemoCalibration = useCallback(async (onPrompt?: () => Promise<void>) => {
+    try {
+      await demoCalibrationService.startCalibration(onPrompt)
+    } catch (err: unknown) {
+      if ((err as Error)?.message !== 'Calibration cancelled') {
+        console.error('Demo calibration failed:', err)
+      }
+    }
+  }, [])
+
+  const triggerHelloAction = useCallback(() => {
+    demoCalibrationService.triggerHello()
+  }, [])
+
+  const runDemoInference = useCallback(async () => {
+    try {
+      const result = await demoCalibrationService.runDemoInference()
+      const formattedTime = new Date().toLocaleTimeString()
+
+      setLatestPrediction({
+        command: result.command,
+        confidence: result.confidence,
+        signalQuality: 'Good (Simulated)',
+        timestamp: formattedTime,
+        modelStatus: 'Ready (Demo)',
+      })
+      setDetectedMessage(result.command)
+
+      addPredictionHistory({
+        time: formattedTime,
+        command: result.command,
+        confidence: result.confidence,
+        source: 'Stream',
+      })
+
+      if (settings.voiceOutputEnabled) {
+        speechService.speak(result.command, { rate: settings.speechRate })
+      }
+    } catch (err: unknown) {
+      console.error('Demo inference error:', err)
+      throw err
+    }
+  }, [addPredictionHistory, settings.voiceOutputEnabled, settings.speechRate])
+
+  const resetDemoCalibration = useCallback(() => {
+    demoCalibrationService.resetCalibration()
+    setIsDemoStreamActive(false)
+    if (latestPrediction.signalQuality?.includes('Simulated')) {
+      setLatestPrediction({
+        command: null,
+        confidence: null,
+        signalQuality: null,
+        timestamp: null,
+        modelStatus: modelStatus === 'Ready' ? 'Ready' : 'Waiting',
+      })
+      setDetectedMessage(null)
+    }
+  }, [latestPrediction.signalQuality, modelStatus])
+
   // ── Real Backend Model Test Action ──
   const testModelWithUtterance = useCallback(
     async (_word: string) => {
@@ -677,19 +791,25 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
       ? 'ERROR'
       : 'DISCONNECTED') as 'CONNECTED' | 'BROKER READY — NO DEVICE' | 'CONNECTING' | 'DISCONNECTED' | 'ERROR',
 
-    model: (modelStatus === 'Ready'
+    model: (['PREPARING', 'WAITING_FOR_TRIGGER', 'ANALYZING_TRIAL', 'EXTRACTING_FEATURES', 'BUILDING_TEMPLATE'].includes(demoCalibration.status)
+      ? 'CALIBRATING'
+      : demoCalibration.status === 'VALIDATING'
+      ? 'VALIDATING'
+      : modelStatus === 'Ready' || demoCalibration.isCalibrated
       ? 'READY'
       : modelStatus === 'Loading'
       ? 'LOADING'
       : modelStatus === 'Error'
       ? 'ERROR'
-      : 'UNAVAILABLE') as 'READY' | 'LOADING' | 'UNAVAILABLE' | 'ERROR',
+      : 'UNAVAILABLE') as 'READY' | 'LOADING' | 'CALIBRATING' | 'VALIDATING' | 'UNAVAILABLE' | 'ERROR',
 
     prediction: (latestPrediction.command
-      ? 'ACTIVE'
+      ? latestPrediction.command
+      : isDemoStreamActive
+      ? 'ANALYZING'
       : hasSensorData
       ? 'WAITING'
-      : 'IDLE') as 'ACTIVE' | 'WAITING' | 'IDLE',
+      : 'IDLE') as 'ACTIVE' | 'WAITING' | 'ANALYZING' | 'IDLE' | string,
 
     output: (speechService.isSpeaking()
       ? 'SPEAKING'
@@ -742,6 +862,13 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({ 
         speakDetectedMessage,
         clearDetectedMessage,
         clearPredictionHistory,
+
+        demoCalibration,
+        startDemoCalibration,
+        triggerHelloAction,
+        runDemoInference,
+        resetDemoCalibration,
+        isDemoStreamActive,
 
         pipeline,
       }}

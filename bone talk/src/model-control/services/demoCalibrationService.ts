@@ -277,6 +277,15 @@ class DemoCalibrationService {
     return Number((rawSim * 100).toFixed(1))
   }
 
+  private triggerResolver: (() => void) | null = null
+
+  public triggerHello(): void {
+    if (this.triggerResolver) {
+      this.triggerResolver()
+      this.triggerResolver = null
+    }
+  }
+
   // ── 5. Full Asynchronous Calibration Workflow (~14-16 seconds) ───────────
 
   public async startCalibration(
@@ -316,17 +325,34 @@ class DemoCalibrationService {
       }
       this.state.countdown = null
 
-      // ── Phase 2: Waiting for User Trigger / Speech Simulation (2s) ──
+      // ── Phase 2: Waiting for User Trigger / Speech Simulation ──
       this.state.status = 'WAITING_FOR_TRIGGER'
       this.state.progress = 15
       this.state.stageText = 'Say HELLO naturally when ready (or press Simulate "HELLO")'
-      this.addLog('Prompt: "Say HELLO naturally when ready"', 'info')
+      this.addLog('Prompt: "Say HELLO now."', 'info')
       this.notify()
 
       if (onTriggerPrompt) {
         await onTriggerPrompt()
       } else {
-        await sleep(1500)
+        // Wait for manual trigger button or auto-progress after 5s
+        await new Promise<void>((resolve) => {
+          let timeoutId: any = null
+          this.triggerResolver = () => {
+            if (timeoutId) clearTimeout(timeoutId)
+            this.triggerResolver = null
+            resolve()
+          }
+          timeoutId = setTimeout(() => {
+            this.triggerResolver = null
+            resolve()
+          }, 5000)
+
+          signal.addEventListener('abort', () => {
+            if (timeoutId) clearTimeout(timeoutId)
+            this.triggerResolver = null
+          })
+        })
       }
 
       // ── Phase 3: Run 5 Calibration Trials (approx 1.6s each = 8s) ──

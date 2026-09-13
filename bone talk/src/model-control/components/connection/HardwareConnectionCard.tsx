@@ -210,7 +210,7 @@ export const HardwareConnectionCard: React.FC = () => {
 
             {/* 3. Arduino UNO R4 Physical Device */}
             <div className="p-2.5 rounded bg-[#FBF9F5] border border-[#E5E0D8] h-[56px] flex flex-col justify-between">
-              <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Arduino UNO R4Y5</span>
+              <span className="text-[10px] text-[#8C827A] uppercase tracking-wider block">Arduino UNO R4 WiFi</span>
               <span
                 className={`font-semibold text-[11px] block truncate ${
                   isDeviceOnline ? 'text-[#2B382D]' : 'text-[#8C827A]'

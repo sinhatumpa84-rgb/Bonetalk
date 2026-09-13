@@ -29,7 +29,7 @@ export interface DeviceConfig {
 export const DEVICE_CONFIG: DeviceConfig = {
   type: 'arduino_uno_r4_wifi',
   name: 'Arduino UNO R4 WiFi',
-  shortName: 'Arduino UNO R4Y5',
+  shortName: 'Arduino UNO R4 WiFi',
   id: 'BONE-01',
   transport: 'wifi',
   protocol: 'mqtt',

@@ -43,7 +43,7 @@ export class WebSocketService {
   private messageListeners = new Set<(message: WebSocketMessage) => void>()
 
   constructor() {
-    this.url = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/emg'
+    this.url = import.meta.env.VITE_WS_URL || (import.meta.env.PROD ? '' : 'ws://localhost:8000/ws/emg')
   }
 
   // ── Public Accessors ────────────────────────────────────────────────────────
@@ -92,6 +92,12 @@ export class WebSocketService {
 
   public connect(customUrl?: string): void {
     if (customUrl) this.url = customUrl
+
+    if (!this.url) {
+      this.setStatus('DISCONNECTED')
+      this.errorMessage = 'WebSocket URL not configured'
+      return
+    }
 
     if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) {
       return // Already connected or connecting
@@ -198,6 +204,10 @@ export class WebSocketService {
 
   private handleReconnect(): void {
     if (this.reconnectTimer) return
+    if (!this.url || this.reconnectAttempt >= 5) {
+      this.setStatus('DISCONNECTED')
+      return
+    }
     this.setStatus('RECONNECTING')
 
     this.reconnectAttempt++

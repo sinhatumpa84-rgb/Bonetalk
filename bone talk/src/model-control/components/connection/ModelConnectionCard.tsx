@@ -195,7 +195,7 @@ export const ModelConnectionCard: React.FC = () => {
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               className="flex-1 px-3 py-1.5 text-xs font-mono rounded border border-[#E5E0D8] bg-[#FFFFFF] text-[#262220] focus:outline-none focus:ring-1 focus:ring-[#41634F]"
-              placeholder="http://localhost:8000"
+              placeholder="https://api.yourdomain.com or http://localhost:8000"
             />
             <button
               type="submit"

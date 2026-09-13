@@ -154,7 +154,7 @@ export const EMGViewer: React.FC<EMGViewerProps> = ({
                 ? 'Arduino UNO R4 WiFi is online. Awaiting EMG samples on configured channel.'
                 : connectionStatus === 'Connected'
                 ? 'MQTT broker reachable. No physical Arduino UNO R4 hardware detected.'
-                : 'Connect Arduino UNO R4Y5 hardware via MQTT to begin streaming live bio-signals.'}
+                : 'Connect Arduino UNO R4 WiFi hardware via MQTT to begin streaming live bio-signals.'}
             </p>
           </div>
         )}

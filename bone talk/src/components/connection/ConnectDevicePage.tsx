@@ -319,7 +319,7 @@ export const ConnectDevicePage: React.FC<ConnectDevicePageProps> = ({ onNavigate
           </a>
           <span className="px-3 py-1.5 rounded-sm bg-[#2B382D] text-[#FFFFFF] font-semibold flex items-center gap-1.5 shadow-2xs whitespace-nowrap">
             <Bluetooth size={12} className="text-[#A3E635]" />
-            <span>Connect Arduino UNO R4Y5</span>
+            <span>Connect Arduino UNO R4 WiFi</span>
           </span>
           <a
             href="/model-control#model"
@@ -371,7 +371,7 @@ export const ConnectDevicePage: React.FC<ConnectDevicePageProps> = ({ onNavigate
               <span className={`font-bold text-xs block mt-0.5 ${isConnected ? 'text-[#2B382D]' : 'text-[#8C827A]'}`}>
                 {isConnected ? 'ONLINE' : 'OFFLINE'}
               </span>
-              <span className="text-[10px] text-[#8C827A]">Arduino UNO R4Y5</span>
+              <span className="text-[10px] text-[#8C827A]">Arduino UNO R4 WiFi</span>
             </div>
 
             {/* 2. EMG + IMU */}
@@ -460,7 +460,7 @@ export const ConnectDevicePage: React.FC<ConnectDevicePageProps> = ({ onNavigate
                       Waiting for physical hardware...
                     </span>
                     <span className="text-xs text-[#736B63] max-w-sm font-body">
-                      Connect Arduino UNO R4Y5 hardware to begin streaming live bio-signals.
+                      Connect Arduino UNO R4 WiFi hardware to begin streaming live bio-signals.
                     </span>
                   </div>
                 )}
@@ -618,7 +618,7 @@ export const ConnectDevicePage: React.FC<ConnectDevicePageProps> = ({ onNavigate
                         rawLogs.map((log, idx) => <div key={idx}>{log}</div>)
                       ) : (
                         <div className="text-[#6B7280] italic">
-                          [GATT Logger]: No packets received. Click Connect Arduino UNO R4Y5 to establish stream.
+                          [GATT Logger]: No packets received. Click Connect Arduino UNO R4 WiFi to establish stream.
                         </div>
                       )}
                     </div>
@@ -887,7 +887,7 @@ export const ConnectDevicePage: React.FC<ConnectDevicePageProps> = ({ onNavigate
                     ) : (
                       <>
                         <Bluetooth size={14} />
-                        <span>CONNECT ARDUINO UNO R4Y5</span>
+                        <span>CONNECT ARDUINO UNO R4 WIFI</span>
                       </>
                     )}
                   </button>

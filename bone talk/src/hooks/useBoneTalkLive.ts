@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 
-const BACKEND_URL = 'http://localhost:8000'
-const WS_URL = 'ws://localhost:8000/ws/emg'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.PROD ? '' : 'http://localhost:8000')
+const WS_URL = import.meta.env.VITE_WS_URL || (import.meta.env.PROD ? '' : 'ws://localhost:8000/ws/emg')
 
 interface LivePrediction {
   prediction: string
@@ -32,6 +32,10 @@ export function useBoneTalkLive() {
 
   // Check backend status
   const checkStatus = useCallback(async () => {
+    if (!BACKEND_URL) {
+      setBackendOnline(false)
+      return false
+    }
     try {
       const res = await fetch(`${BACKEND_URL}/api/status`, { signal: AbortSignal.timeout(2000) })
       if (res.ok) {
@@ -60,7 +64,7 @@ export function useBoneTalkLive() {
 
   // WebSocket connection for streaming predictions
   useEffect(() => {
-    if (!isLive || !backendOnline) {
+    if (!isLive || !backendOnline || !WS_URL) {
       if (wsRef.current) {
         wsRef.current.close()
         wsRef.current = null

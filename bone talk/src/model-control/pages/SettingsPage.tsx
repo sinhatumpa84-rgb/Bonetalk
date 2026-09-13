@@ -243,10 +243,10 @@ export const SettingsPage: React.FC = () => {
               value={form.backendUrl}
               onChange={(e) => setForm({ ...form, backendUrl: e.target.value })}
               className="w-full px-3 py-1.5 rounded border border-[#E5E0D8] bg-[#FFFFFF] text-[#262220] focus:outline-none focus:ring-1 focus:ring-[#41634F]"
-              placeholder="http://localhost:8000"
+              placeholder="https://api.yourdomain.com or http://localhost:8000"
             />
             <span className="text-[10px] text-[#8C827A] mt-1 block">
-              Default: http://localhost:8000 (FastAPI backend providing /api/status and /api/predict)
+              Configured via VITE_BACKEND_URL in production, or http://localhost:8000 in local dev
             </span>
           </div>
         </div>

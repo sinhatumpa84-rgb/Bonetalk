@@ -100,7 +100,7 @@ export const ModelControlNav: React.FC<ModelControlNavProps> = ({
             title="Connect physical BoneTalk Arduino UNO R4 hardware via Wi-Fi / MQTT"
           >
             <Wifi size={13} className="text-[#41634F]" />
-            <span>Connect Arduino UNO R4Y5</span>
+            <span>Connect Arduino UNO R4 WiFi</span>
             <span className="text-[10px] opacity-70">↗</span>
           </a>
         </li>

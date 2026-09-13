@@ -21,7 +21,10 @@ export interface PredictionResponse {
 export type ModelSystemStatus = 'Ready' | 'Loading' | 'Unavailable' | 'Error'
 
 class ModelService {
-  private backendUrl: string = 'http://localhost:8000'
+  private backendUrl: string =
+    import.meta.env.VITE_BACKEND_URL ||
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.PROD ? '' : 'http://localhost:8000')
   private status: ModelSystemStatus = 'Loading'
   private statusListeners: Array<(status: ModelSystemStatus, info?: ModelStatusResponse) => void> = []
   private latestInfo: ModelStatusResponse | null = null
@@ -74,10 +77,15 @@ class ModelService {
   }
 
   public async checkStatus(): Promise<ModelStatusResponse | null> {
+    if (!this.backendUrl) {
+      this.notifyStatus('Unavailable')
+      return null
+    }
     try {
       const res = await fetch(`${this.backendUrl}/api/status`, {
         method: 'GET',
         headers: { Accept: 'application/json' },
+        signal: AbortSignal.timeout(3000),
       })
       if (!res.ok) {
         this.notifyStatus('Unavailable')
@@ -98,6 +106,10 @@ class ModelService {
 
   public startPolling(intervalMs: number = 8000): void {
     this.stopPolling()
+    if (!this.backendUrl) {
+      this.notifyStatus('Unavailable')
+      return
+    }
     this.checkStatus()
     this.pollIntervalId = window.setInterval(() => {
       this.checkStatus()
@@ -149,6 +161,7 @@ class ModelService {
     onPrediction: (result: PredictionResponse) => void,
     onError?: (err: Event) => void
   ): WebSocket | null {
+    if (!this.backendUrl) return null
     const wsUrl = this.backendUrl.replace(/^http/, 'ws') + '/ws/emg'
     try {
       const ws = new WebSocket(wsUrl)

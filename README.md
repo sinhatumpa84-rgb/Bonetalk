@@ -111,6 +111,12 @@ To calibrate the model for a specific user on the BoneTalk hardware:
 *   **Hardware Gap:** There is a significant difference between the clinical-grade 24-bit 1000Hz research hardware and the target consumer ESP32-S3 hardware (see `docs/HARDWARE_DIFFERENCES.md`).
 
 ## License
-MIT License. 
+
+BONEtalk is open-source software licensed under the [MIT License](LICENSE).
+
+* **Software & Code:** You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the terms and conditions of the MIT License.
+* **Branding & Intellectual Property:** The MIT License applies exclusively to the project software and code. The BONEtalk name, logos, hardware schematics/enclosure designs, and project documentation remain the property of the project authors and are not granted trademark or intellectual property rights without explicit prior permission.
+* **Disclaimer / Non-Medical Device:** BONEtalk is an assistive technology prototype created for academic, educational, and research purposes (including hackathons). It is **not** medically certified, clinically validated, or approved by regulatory authorities (e.g., FDA, CE-IVD) as a medical or diagnostic device. It must not be used as a substitute for professional medical advice, clinical diagnosis, or life-critical assistive systems.
 
 **Dataset Citation:** Gaddy, David. "Digital Voicing of Silent Speech." EMNLP 2020. [DOI: 10.5281/zenodo.4064409](https://doi.org/10.5281/zenodo.4064409). Dataset licensed under CC BY 4.0.
+

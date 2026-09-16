@@ -195,9 +195,9 @@ async def finish_calibration_session(request: CalibrationFinishRequest):
 async def get_gesture_report():
     """Returns machine-readable model evaluation report and confusion matrix."""
     try:
-        from data.calibration_db import calibration_db
-    except ImportError:
         from ml.data.calibration_db import calibration_db
+    except (ImportError, ModuleNotFoundError):
+        from data.calibration_db import calibration_db  # type: ignore
     ev = calibration_db.get_latest_evaluation()
     act = calibration_db.get_active_model()
     return {
@@ -217,9 +217,9 @@ async def get_gesture_report():
 async def get_gesture_models():
     """Lists registered gesture models."""
     try:
-        from data.calibration_db import calibration_db
-    except ImportError:
         from ml.data.calibration_db import calibration_db
+    except (ImportError, ModuleNotFoundError):
+        from data.calibration_db import calibration_db  # type: ignore
     return calibration_db.list_models()
 
 @app.websocket("/ws/emg")

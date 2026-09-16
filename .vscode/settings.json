@@ -1,0 +1,6 @@
+{
+  "python.analysis.extraPaths": [
+    "./ml"
+  ],
+  "css.lint.unknownAtRules": "ignore"
+}

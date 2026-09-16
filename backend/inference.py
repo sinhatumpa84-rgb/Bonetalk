@@ -22,14 +22,24 @@ _ML_DIR = Path(__file__).resolve().parent.parent / "ml"
 if str(_ML_DIR) not in sys.path:
     sys.path.insert(0, str(_ML_DIR))
 
-from preprocessing.filters import preprocess_emg
-from preprocessing.windowing import create_windows
-from preprocessing.normalizer import EMGNormalizer
-from features.emg_features import extract_features
-from preprocessing.muscle_pipeline import muscle_pipeline
-from features.three_channel_features import three_channel_extractor
-from models.three_channel_model import three_channel_model
-from data.calibration_db import calibration_db
+try:
+    from ml.preprocessing.filters import preprocess_emg
+    from ml.preprocessing.windowing import create_windows
+    from ml.preprocessing.normalizer import EMGNormalizer
+    from ml.features.emg_features import extract_features
+    from ml.preprocessing.muscle_pipeline import muscle_pipeline
+    from ml.features.three_channel_features import three_channel_extractor
+    from ml.models.three_channel_model import three_channel_model
+    from ml.data.calibration_db import calibration_db
+except (ImportError, ModuleNotFoundError):
+    from preprocessing.filters import preprocess_emg  # type: ignore
+    from preprocessing.windowing import create_windows  # type: ignore
+    from preprocessing.normalizer import EMGNormalizer  # type: ignore
+    from features.emg_features import extract_features  # type: ignore
+    from preprocessing.muscle_pipeline import muscle_pipeline  # type: ignore
+    from features.three_channel_features import three_channel_extractor  # type: ignore
+    from models.three_channel_model import three_channel_model  # type: ignore
+    from data.calibration_db import calibration_db  # type: ignore
 
 log = logging.getLogger("bonetalk.inference")
 
@@ -62,7 +72,10 @@ class BoneTalkInference:
             if pt_p.exists():
                 try:
                     import torch
-                    from colab.model_1dcnn import BoneTalk1DCNN
+                    try:
+                        from ml.colab.model_1dcnn import BoneTalk1DCNN
+                    except (ImportError, ModuleNotFoundError):
+                        from colab.model_1dcnn import BoneTalk1DCNN  # type: ignore
                     checkpoint = torch.load(pt_p, map_location="cpu", weights_only=False)
                     class_names = [str(c) for c in checkpoint.get("class_names", [])]
                     num_classes = checkpoint.get("num_classes", len(class_names))
@@ -163,7 +176,10 @@ class BoneTalkInference:
         try:
             if self.is_pytorch:
                 import torch
-                from experiments.bonetalk_mvp.preprocess import preprocess_emg_signal
+                try:
+                    from ml.experiments.bonetalk_mvp.preprocess import preprocess_emg_signal
+                except (ImportError, ModuleNotFoundError):
+                    from experiments.bonetalk_mvp.preprocess import preprocess_emg_signal  # type: ignore
 
                 cleaned = preprocess_emg_signal(emg_data, fs=sampling_rate, target_fs=800.0, apply_gating=True)
                 sig = cleaned.T  # (8, T)
@@ -189,8 +205,12 @@ class BoneTalkInference:
                 }
 
             elif self.is_mvp:
-                from experiments.bonetalk_mvp.preprocess import preprocess_emg_signal
-                from experiments.bonetalk_mvp.features import extract_multichannel_features
+                try:
+                    from ml.experiments.bonetalk_mvp.preprocess import preprocess_emg_signal
+                    from ml.experiments.bonetalk_mvp.features import extract_multichannel_features
+                except (ImportError, ModuleNotFoundError):
+                    from experiments.bonetalk_mvp.preprocess import preprocess_emg_signal  # type: ignore
+                    from experiments.bonetalk_mvp.features import extract_multichannel_features  # type: ignore
 
                 cleaned = preprocess_emg_signal(emg_data, fs=sampling_rate, target_fs=800.0, apply_gating=True)
                 feats = extract_multichannel_features(cleaned, fs=800.0).reshape(1, -1)

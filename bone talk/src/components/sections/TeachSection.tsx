@@ -195,6 +195,15 @@ export function TeachSection() {
                   </p>
 
                   <div className="mt-6 flex flex-col gap-3 w-full max-w-sm sm:mt-8 sm:gap-4">
+                    <a
+                      href="/gesture-calibration"
+                      className="w-full flex items-center justify-center gap-2 rounded-sm border border-cyan-signal/60 bg-cyan-signal/20 px-4 py-3 font-mono text-xs font-bold text-cyan-signal uppercase tracking-wider hover:bg-cyan-signal/30 transition-all duration-200 shadow-sm text-center"
+                      title="Open Live Gesture Calibration Suite"
+                    >
+                      <Sparkles size={16} />
+                      <span>TRAIN IT &bull; GESTURE CALIBRATION SUITE &rarr;</span>
+                    </a>
+
                     <MagneticButton variant="primary" onClick={() => startTraining('HI')} className="w-full min-h-[44px] justify-center">
                       {t.teach.trainHi}
                     </MagneticButton>

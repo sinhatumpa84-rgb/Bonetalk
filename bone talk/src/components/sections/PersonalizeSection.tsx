@@ -107,12 +107,19 @@ export function PersonalizeSection() {
                 </p>
 
                 <div className="flex flex-col gap-4 w-full max-w-md">
+                  <a
+                    href="/gesture-calibration"
+                    className="flex items-center justify-center gap-2 w-full rounded-xl bg-emerald-600 py-3.5 px-4 text-base font-semibold text-white hover:bg-emerald-700 transition-colors shadow-sm"
+                  >
+                    TRAIN IT &bull; Gesture Calibration Suite <ArrowRight size={18} />
+                  </a>
+
                   <button
                     type="button"
                     onClick={() => startTraining('I NEED WATER')}
-                    className="flex items-center justify-center gap-2 w-full rounded-xl bg-emerald-600 py-3.5 px-4 text-base font-semibold text-white hover:bg-emerald-700 transition-colors shadow-sm"
+                    className="flex items-center justify-center gap-2 w-full rounded-xl border border-zinc-300 py-3 px-4 text-sm font-semibold text-zinc-800 hover:bg-zinc-50 transition-colors"
                   >
-                    Train &quot;I NEED WATER&quot; <ArrowRight size={18} />
+                    Quick Train &quot;I NEED WATER&quot;
                   </button>
 
                   <form onSubmit={handleCustomSubmit} className="flex gap-2 w-full">

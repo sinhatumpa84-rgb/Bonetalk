@@ -31,8 +31,11 @@ const char topicCommand[]   = "bonetalk/device/BONE-01/commands";
 const char topicAck[]       = "bonetalk/device/BONE-01/ack";
 
 // ── Hardware Pin Configuration ───────────────────────────────────────────
-const int EMG_PIN = A0;  // Analog A0 on RA4M1 (14-bit ADC)
-const int LED_PIN = LED_BUILTIN;
+const int EMG_PIN_1 = A0;  // Muscle 1: Zygomaticus Major (14-bit ADC)
+const int EMG_PIN_2 = A1;  // Muscle 2: Orbicularis Oris (14-bit ADC)
+const int EMG_PIN_3 = A2;  // Muscle 3: Masseter / Depressor (14-bit ADC)
+const int EMG_PIN   = EMG_PIN_1;  // Backward compatibility
+const int LED_PIN   = LED_BUILTIN;
 
 // ── Networking Clients ───────────────────────────────────────────────────
 WiFiClient wifiClient;
@@ -255,25 +258,47 @@ void sendHeartbeat() {
   mqttClient.endMessage();
 }
 
-// ── Stream Real EMG & Simulated/IMU Telemetry ─────────────────────────────
+// ── Stream Real 3-Channel EMG & IMU Telemetry ─────────────────────────────
 void sendTelemetry() {
   // Read real 14-bit ADC on Renesas RA4M1 (0 - 16383, mapped to mV: 0 - 5000mV)
-  int rawAdc = analogRead(EMG_PIN);
-  float voltageMv = (rawAdc * 5000.0) / 16384.0;
-  // Center around 0mV baseline (subtract 2.5V reference)
-  float emgMv = (voltageMv - 2500.0) / 10.0;
+  int rawAdc1 = analogRead(EMG_PIN_1);
+  int rawAdc2 = analogRead(EMG_PIN_2);
+  int rawAdc3 = analogRead(EMG_PIN_3);
 
-  // Stream EMG Sample Packet
+  float voltageMv1 = (rawAdc1 * 5000.0) / 16384.0;
+  float emgMv1 = (voltageMv1 - 2500.0) / 10.0;
+
+  float voltageMv2 = (rawAdc2 * 5000.0) / 16384.0;
+  float emgMv2 = (voltageMv2 - 2500.0) / 10.0;
+
+  float voltageMv3 = (rawAdc3 * 5000.0) / 16384.0;
+  float emgMv3 = (voltageMv3 - 2500.0) / 10.0;
+
+  // Stream 3-Channel EMG Sample Packet
   mqttClient.beginMessage(topicEmg);
   mqttClient.print("{\"device_id\":\"");
   mqttClient.print(deviceId);
   mqttClient.print("\",\"timestamp\":");
   mqttClient.print(millis());
-  mqttClient.print(",\"emg\":");
-  mqttClient.print(emgMv, 3);
-  mqttClient.print(",\"raw\":");
-  mqttClient.print(rawAdc);
-  mqttClient.print("}");
+  mqttClient.print(",\"emg\":[");
+  mqttClient.print(emgMv1, 3);
+  mqttClient.print(",");
+  mqttClient.print(emgMv2, 3);
+  mqttClient.print(",");
+  mqttClient.print(emgMv3, 3);
+  mqttClient.print("],\"m1\":");
+  mqttClient.print(emgMv1, 3);
+  mqttClient.print(",\"m2\":");
+  mqttClient.print(emgMv2, 3);
+  mqttClient.print(",\"m3\":");
+  mqttClient.print(emgMv3, 3);
+  mqttClient.print(",\"raw\":[");
+  mqttClient.print(rawAdc1);
+  mqttClient.print(",");
+  mqttClient.print(rawAdc2);
+  mqttClient.print(",");
+  mqttClient.print(rawAdc3);
+  mqttClient.print("]}");
   mqttClient.endMessage();
 
   // Stream 6-DOF IMU Telemetry (Orientation & Micro-tremor)

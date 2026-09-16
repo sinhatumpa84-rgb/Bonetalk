@@ -15,16 +15,18 @@ import ExperiencePage from './components/experience/ExperiencePage'
 import { CheckoutPage } from './components/checkout/CheckoutPage'
 import { ModelControlApp } from './model-control/ModelControlApp'
 import { ConnectDevicePage } from './components/connection/ConnectDevicePage'
+import { GestureCalibrationPage } from './pages/GestureCalibrationPage'
 import { useLenis } from './hooks/useLenis'
 
 import { OrderProvider } from './context/OrderContext'
 
-type AppRoute = 'home' | 'experience' | 'checkout' | 'model-control' | 'connect-device'
+type AppRoute = 'home' | 'experience' | 'checkout' | 'model-control' | 'connect-device' | 'gesture-calibration'
 
 function getRoute(): AppRoute {
   if (typeof window === 'undefined') return 'home'
   const path = window.location.pathname
   const hash = window.location.hash
+  if (path.startsWith('/gesture-calibration') || hash === '#gesture-calibration') return 'gesture-calibration'
   if (path.startsWith('/connect-device') || path.startsWith('/connect') || hash === '#connect-device' || hash === '#connect') return 'connect-device'
   if (path.startsWith('/model-control')) return 'model-control'
   if (path === '/experience' || path === '/experience/') return 'experience'
@@ -66,6 +68,10 @@ function App() {
         window.scrollTo({ top: 0, behavior: 'instant' })
       }
     }, 150)
+  }
+
+  if (route === 'gesture-calibration') {
+    return <GestureCalibrationPage />
   }
 
   if (route === 'connect-device') {

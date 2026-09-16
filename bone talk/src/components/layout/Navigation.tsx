@@ -92,6 +92,13 @@ export function Navigation() {
               {t.nav.experience}
             </MagneticButton>
             <a
+              href="/gesture-calibration"
+              className="font-mono text-[11px] tracking-wider uppercase px-2.5 py-1.5 rounded-sm border border-cyan-500/40 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/20 transition-all duration-200 inline-flex items-center gap-1.5 whitespace-nowrap min-h-[34px]"
+              title="Open Gesture Calibration Suite (Muscle & Gesture Pattern Sync)"
+            >
+              <span>GESTURE CALIBRATION</span>
+            </a>
+            <a
               href="/model-control"
               target="_blank"
               rel="noopener noreferrer"
@@ -197,6 +204,13 @@ export function Navigation() {
                 >
                   {t.nav.experience} →
                 </MagneticButton>
+                <a
+                  href="/gesture-calibration"
+                  className="w-full min-h-[44px] flex items-center justify-center font-mono text-xs tracking-wider uppercase px-3 py-2 rounded-sm border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 transition-colors text-center"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  GESTURE CALIBRATION
+                </a>
                 <a
                   href="/model-control"
                   target="_blank"
